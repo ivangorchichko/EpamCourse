@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace task3EPAMCourse.Model
+namespace task3EPAMCourse.Contracts
 {
-    class Contract
+    public interface IPort
     {
     }
 }
