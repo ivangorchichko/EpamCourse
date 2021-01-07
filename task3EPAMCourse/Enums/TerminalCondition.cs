@@ -4,10 +4,9 @@ using System.Text;
 
 namespace task3EPAMCourse.Enums
 {
-    public enum PortCondition
+    public enum TerminalCondition
     {
-        Calling,
-        Free,
-        InCalling
+        IsUsed,
+        Avaible
     }
 }

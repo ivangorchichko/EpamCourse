@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace task3EPAMCourse.Model
+namespace task3EPAMCourse.Model.ATS
 {
     public class Contract
     {

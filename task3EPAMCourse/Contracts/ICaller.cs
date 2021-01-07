@@ -5,8 +5,9 @@ using task3EPAMCourse.Enums;
 
 namespace task3EPAMCourse.Contracts
 {
-    public interface IPort
+    public interface ICaller
     {
-        void ChangeCondition(PortCondition condition);
+         ITerminal Terminal { get; }
+         void ChangePortCondition(PortCondition condition);
     }
 }

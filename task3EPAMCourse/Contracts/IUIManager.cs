@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using task3EPAMCourse.Enums;
 
 namespace task3EPAMCourse.Contracts
 {
-    public interface IPort
+    public interface IUIManager
     {
-        void ChangeCondition(PortCondition condition);
     }
 }

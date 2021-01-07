@@ -9,8 +9,17 @@ namespace task3EPAMCourse.Model.ATS
     public class Port : IPort
     {
         public int PortNumber { get; }
-        public PortCondition Condition { get; }
+        public PortCondition Condition { get; private set; }
 
-        public Port() { }
+        public Port(int portNumber, PortCondition portCondition) 
+        {
+            PortNumber = portNumber;
+            Condition = portCondition;
+        }
+
+        public void ChangeCondition(PortCondition condition)
+        {
+            Condition = condition;
+        }
     }
 }
