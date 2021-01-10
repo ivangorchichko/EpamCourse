@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using task3EPAMCourse.Contracts;
-using task3EPAMCourse.Enums;
-using task3EPAMCourse.Model.ATS;
+﻿using System.Diagnostics.Contracts;
+using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.Model.BillimgSystem
+namespace task3EPAMCourse.Billing.Model
 {
     public class Caller : ICaller
     {
@@ -15,10 +11,11 @@ namespace task3EPAMCourse.Model.BillimgSystem
         public Contract Contract { get; } = new Contract();
 
         public Caller() { }
-        public Caller(int callerNumber, ITerminal terminal)
+        public Caller(int callerNumber, ITerminal terminal, IPort port)
         {
             CallerNumber = callerNumber;
             Terminal = terminal;
+            Terminal.ChangePortSourse(port);
         }
 
         public void ChangePortCondition(PortCondition condition)

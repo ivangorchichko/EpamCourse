@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using task3EPAMCourse.Contracts;
-using task3EPAMCourse.Enums;
+using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.Model.ATS
+namespace task3EPAMCourse.ATS.Model
 {
     public class Port : IPort
     {
@@ -20,6 +18,11 @@ namespace task3EPAMCourse.Model.ATS
         public void ChangeCondition(PortCondition condition)
         {
             Condition = condition;
+        }
+
+        public void GetPortInfo()
+        {
+            Console.WriteLine($"PortNumber : {PortNumber}, Condition : {Condition}");
         }
     }
 }

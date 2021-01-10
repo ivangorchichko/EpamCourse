@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Timers;
-using task3EPAMCourse.Contracts;
+﻿using System.Timers;
+using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.Model.BillimgSystem
+namespace task3EPAMCourse.Billing.Model
 {
-    public class Billing
+    public class BillingSystem : IBilling
     {
         public static double time { get; private set; } = 0.0;
         public Timer Timer { get; } = new Timer(10);
-        public Billing()
+        public BillingSystem()
         {
            
         }
