@@ -16,6 +16,7 @@ namespace task3EPAMCourse.ATS.Model
         public event EventHandler<ICaller> Call;
         public event EventHandler<ICaller> AceptCall;
         public event EventHandler<ICaller> StopCall;
+        public event EventHandler<ICaller> DropCall;
 
         public Terminal(string number, TerminalCondition condition)
         {
@@ -34,6 +35,10 @@ namespace task3EPAMCourse.ATS.Model
         private void OnStopCall(object sender, ICaller secondCaller)
         {
             StopCall?.Invoke(sender, secondCaller);
+        }
+        private void OnDropCall(object sender, ICaller caller)
+        {
+            DropCall?.Invoke(sender, caller);
         }
         private void OnChangeCondition(object sender, TerminalCondition condition)
         {
@@ -97,6 +102,20 @@ namespace task3EPAMCourse.ATS.Model
                     }
                 }
             };
+            DropCall += (sender, caller) => 
+            {
+                var answerer = sender as Terminal;
+                foreach (var connection in _ats.CallService.InWaitingConnectionCollection)
+                {
+                    if (connection.Answer == answerer && connection.Caller == caller.Terminal)
+                    {
+                        Console.WriteLine($"Terminal {answerer.Number} drop calling with {caller.CallerNumber}");
+                        caller.Terminal.Port.ChangeCondition(PortCondition.Free);
+                        _ats.CallService.InWaitingConnectionCollection.Remove(connection);
+                        break;
+                    }
+                }
+            };
         }
         public void ChangeTerminalCondition(TerminalCondition condition)
         {
@@ -117,6 +136,10 @@ namespace task3EPAMCourse.ATS.Model
         public void StopCalling(ICaller secondCaller)
         {
             OnStopCall(this, secondCaller);
+        }
+        public void DropCalling(ICaller caller)
+        {
+            OnDropCall(this, caller);
         }
     }
 }
