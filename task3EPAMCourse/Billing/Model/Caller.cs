@@ -15,7 +15,7 @@ namespace task3EPAMCourse.Billing.Model
         {
             CallerNumber = callerNumber;
             Terminal = terminal;
-            Terminal.ChangePortSourse(port);
+            Terminal.ChangePort(port);
         }
 
         public void ChangePortCondition(PortCondition condition)

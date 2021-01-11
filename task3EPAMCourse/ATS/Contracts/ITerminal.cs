@@ -1,12 +1,18 @@
-﻿using task3EPAMCourse.ATS.Enums;
+﻿using System;
+using task3EPAMCourse.ATS.Enums;
+using task3EPAMCourse.ATS.Model;
 
 namespace task3EPAMCourse.ATS.Contracts
 {
     public interface ITerminal
     {
+        event EventHandler<Connections> Call;
+        event EventHandler<Connections> AceptCall;
+        event EventHandler<Connections> StopCall;
+        event EventHandler<Connections> DropCall;
         void ChangeTerminalCondition(TerminalCondition condition);
 
-        void ChangePortSourse(IPort port);
+        void ChangePort(IPort port);
 
         IPort Port { get; }
 

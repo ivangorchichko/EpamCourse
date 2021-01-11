@@ -10,8 +10,6 @@ namespace task3EPAMCourse.ATS.Contracts
         IPortService PortService { get; }
         ITerminalService TerminalService { get; }
         ICaller CreateContract(int callerNumber);
-        void Calling(Connections connection);
-        void Acepting(Connections connection);
-
+        void RegistrATSEvents();
     }
 }

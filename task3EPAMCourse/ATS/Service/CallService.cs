@@ -17,5 +17,13 @@ namespace task3EPAMCourse.ATS.Service
         {
             InJoinedConnectionCollection.Add(connection);
         }
+        public void RemoveFromWaitingCollection(Connections connection)
+        {
+            InWaitingConnectionCollection.Remove(connection);
+        }
+        public void RemoveFromJoinedCollection(Connections connection)
+        {
+            InJoinedConnectionCollection.Remove(connection);
+        }
     }
 }

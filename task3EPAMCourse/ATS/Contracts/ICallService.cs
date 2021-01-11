@@ -11,5 +11,7 @@ namespace task3EPAMCourse.ATS.Contracts
         IList<Connections> InJoinedConnectionCollection { get; }
         void AddInWaitingCollection(Connections connection);
         void AddInJoinedCollection(Connections connection);
+        void RemoveFromWaitingCollection(Connections connection);
+        void RemoveFromJoinedCollection(Connections connection);
     }
 }

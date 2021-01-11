@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Enums;
 using task3EPAMCourse.ATS.Service;
@@ -13,41 +14,57 @@ namespace task3EPAMCourse.ATS.Model
 
         public ICallService CallService { get; } = new CallService();
 
-        public ITerminalService TerminalService { get; } = new TerminalService();
+        public ITerminalService TerminalService { get; }
 
-        public event EventHandler<Connections> Call;
-        public event EventHandler<Connections> Acept;
+        //public event EventHandler<Connections> Call;
+        //public event EventHandler<Connections> Acept;
 
         public AutoTelephoneStation()
         {
+            TerminalService = new TerminalService(this);
             RegistrATSEvents();
         }
-        private void RegistrATSEvents()
+        public void RegistrATSEvents()
         {
-            Call += (sender, connection) => 
+            foreach (var terminal in TerminalService.Terminals.ToList())
             {
-                CallService.AddInWaitingCollection(connection);
-            };
-            Acept += (sender, connection) => 
-            {
-                CallService.AddInJoinedCollection(connection);
-            };
+                terminal.Call += (sender, connections) =>
+                {
+                    Calling(connections);
+                };
+                terminal.AceptCall += (sender, connection) =>
+                {
+                    Acepting(connection);
+                };
+                terminal.StopCall += (sender, connection) =>
+                {
+                    Stoping(connection);
+                };
+                terminal.DropCall += (sender, connection) =>
+                {
+                    Droping(connection);
+                };
+            }
         }
-        public void Calling(Connections connection)
+
+        private void Droping(Connections connection)
         {
-            OnCall(this, connection);
+            CallService.RemoveFromWaitingCollection(connection);
         }
-        public void Acepting(Connections connection)
+
+        private void Stoping(Connections connection)
         {
-            OnAcept(this, connection);
+            CallService.RemoveFromJoinedCollection(connection);
         }
-        private void OnAcept(object sender, Connections connection)
+
+        private void Calling(Connections connection)
         {
-            Acept?.Invoke(sender, connection);
+            CallService.AddInWaitingCollection(connection);
         }
-        private void OnCall(object sender, Connections connection)
+        private void Acepting(Connections connection)
         {
-            Call?.Invoke(sender, connection);
+            this.CallService.RemoveFromWaitingCollection(connection);
+            CallService.AddInJoinedCollection(connection);     
         }
         public ICaller CreateContract(int callerNumber)
         {

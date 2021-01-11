@@ -10,15 +10,15 @@ namespace task3EPAMCourse.ATS.Service
 {
     public class TerminalService : ITerminalService
     { 
-        public IEnumerable<ITerminal> Terminals { get; } = new List<ITerminal>()
-            {
-                 new Terminal("001", TerminalCondition.Avaible),
-                 new Terminal("002", TerminalCondition.Avaible),
-                 new Terminal("003", TerminalCondition.Avaible)
-            };
-        public TerminalService(IEnumerable<ITerminal> terminals)
+        public IEnumerable<ITerminal> Terminals { get; } 
+        public TerminalService(AutoTelephoneStation autoTelephoneStation)
         {
-            Terminals = terminals;
+            Terminals = new List<ITerminal>()
+            {
+                 new Terminal("001", TerminalCondition.Avaible, autoTelephoneStation),
+                 new Terminal("002", TerminalCondition.Avaible, autoTelephoneStation),
+                 new Terminal("003", TerminalCondition.Avaible, autoTelephoneStation)
+            };
         }
 
         public TerminalService()
