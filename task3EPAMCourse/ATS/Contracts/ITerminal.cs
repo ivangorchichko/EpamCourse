@@ -10,6 +10,7 @@ namespace task3EPAMCourse.ATS.Contracts
         event EventHandler<Connections> AceptCall;
         event EventHandler<Connections> StopCall;
         event EventHandler<Connections> DropCall;
+        event EventHandler<PortCondition> OnChangePortCondition;
         void ChangeTerminalCondition(TerminalCondition condition);
 
         void ChangePort(IPort port);

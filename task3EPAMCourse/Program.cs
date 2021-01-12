@@ -15,10 +15,15 @@ namespace task3EPAMCourse
         {
             _callers.Add(_aTS.CreateContract(_uIManager.GetUserId()));
             _callers.Add(_aTS.CreateContract(_uIManager.GetUserId()));
+            _callers.Add(_aTS.CreateContract(_uIManager.GetUserId()));
 
             _callers[0].Terminal.Calling(_callers[1]);
+            _callers[2].Terminal.Calling(_callers[0]);
+
             _callers[1].Terminal.DropCalling(_callers[0]);
-            _callers[0].Terminal.Calling(_callers[1]);
+            _callers[2].Terminal.Calling(_callers[1]);
+            _callers[0].Terminal.DropCalling(_callers[1]);
+
             _callers[1].Terminal.AceptCalling(_callers[0]);
             _callers[0].Terminal.StopCalling(_callers[1]);
 

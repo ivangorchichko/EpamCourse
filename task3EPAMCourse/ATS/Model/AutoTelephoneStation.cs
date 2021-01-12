@@ -44,9 +44,15 @@ namespace task3EPAMCourse.ATS.Model
                 {
                     Droping(connection);
                 };
+                terminal.OnChangePortCondition += (sender, condition) => 
+                { 
+                    
+                };
             }
         }
-
+        private void ChangePortCondition(PortCondition condition)
+        {
+        }
         private void Droping(Connections connection)
         {
             CallService.RemoveFromWaitingCollection(connection);
@@ -79,7 +85,7 @@ namespace task3EPAMCourse.ATS.Model
             }
             else
             {
-                System.Console.WriteLine("No more terminals or ports");
+                Console.WriteLine("No more terminals or ports");
                 return null;
             }
         }

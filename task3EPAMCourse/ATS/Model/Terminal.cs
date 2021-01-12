@@ -1,6 +1,7 @@
 ﻿using System;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Enums;
+using System.Linq;
 
 namespace task3EPAMCourse.ATS.Model
 {
@@ -11,12 +12,11 @@ namespace task3EPAMCourse.ATS.Model
         public IPort Port { get; private set; }
         public TerminalCondition TerminalCondition { get; private set; }
 
-        //public event EventHandler<TerminalCondition> TerminalConditionChange;
-        //public event EventHandler<IPort> ChangePort;
         public event EventHandler<Connections> Call;
         public event EventHandler<Connections> AceptCall;
         public event EventHandler<Connections> StopCall;
         public event EventHandler<Connections> DropCall;
+        public event EventHandler<PortCondition> OnChangePortCondition;
 
         public Terminal(string number, TerminalCondition condition, AutoTelephoneStation autoTelephoneStation)
         {
@@ -34,61 +34,76 @@ namespace task3EPAMCourse.ATS.Model
         }
         public void Calling(ICaller answerer)
         {
-            Call?.Invoke(this, new Connections(this, answerer.Terminal));
-            Console.WriteLine($"Terminal {this.Number} calls to {answerer.CallerNumber}");
-            this.Port.ChangeCondition(PortCondition.InCalling);
+            if (answerer.Terminal.Port.Condition == PortCondition.Free)
+            {
+                Call?.Invoke(this, new Connections(this, answerer.Terminal));
+                Console.WriteLine($"Terminal {this.Number} calls to {answerer.CallerNumber}");
+                this.Port.ChangeCondition(PortCondition.InCalling);
+            }
+            else Console.WriteLine($"Caller {this.Number} can not call to {answerer.CallerNumber} cause them in call orr port is off");
         }
         public void AceptCalling(ICaller caller)
         {
-            foreach (var connection in _ats.CallService.InWaitingConnectionCollection)
+            Connections connection = _ats.CallService.InWaitingConnectionCollection
+                .Where(x => x.Answer == this && x.Caller == caller.Terminal)
+                .Select(x => x).FirstOrDefault();
+            if (connection != null)
             {
-                if (connection.Answer == this && connection.Caller == caller.Terminal)
-                {
-                    Console.WriteLine($"Terminal {this.Number} acept call with {caller.CallerNumber}");
-                    AceptCall?.Invoke(this, connection);
-                    this.Port.ChangeCondition(PortCondition.Calling);
-                    caller.Terminal.Port.ChangeCondition(PortCondition.Calling);
-                    break;
-                }
+                Console.WriteLine($"Terminal {this.Number} acept call with {caller.CallerNumber}");
+                AceptCall?.Invoke(this, connection);
+                this.Port.ChangeCondition(PortCondition.Calling);
+                caller.Terminal.Port.ChangeCondition(PortCondition.Calling);
+            }
+            else
+            {
+                Console.WriteLine($"Terminal {this.Number} can not acept calling {caller.CallerNumber} cause them dont call");
             }
         }
         public void StopCalling(ICaller secondCaller)
         {
-            foreach (var connection in _ats.CallService.InJoinedConnectionCollection)
+            Connections connectionWherStopFirstCaller = _ats.CallService.InJoinedConnectionCollection
+                .Where(x => x.Answer == this && x.Caller == secondCaller.Terminal)
+                .Select(x => x).FirstOrDefault();
+            Connections connectionWherStopSecondCaller = _ats.CallService.InJoinedConnectionCollection
+                .Where(x => x.Answer == secondCaller.Terminal && x.Caller == this)
+                .Select(x => x).FirstOrDefault();
+            if (connectionWherStopFirstCaller != null)
             {
-                if (connection.Answer == this && connection.Caller == secondCaller.Terminal)
+                Console.WriteLine($"Terminal {this.Number} stop calling with {secondCaller.CallerNumber}");
+                this.Port.ChangeCondition(PortCondition.Free);
+                secondCaller.Terminal.Port.ChangeCondition(PortCondition.Free);
+                StopCall?.Invoke(this, connectionWherStopFirstCaller);
+            }
+            else
+            {
+                if (connectionWherStopSecondCaller != null)
                 {
-                    Console.WriteLine($"Terminal {this.Number} stop calling with {secondCaller.CallerNumber}");
+                    Console.WriteLine($"Caller {secondCaller.CallerNumber} stop calling with {this.Number}");
                     this.Port.ChangeCondition(PortCondition.Free);
                     secondCaller.Terminal.Port.ChangeCondition(PortCondition.Free);
-                    StopCall?.Invoke(this, connection);
-                    break;
-                }
+                    StopCall?.Invoke(this, connectionWherStopSecondCaller);
+                } 
                 else
                 {
-                    if (connection.Caller == this && connection.Answer == secondCaller.Terminal)
-                    {
-                        Console.WriteLine($"Terminal {this.Number} stop calling with {secondCaller.CallerNumber}");
-                        this.Port.ChangeCondition(PortCondition.Free);
-                        secondCaller.Terminal.Port.ChangeCondition(PortCondition.Free);
-                        StopCall?.Invoke(this, connection);
-                        break;
-                    }
+                    Console.WriteLine($"Terminal {this.Number} not in calling with {secondCaller.CallerNumber}");
                 }
+
             }
         }
         public void DropCalling(ICaller caller)
         {
-            foreach (var connection in _ats.CallService.InWaitingConnectionCollection)
+            Connections connection = _ats.CallService.InWaitingConnectionCollection
+                .Where(x => x.Answer == this && x.Caller == caller.Terminal)
+                .Select(x => x).FirstOrDefault();
+            if (connection != null)
             {
-                if (connection.Answer == this && connection.Caller == caller.Terminal)
-                {
-                    Console.WriteLine($"Terminal {this.Number} drop calling with {caller.CallerNumber}");
-                    caller.Terminal.Port.ChangeCondition(PortCondition.Free);
-                    DropCall?.Invoke(this, connection);
-                    _ats.CallService.InWaitingConnectionCollection.Remove(connection);
-                    break;
-                }
+                Console.WriteLine($"Terminal {this.Number} drop calling with {caller.CallerNumber}");
+                caller.Terminal.Port.ChangeCondition(PortCondition.Free);
+                DropCall?.Invoke(this, connection);
+            }
+            else
+            {
+                Console.WriteLine($"Terminal {this.Number} can not drop calling {caller.CallerNumber} cause caller dont call");
             }
         }
     }
