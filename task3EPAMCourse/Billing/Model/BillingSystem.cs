@@ -1,33 +1,77 @@
-﻿using System.Timers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
 using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.Billing.Contracts;
 
 namespace task3EPAMCourse.Billing.Model
 {
     public class BillingSystem : IBilling
     {
-        public static double time { get; private set; } = 0.0;
-        public Timer Timer { get; } = new Timer(10);
-        public BillingSystem()
+        private IATS _ats;
+        private IList<CallInfo> CallsInfo = new List<CallInfo>();
+
+        private CallInfo _callInfo;
+        public BillingSystem(IATS ATS)
         {
-           
+            _ats = ATS;
+            RegistrEvents();
         }
 
-        public void StartConnecting(ICaller caller1, ICaller caller2)
+        private void RegistrEvents()
         {
-            Timer.Elapsed += OnCall;
-            Timer.AutoReset = true;
-            Timer.Enabled = true;
+            foreach (var terminal in _ats.TerminalService.Terminals.ToList())
+            {
+                terminal.Call += (sender, connection) =>
+                {
+                    StartConnecting(connection);
+                };
+                terminal.StopCall += (sender, connection) =>
+                {
+                    StopConnecting(connection);
+                };
+                terminal.DropCall += (sender, connection) =>
+                {
+                    DropConnection(connection);
+                };
+            }
         }
 
-        public void StopConnecting(ICaller caller1, ICaller caller2)
+        private void StartConnecting(TerminalConnectionsEventArgs connection)
         {
-            Timer.Stop();
+            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+                .Select(x => x).FirstOrDefault();
+            if (callInfo == null)
+            {
+                _callInfo = new CallInfo();
+                _callInfo.From = connection.Caller;
+                _callInfo.To = connection.Answer;
+                _callInfo.DateTimeStart = DateTime.Now;
+                CallsInfo.Add(_callInfo);
+            }
         }
 
-        public static void OnCall(object sender, ElapsedEventArgs e)
+        private void DropConnection(TerminalConnectionsEventArgs connection)
         {
-            time += 0.01;
+            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+                .Select(x => x).FirstOrDefault();
+            callInfo.Duration = TimeSpan.Zero;
+            callInfo.Cost = 0.0;
+        }
+
+        private void StopConnecting(TerminalConnectionsEventArgs connection)
+        {
+            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+                .Select(x => x).FirstOrDefault();
+            callInfo.Duration = DateTime.Now - _callInfo.DateTimeStart;
+            callInfo.Cost = _callInfo.Duration.TotalSeconds * 0.2;
+        }
+
+        public IList<CallInfo> GetCalls()
+        {
+            return CallsInfo;
         }
     }
 }

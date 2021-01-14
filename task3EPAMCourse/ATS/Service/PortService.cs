@@ -13,7 +13,8 @@ namespace task3EPAMCourse.ATS.Service
             {
                  new Port(3301, PortCondition.Off),
                  new Port(3302, PortCondition.Off),
-                 new Port(3303, PortCondition.Off)
+                 new Port(3303, PortCondition.Off),
+                 new Port(3304, PortCondition.Off)
             };
 
         public PortService(IEnumerable<IPort> ports)

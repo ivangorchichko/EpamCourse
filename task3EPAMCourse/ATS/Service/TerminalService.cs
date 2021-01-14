@@ -17,7 +17,8 @@ namespace task3EPAMCourse.ATS.Service
             {
                  new Terminal("001", TerminalCondition.Avaible, autoTelephoneStation),
                  new Terminal("002", TerminalCondition.Avaible, autoTelephoneStation),
-                 new Terminal("003", TerminalCondition.Avaible, autoTelephoneStation)
+                 new Terminal("003", TerminalCondition.Avaible, autoTelephoneStation),
+                 new Terminal("004", TerminalCondition.Avaible, autoTelephoneStation)
             };
         }
 
@@ -37,6 +38,11 @@ namespace task3EPAMCourse.ATS.Service
                 Console.WriteLine("All terminals are in used");
                 return null;
             }
+        }
+
+        public ICaller GetTerminalCaller(ITerminal terminal, IList<ICaller> callers)
+        {
+            return callers.Where(x => x.Terminal == terminal).FirstOrDefault();
         }
     }
 }

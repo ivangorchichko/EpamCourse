@@ -15,6 +15,7 @@ namespace task3EPAMCourse.ATS.Contracts
 
         void ChangePort(IPort port);
 
+        string Number { get; }
         IPort Port { get; }
 
         TerminalCondition TerminalCondition { get; }
