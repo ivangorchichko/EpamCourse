@@ -7,11 +7,11 @@ namespace task3EPAMCourse.ATS.Contracts
 {
     public interface ICallService
     {
-        IList<Connections> InWaitingConnectionCollection { get; }
-        IList<Connections> InJoinedConnectionCollection { get; }
-        void AddInWaitingCollection(Connections connection);
-        void AddInJoinedCollection(Connections connection);
-        void RemoveFromWaitingCollection(Connections connection);
-        void RemoveFromJoinedCollection(Connections connection);
+        IList<TerminalConnectionsEventArgs> InWaitingConnectionCollection { get; }
+        IList<TerminalConnectionsEventArgs> InJoinedConnectionCollection { get; }
+        void AddInWaitingCollection(TerminalConnectionsEventArgs connection);
+        void AddInJoinedCollection(TerminalConnectionsEventArgs connection);
+        void RemoveFromWaitingCollection(TerminalConnectionsEventArgs connection);
+        void RemoveFromJoinedCollection(TerminalConnectionsEventArgs connection);
     }
 }

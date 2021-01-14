@@ -6,22 +6,22 @@ namespace task3EPAMCourse.ATS.Service
 {
     public class CallService : ICallService
     {
-        public IList<Connections> InWaitingConnectionCollection { get; } = new List<Connections>();
-        public IList<Connections> InJoinedConnectionCollection { get; } = new List<Connections>();
+        public IList<TerminalConnectionsEventArgs> InWaitingConnectionCollection { get; } = new List<TerminalConnectionsEventArgs>();
+        public IList<TerminalConnectionsEventArgs> InJoinedConnectionCollection { get; } = new List<TerminalConnectionsEventArgs>();
 
-        public void AddInWaitingCollection(Connections connection)
+        public void AddInWaitingCollection(TerminalConnectionsEventArgs connection)
         {
             InWaitingConnectionCollection.Add(connection);
         }
-        public void AddInJoinedCollection(Connections connection)
+        public void AddInJoinedCollection(TerminalConnectionsEventArgs connection)
         {
             InJoinedConnectionCollection.Add(connection);
         }
-        public void RemoveFromWaitingCollection(Connections connection)
+        public void RemoveFromWaitingCollection(TerminalConnectionsEventArgs connection)
         {
             InWaitingConnectionCollection.Remove(connection);
         }
-        public void RemoveFromJoinedCollection(Connections connection)
+        public void RemoveFromJoinedCollection(TerminalConnectionsEventArgs connection)
         {
             InJoinedConnectionCollection.Remove(connection);
         }
