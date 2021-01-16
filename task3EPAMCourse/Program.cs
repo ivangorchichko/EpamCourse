@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
@@ -17,36 +18,110 @@ namespace task3EPAMCourse
         private static readonly BillingSystem _billingSystem = new BillingSystem(_aTS);
         static void Main(string[] args)
         {
+            CreateContracts();
+            CreateConnections();
+            ShowCallerInfoCollection();
+        }
+        private static void CreateContracts()
+        {
             _callers.Add(_aTS.CreateContract(1));
             _callers.Add(_aTS.CreateContract(2));
             _callers.Add(_aTS.CreateContract(3));
             _callers.Add(_aTS.CreateContract(4));
+            Console.WriteLine();
+        }
 
+        private static void CreateConnections()
+        {
+            //good conect
             _callers[0].Terminal.Calling(_callers[1]);
             _callers[1].Terminal.AceptCalling(_callers[0]);
             Thread.Sleep(5000);
             _callers[1].Terminal.StopCalling(_callers[0]);
-            
+            Console.WriteLine();
 
+            //good conect
             _callers[3].Terminal.Calling(_callers[2]);
             Thread.Sleep(6000);
             _callers[2].Terminal.DropCalling(_callers[3]);
+            Console.WriteLine();
 
-            
-            _callers[2].Terminal.Calling(_callers[0]);
-            Thread.Sleep(5000);
+            //bad conect
+            _callers[2].Terminal.StopCalling(_callers[0]);
             _callers[1].Terminal.DropCalling(_callers[0]);
-            _callers[2].Terminal.Calling(_callers[1]);
-            Thread.Sleep(5000);
             _callers[1].Terminal.AceptCalling(_callers[2]);
-            _callers[0].Terminal.DropCalling(_callers[1]);
+            Console.WriteLine();
 
+            //good conect
+            _callers[1].Terminal.Calling(_callers[3]);
+            _callers[3].Terminal.AceptCalling(_callers[1]);
+            Thread.Sleep(4000);
+            _callers[1].Terminal.StopCalling(_callers[3]);
+            Console.WriteLine();
+
+            //good conect
+            _callers[0].Terminal.Calling(_callers[1]);
             _callers[1].Terminal.AceptCalling(_callers[0]);
-            _callers[0].Terminal.StopCalling(_callers[1]);
+            Thread.Sleep(8000);
+            _callers[1].Terminal.StopCalling(_callers[0]);
+            Console.WriteLine();
 
-            foreach (var call in _billingSystem.GetCalls())
+            //good conect
+            _callers[2].Terminal.Calling(_callers[3]);
+            _callers[2].Terminal.AceptCalling(_callers[3]);
+            _callers[3].Terminal.AceptCalling(_callers[2]);
+            _callers[0].Terminal.Calling(_callers[2]);
+            Thread.Sleep(6000);
+            _callers[3].Terminal.StopCalling(_callers[2]);
+            Console.WriteLine();
+
+            //good conect
+            _callers[0].Terminal.Calling(_callers[1]);
+            _callers[1].Terminal.AceptCalling(_callers[0]);
+            Thread.Sleep(7000);
+            _callers[1].Terminal.StopCalling(_callers[0]);
+            Console.WriteLine();
+        }
+
+        private static void ShowCallerInfoCollection()
+        {
+            Console.WriteLine("All CallsInfo with old\n");
+            foreach (var callInfo in _billingSystem.GetCalls())
             {
-                System.Console.WriteLine(call.ToString());
+                Console.WriteLine(callInfo.ToString());
+                Console.WriteLine();
+            }
+
+            var firstUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByCost(_callers[0]);
+            Console.WriteLine("User " + _callers[0].CallerNumber + "  Calls ordered by cost\n");
+            foreach (var callinfo in firstUserCallInfoCollection)
+            {
+                Console.WriteLine(callinfo.ToString());
+                Console.WriteLine();
+            }
+
+            var secondUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByDuration(_callers[1]);
+            Console.WriteLine("User " + _callers[1].CallerNumber + "  Calls ordered by duration\n");
+            foreach (var callinfo in secondUserCallInfoCollection)
+            {
+                Console.WriteLine(callinfo.ToString());
+                Console.WriteLine();
+            }
+
+            var thirdUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByCallers(_callers[2]);
+            Console.WriteLine("User " + _callers[2].CallerNumber + "  Calls ordered by callers\n");
+            foreach (var callinfo in thirdUserCallInfoCollection)
+            {
+                Console.WriteLine(callinfo.ToString());
+                Console.WriteLine();
+            }
+
+            var fourthUserCallInfoCollection = _billingSystem.GetUserCalls(_callers[3]);
+            Console.WriteLine("User " + _callers[3].CallerNumber + "  Calls\n");
+            foreach (var callinfo in fourthUserCallInfoCollection)
+            {
+                Console.WriteLine(callinfo.ToString());
+                Console.WriteLine();
             }
         }
     }

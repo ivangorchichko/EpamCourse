@@ -5,15 +5,19 @@ using System.Timers;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.Billing.Contracts;
+using task3EPAMCourse.Billing.Enums;
+using task3EPAMCourse.Billing.JsonService;
 
 namespace task3EPAMCourse.Billing.Model
 {
     public class BillingSystem : IBilling
     {
         private IATS _ats;
-        private IList<CallInfo> CallsInfo = new List<CallInfo>();
-
+        private static JsonFileService _json = new JsonFileService();
+        private IList<CallInfo> _callsInfoCollection = new List<CallInfo>();
+        private Contract _contract = new Contract();
         private CallInfo _callInfo;
+        
         public BillingSystem(IATS ATS)
         {
             _ats = ATS;
@@ -41,37 +45,108 @@ namespace task3EPAMCourse.Billing.Model
 
         private void StartConnecting(TerminalConnectionsEventArgs connection)
         {
-            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+            var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
                 .Select(x => x).FirstOrDefault();
-            if (callInfo == null)
+            if (callInfo == null || callInfo.Cost != 0.0)
             {
                 _callInfo = new CallInfo();
+                _callInfo.User = connection.Caller;
                 _callInfo.From = connection.Caller;
                 _callInfo.To = connection.Answer;
                 _callInfo.DateTimeStart = DateTime.Now;
-                CallsInfo.Add(_callInfo);
+                _callInfo.CallType = CallType.Incoming; 
+                _callsInfoCollection.Add(_callInfo);
             }
         }
 
         private void DropConnection(TerminalConnectionsEventArgs connection)
         {
-            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
-                .Select(x => x).FirstOrDefault();
+            var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+                .Select(x => x).Last();
             callInfo.Duration = TimeSpan.Zero;
             callInfo.Cost = 0.0;
+            var secondSideCallInfo = new CallInfo(callInfo);
+            secondSideCallInfo.User = callInfo.To;
+            secondSideCallInfo.CallType = CallType.Skipped;
+            _callsInfoCollection.Add(secondSideCallInfo);
         }
 
         private void StopConnecting(TerminalConnectionsEventArgs connection)
         {
-            var callInfo = CallsInfo.Where(x => x.From == connection.Caller && x.To == connection.Answer)
-                .Select(x => x).FirstOrDefault();
+            var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
+                .Select(x => x).Last();
             callInfo.Duration = DateTime.Now - _callInfo.DateTimeStart;
-            callInfo.Cost = _callInfo.Duration.TotalSeconds * 0.2;
+            callInfo.Cost = _callInfo.Duration.TotalSeconds * _contract.Rate;
+            var secondSideCallInfo = new CallInfo(callInfo);
+            secondSideCallInfo.User = callInfo.To;
+            secondSideCallInfo.CallType = CallType.Outgoing;
+            _callsInfoCollection.Add(secondSideCallInfo);
         }
 
-        public IList<CallInfo> GetCalls()
+        private IEnumerable<CallInfo> SaveCallInfoCallection()
         {
-            return CallsInfo;
+            if (_json.GetCurrentCallInfo() == null)
+            {
+                _json.SaveFile(_callsInfoCollection);
+                _json.IsSaved = true;
+                return _callsInfoCollection;
+            }
+            else
+            if (_json.IsSaved != true)
+            {
+                var callsInfoCollection = _callsInfoCollection.Union(_json.GetCurrentCallInfo()).ToList();
+                _json.SaveFile(callsInfoCollection);
+                _json.IsSaved = true;
+                return callsInfoCollection;
+            }
+            else return _json.GetCurrentCallInfo();
+            
+        }
+
+        public IEnumerable<CallInfo> GetCalls()
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            return callsInfoCollection;
+        }
+
+        public IEnumerable<CallInfo> GetUserCalls(ICaller caller)
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            return callsInfoCollection
+                .Where(x => x.User.Number == caller.Terminal.Number)
+                .Select(x => x);
+        }
+
+        public IEnumerable<CallInfo> GetUserCallsOrderedByDuration(ICaller caller)
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            return callsInfoCollection
+                .Where(x => x.User.Number == caller.Terminal.Number)
+                .Select(x => x)
+                .OrderBy(x => x.Duration);
+        }
+
+        public IEnumerable<CallInfo> GetUserCallsOrderedByCost(ICaller caller)
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            return callsInfoCollection
+                .Where(x => x.User.Number == caller.Terminal.Number)
+                .Select(x => x)
+                .OrderBy(x => x.Cost);
+        }
+
+        public IEnumerable<CallInfo> GetUserCallsOrderedByCallers(ICaller caller)
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            return callsInfoCollection
+                .Where(x => x.User.Number == caller.Terminal.Number)
+                .Select(x => x)
+                .OrderBy(x => x.To.Number);
         }
     }
 }

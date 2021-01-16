@@ -42,7 +42,7 @@ namespace task3EPAMCourse.ATS.Model
             CallService.AddInJoinedCollection(connection);
         }
 
-        public void RegistrATSEvents()
+        private void RegistrATSEvents()
         {
             foreach (var terminal in TerminalService.Terminals.ToList())
             {
@@ -80,6 +80,7 @@ namespace task3EPAMCourse.ATS.Model
                 ICaller caller = new Caller(callerNumber, terminal, port);
                 terminal.ChangeTerminalCondition(TerminalCondition.IsUsed);
                 port.ChangeCondition(PortCondition.Free);
+                Console.WriteLine($"New contract is created! User {caller.CallerNumber}");
                 return caller;
             }
             else

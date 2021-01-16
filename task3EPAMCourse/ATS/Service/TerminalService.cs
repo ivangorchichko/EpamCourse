@@ -22,10 +22,6 @@ namespace task3EPAMCourse.ATS.Service
             };
         }
 
-        public TerminalService()
-        {
-        }
-
         public ITerminal GetAvaibleTerminal()
         {
             var terminal = Terminals.Where(terminal => terminal.TerminalCondition == TerminalCondition.Avaible).FirstOrDefault();

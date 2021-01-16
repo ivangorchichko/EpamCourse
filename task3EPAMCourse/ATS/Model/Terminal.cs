@@ -76,7 +76,7 @@ namespace task3EPAMCourse.ATS.Model
                 Console.WriteLine($"Terminal {this.Number} calls to {answerer.CallerNumber}");
                 this.ChangingPortCondition(PortCondition.InCalling);
             }
-            else Console.WriteLine($"Caller {this.Number} can not call to {answerer.CallerNumber} cause them in call orr port is off");
+            else Console.WriteLine($"Terminal {this.Number} can not call to {answerer.Terminal.Number} cause them in call orr port is off");
         }
 
         public void AceptCalling(ICaller caller)
@@ -86,14 +86,14 @@ namespace task3EPAMCourse.ATS.Model
                 .Select(x => x).FirstOrDefault();
             if (connection != null)
             {
-                Console.WriteLine($"Terminal {this.Number} acept call with {caller.CallerNumber}");
+                Console.WriteLine($"Terminal {this.Number} acept call with {caller.Terminal.Number}");
                 OnAceptCall(connection);
                 this.ChangingPortCondition(PortCondition.Calling);
                 caller.Terminal.ChangingPortCondition(PortCondition.Calling);
             }
             else
             {
-                Console.WriteLine($"Terminal {this.Number} can not acept calling {caller.CallerNumber} cause them dont call");
+                Console.WriteLine($"Terminal {this.Number} can not acept calling {caller.Terminal.Number} cause them dont call");
             }
         }
 
@@ -107,7 +107,7 @@ namespace task3EPAMCourse.ATS.Model
                 .Select(x => x).FirstOrDefault();
             if (connectionWhereStopFirstCaller != null)
             {
-                Console.WriteLine($"Terminal {this.Number} stop calling with {secondCaller.CallerNumber}");
+                Console.WriteLine($"Terminal {this.Number} stop calling with {secondCaller.Terminal.Number}");
                 this.ChangingPortCondition(PortCondition.Free);
                 secondCaller.Terminal.ChangingPortCondition(PortCondition.Free);
                 OnStopCall(connectionWhereStopFirstCaller);
@@ -116,14 +116,14 @@ namespace task3EPAMCourse.ATS.Model
             {
                 if (connectionWhereStopSecondCaller != null)
                 {
-                    Console.WriteLine($"Caller {secondCaller.CallerNumber} stop calling with {this.Number}");
+                    Console.WriteLine($"Terminal {secondCaller.Terminal.Number} stop calling with {this.Number}");
                     this.ChangingPortCondition(PortCondition.Free);
                     secondCaller.Terminal.ChangingPortCondition(PortCondition.Free);
                     OnStopCall(connectionWhereStopSecondCaller);
                 } 
                 else
                 {
-                    Console.WriteLine($"Terminal {this.Number} not in calling with {secondCaller.CallerNumber}");
+                    Console.WriteLine($"Terminal {this.Number} not in calling with {secondCaller.Terminal.Number}");
                 }
 
             }
@@ -136,13 +136,13 @@ namespace task3EPAMCourse.ATS.Model
                 .Select(x => x).FirstOrDefault();
             if (connection != null)
             {
-                Console.WriteLine($"Terminal {this.Number} drop calling with {caller.CallerNumber}");
+                Console.WriteLine($"Terminal {this.Number} drop calling with {caller.Terminal.Number}");
                 caller.Terminal.ChangingPortCondition(PortCondition.Free);
                 OnDropCall(connection);
             }
             else
             {
-                Console.WriteLine($"Terminal {this.Number} can not drop calling {caller.CallerNumber} cause caller dont call");
+                Console.WriteLine($"Terminal {this.Number} can not drop calling {caller.Terminal.Number} cause caller dont call");
             }
         }
     }

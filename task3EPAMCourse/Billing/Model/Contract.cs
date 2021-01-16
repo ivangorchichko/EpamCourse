@@ -2,6 +2,6 @@
 {
     public class Contract
     {
-        public const double Rate = 0.1;
+        public readonly double Rate = 0.1;
     }
 }
