@@ -1,10 +1,10 @@
-﻿namespace task3EPAMCourse.ATS.Enums
+﻿namespace Task3EPAMCourse.ATS.Enums
 {
     public enum TerminalOperations
     {
         Calling,
         Accepting,
         Dropping,
-        Stopping
+        Stopping,
     }
 }

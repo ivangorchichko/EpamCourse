@@ -1,17 +1,18 @@
-﻿using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
-using task3EPAMCourse.Billing.Contracts;
+﻿using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.ATS.Contracts
+namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface IUiManager
     {
         void GetInfoOnCreateContract(ICaller caller = null);
 
-        void GetInfoTerminalOperation(ITerminal firstCaller,
-            ITerminal secondCaller,
-            TerminalOperations terminalOperations, 
-            TerminalConnectionsEventArgs connection = null, 
+        void GetInfoTerminalOperation(
+            TerminalConnections callersConnection,
+            TerminalOperations terminalOperations,
             PortCondition portCondition = PortCondition.Free);
+
+        void GetInfoIfPortConditionChanged(PortCondition condition);
     }
 }

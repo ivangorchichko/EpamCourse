@@ -1,19 +1,19 @@
-﻿using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
+﻿using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.ATS.Model
+namespace Task3EPAMCourse.ATS.Model
 {
     public class Port : IPort
     {
-        private int PortNumber { get; }
-
-        public PortCondition Condition { get; private set; }
-
-        public Port(int portNumber, PortCondition portCondition) 
+        public Port(int portNumber, PortCondition portCondition)
         {
             PortNumber = portNumber;
             Condition = portCondition;
         }
+
+        public PortCondition Condition { get; private set; }
+
+        private int PortNumber { get; }
 
         public void ChangeCondition(PortCondition condition)
         {

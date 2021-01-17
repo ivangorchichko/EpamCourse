@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Model;
-using task3EPAMCourse.Billing.Contracts;
-using task3EPAMCourse.Billing.Enums;
-using task3EPAMCourse.Billing.FileService;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.Billing.Enums;
+using Task3EPAMCourse.Billing.FileService;
 
-namespace task3EPAMCourse.Billing.Model
+namespace Task3EPAMCourse.Billing.Model
 {
     public class BillingSystem : IBilling
     {
         private readonly IAts _ats;
         private readonly JsonRepository _jsonRepository = new JsonRepository();
         private readonly IList<CallInfo> _callsInfoCollection = new List<CallInfo>();
-        private readonly Contract _contract = new Contract();
         private CallInfo _callInfo;
 
         public BillingSystem(IAts ats)
@@ -23,26 +22,62 @@ namespace task3EPAMCourse.Billing.Model
             RegistrationEvents();
         }
 
+        public IEnumerable<CallInfo> GetCalls()
+        {
+            return SaveCallInfoCollection()
+                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+        }
+
+        public IEnumerable<CallInfo> GetUserCallsOrderedBy(ICaller caller, OrderSequenceType orderType)
+        {
+            var callsInfoCollection = GetCalls();
+            switch (orderType)
+            {
+                case OrderSequenceType.None:
+                {
+                    return callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number);
+                }
+
+                case OrderSequenceType.Duration:
+                {
+                    return callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .OrderBy(x => x.Duration);
+                }
+
+                case OrderSequenceType.Cost:
+                {
+                    return callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .OrderBy(x => x.Cost);
+                }
+
+                case OrderSequenceType.Callers:
+                {
+                    return callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .OrderBy(x => x.To.Number);
+                }
+
+                default:
+                {
+                    return callsInfoCollection;
+                }
+            }
+        }
+
         private void RegistrationEvents()
         {
             foreach (var terminal in _ats.TerminalService.Terminals.ToList())
             {
-                terminal.Call += (sender, connection) =>
-                {
-                    StartConnecting(connection);
-                };
-                terminal.StopCall += (sender, connection) =>
-                {
-                    StopConnecting(connection);
-                };
-                terminal.DropCall += (sender, connection) =>
-                {
-                    DropConnection(connection);
-                };
+                terminal.Call += (sender, connection) => { StartConnecting(connection); };
+                terminal.StopCall += (sender, connection) => { StopConnecting(connection); };
+                terminal.DropCall += (sender, connection) => { DropConnection(connection); };
             }
         }
 
-        private void StartConnecting(TerminalConnectionsEventArgs connection)
+        private void StartConnecting(TerminalConnections connection)
         {
             var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
                 .Select(x => x).FirstOrDefault();
@@ -54,13 +89,13 @@ namespace task3EPAMCourse.Billing.Model
                     From = connection.Caller,
                     To = connection.Answer,
                     DateTimeStart = DateTime.Now,
-                    CallType = CallType.Incoming
+                    CallType = CallType.Incoming,
                 };
                 _callsInfoCollection.Add(_callInfo);
             }
         }
 
-        private void DropConnection(TerminalConnectionsEventArgs connection)
+        private void DropConnection(TerminalConnections connection)
         {
             var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
                 .Select(x => x).Last();
@@ -69,90 +104,45 @@ namespace task3EPAMCourse.Billing.Model
             var secondSideCallInfo = new CallInfo(callInfo)
             {
                 User = callInfo.To,
-                CallType = CallType.Skipped
+                CallType = CallType.Skipped,
             };
             _callsInfoCollection.Add(secondSideCallInfo);
         }
 
-        private void StopConnecting(TerminalConnectionsEventArgs connection)
+        private void StopConnecting(TerminalConnections connection)
         {
             var callInfo = _callsInfoCollection.Where(x => x.From == connection.Caller && x.To == connection.Answer)
                 .Select(x => x).Last();
             callInfo.Duration = DateTime.Now - _callInfo.DateTimeStart;
-            callInfo.Cost = _callInfo.Duration.TotalSeconds * _contract.Rate;
+            callInfo.Cost = _callInfo.Duration.TotalSeconds * Contract.Rate;
             var secondSideCallInfo = new CallInfo(callInfo)
             {
                 User = callInfo.To,
-                CallType = CallType.Outgoing
+                CallType = CallType.Outgoing,
             };
             _callsInfoCollection.Add(secondSideCallInfo);
         }
 
         private IEnumerable<CallInfo> SaveCallInfoCollection()
         {
-            if (_jsonRepository.GetCurrentCallInfo() == null)
+            var currentCallInfo = _jsonRepository.GetCurrentCallInfo();
+            if (currentCallInfo == null)
             {
                 _jsonRepository.SaveFile(_callsInfoCollection);
                 _jsonRepository.IsSequenceSavedOnce = true;
                 return _callsInfoCollection;
             }
-            else
-            if (_jsonRepository.IsSequenceSavedOnce != true)
+            else if (!_jsonRepository.IsSequenceSavedOnce)
             {
-                var callsInfoCollection = _callsInfoCollection.Union(_jsonRepository.GetCurrentCallInfo()).ToList();
+                var callsInfoCollection = _callsInfoCollection.Union(currentCallInfo).ToList();
                 _jsonRepository.SaveFile(callsInfoCollection);
                 _jsonRepository.IsSequenceSavedOnce = true;
                 return callsInfoCollection;
             }
-            else return _jsonRepository.GetCurrentCallInfo();
-
-        }
-
-        public IEnumerable<CallInfo> GetCalls()
-        {
-            return SaveCallInfoCollection()
-                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-        }
-
-        public IEnumerable<CallInfo> GetUserCallsOrderedBy(ICaller caller, OrderSequenceType orderType)
-        {
-            var callsInfoCollection = SaveCallInfoCollection()
-               .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-            switch (orderType)
+            else
             {
-                case OrderSequenceType.None:
-                    {
-                        callsInfoCollection = callsInfoCollection
-                        .Where(x => x.User.Number == caller.Terminal.Number)
-                        .Select(x => x);
-                        break;
-                    }
-                case OrderSequenceType.Duration:
-                    {
-                        callsInfoCollection = callsInfoCollection
-                        .Where(x => x.User.Number == caller.Terminal.Number)
-                        .Select(x => x)
-                        .OrderBy(x => x.Duration);
-                        break;
-                    }
-                case OrderSequenceType.Cost:
-                    {
-                        callsInfoCollection = callsInfoCollection
-                        .Where(x => x.User.Number == caller.Terminal.Number)
-                        .Select(x => x)
-                        .OrderBy(x => x.Cost);
-                        break;
-                    }
-                case OrderSequenceType.Callers:
-                    {
-                        callsInfoCollection = callsInfoCollection
-                        .Where(x => x.User.Number == caller.Terminal.Number)
-                        .Select(x => x)
-                        .OrderBy(x => x.To.Number);
-                        break;
-                    }
+                return currentCallInfo;
             }
-            return callsInfoCollection;
         }
     }
 }

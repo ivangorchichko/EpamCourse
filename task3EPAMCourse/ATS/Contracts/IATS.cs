@@ -1,12 +1,10 @@
-﻿using task3EPAMCourse.Billing.Contracts;
+﻿using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.ATS.Contracts
+namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface IAts
     {
-        ICallService CallService { get; }
-
-        IPortService PortService { get; }
+        ICallConnections CallConnections { get; }
 
         ITerminalService TerminalService { get; }
 

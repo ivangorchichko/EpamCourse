@@ -1,10 +1,10 @@
 ﻿using System;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
-using task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.ATS.Service
+namespace Task3EPAMCourse.ATS.Service
 {
     public class UiManager : IUiManager
     {
@@ -15,39 +15,47 @@ namespace task3EPAMCourse.ATS.Service
                 : "No more terminals or ports, caller set as null");
         }
 
-        public void GetInfoTerminalOperation(ITerminal firstCaller, ITerminal secondCaller, TerminalOperations terminalOperations, TerminalConnectionsEventArgs connection = null, PortCondition portCondition = PortCondition.Free)
+        public void GetInfoTerminalOperation(TerminalConnections callersConnection, TerminalOperations terminalOperations, PortCondition portCondition = PortCondition.Free)
         {
             switch (terminalOperations)
             {
                 case TerminalOperations.Calling:
                 {
                     Console.WriteLine(portCondition == PortCondition.Free
-                        ? $"Terminal {firstCaller.Number} calls to {secondCaller.Number}"
-                        : $"Terminal {firstCaller.Number} can not call to {secondCaller.Number} cause them in call orr port is off");
+                        ? $"Terminal {callersConnection.Caller.Number} calls to {callersConnection.Answer.Number}"
+                        : $"Terminal {callersConnection.Caller.Number} can not call to {callersConnection.Answer.Number} cause them in call orr port is off");
                     break;
                 }
+
                 case TerminalOperations.Accepting:
                 {
-                    Console.WriteLine(connection != null
-                        ? $"Terminal {firstCaller.Number} accept call with {secondCaller.Number}"
-                        : $"Terminal {firstCaller.Number} can not accept calling {secondCaller.Number} cause them do not call");
+                    Console.WriteLine(callersConnection != null
+                        ? $"Terminal {callersConnection.Answer.Number} accept call with {callersConnection.Caller.Number}"
+                        : $"Accepting can't happen cause terminal don't call");
                     break;
                 }
+
                 case TerminalOperations.Dropping:
                 {
-                    Console.WriteLine(connection != null
-                        ? $"Terminal {firstCaller.Number} drop calling with {secondCaller.Number}"
-                        : $"Terminal {firstCaller.Number} can not drop calling {secondCaller.Number} cause caller do not call");
+                    Console.WriteLine(callersConnection != null
+                        ? $"Terminal {callersConnection.Answer.Number} drop calling with {callersConnection.Caller.Number}"
+                        : $"Terminal can't drop calling with caller cause caller do not calling");
                     break;
                 }
+
                 case TerminalOperations.Stopping:
                 {
-                    Console.WriteLine(connection != null
-                        ? $"Terminal {firstCaller.Number} stop calling with {secondCaller.Number}"
-                        : $"Terminal {firstCaller.Number} not in calling with {secondCaller.Number}");
+                    Console.WriteLine(callersConnection != null
+                        ? $"Terminal {callersConnection.Caller.Number} stop calling with {callersConnection.Answer.Number}"
+                        : $"Terminal can't stop calling with caller cause them not in calling");
                     break;
                 }
             }
+        }
+
+        public void GetInfoIfPortConditionChanged(PortCondition condition)
+        {
+            Console.WriteLine($"Port condition changed on {condition}");
         }
     }
 }

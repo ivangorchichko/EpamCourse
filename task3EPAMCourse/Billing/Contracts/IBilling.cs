@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using task3EPAMCourse.Billing.Enums;
-using task3EPAMCourse.Billing.Model;
+using Task3EPAMCourse.Billing.Enums;
+using Task3EPAMCourse.Billing.Model;
 
-namespace task3EPAMCourse.Billing.Contracts
+namespace Task3EPAMCourse.Billing.Contracts
 {
     public interface IBilling
     {

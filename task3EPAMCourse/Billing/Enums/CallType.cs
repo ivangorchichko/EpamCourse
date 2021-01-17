@@ -1,4 +1,4 @@
-﻿namespace task3EPAMCourse.Billing.Enums
+﻿namespace Task3EPAMCourse.Billing.Enums
 {
     public enum CallType
     {

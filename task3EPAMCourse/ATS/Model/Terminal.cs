@@ -1,28 +1,15 @@
 ﻿using System;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
 using System.Linq;
-using task3EPAMCourse.ATS.Service;
-using task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Service;
+using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.ATS.Model
+namespace Task3EPAMCourse.ATS.Model
 {
     public class Terminal : ITerminal
     {
         private readonly IAts _ats;
-        private readonly IUiManager _uIManager = new UiManager();
-
-        public string Number { get; }
-
-        public IPort Port { get; private set; }
-
-        public TerminalCondition TerminalCondition { get; private set; }
-
-        public event EventHandler<TerminalConnectionsEventArgs> Call;
-        public event EventHandler<TerminalConnectionsEventArgs> AcceptCall;
-        public event EventHandler<TerminalConnectionsEventArgs> StopCall;
-        public event EventHandler<TerminalConnectionsEventArgs> DropCall;
-        public event EventHandler<PortCondition> ChangePortCondition;
 
         public Terminal(string number, TerminalCondition condition, IAts autoTelephoneStation)
         {
@@ -31,30 +18,21 @@ namespace task3EPAMCourse.ATS.Model
             _ats = autoTelephoneStation;
         }
 
-        private void OnCalling(TerminalConnectionsEventArgs connection)
-        {
-            Call?.Invoke(this, connection);
-        }
+        public event EventHandler<TerminalConnections> Call;
 
-        private void OnAcceptCalling(TerminalConnectionsEventArgs connection)
-        {
-            AcceptCall?.Invoke(this, connection);
-        }
+        public event EventHandler<TerminalConnections> AcceptCall;
 
-        private void OnCallStopped(TerminalConnectionsEventArgs connection)
-        {
-            StopCall?.Invoke(this, connection);
-        }
+        public event EventHandler<TerminalConnections> StopCall;
 
-        private void OnCallDropped(TerminalConnectionsEventArgs connection)
-        {
-            DropCall?.Invoke(this, connection);
-        }
+        public event EventHandler<TerminalConnections> DropCall;
 
-        private void OnChangingPortCondition(PortCondition condition)
-        {
-            ChangePortCondition?.Invoke(this, condition);
-        }
+        public event EventHandler<PortCondition> ChangePortCondition;
+
+        public string Number { get; }
+
+        public IPort Port { get; private set; }
+
+        public TerminalCondition TerminalCondition { get; private set; }
 
         public void ChangeTerminalCondition(TerminalCondition condition)
         {
@@ -71,95 +49,121 @@ namespace task3EPAMCourse.ATS.Model
             OnChangingPortCondition(condition);
         }
 
-        public void Calling(ICaller answerer)
+        public TerminalConnections Calling(ICaller answerer)
         {
             if (answerer.Terminal.Port.Condition == PortCondition.Free)
             {
-                var args = new TerminalConnectionsEventArgs
+                var connection = new TerminalConnections
                 {
                     Answer = answerer.Terminal,
-                    Caller = this
+                    Caller = this,
                 };
-                OnCalling(args);
-                _uIManager.GetInfoTerminalOperation(this, answerer.Terminal, TerminalOperations.Calling);
-                this.ChangingPortCondition(PortCondition.InCalling);
+                OnCalling(connection);
+                ChangingPortCondition(PortCondition.InCalling);
+                return connection;
             }
-            else _uIManager.GetInfoTerminalOperation(this, answerer.Terminal, TerminalOperations.Calling, null, PortCondition.Calling);
+
+            return new TerminalConnections() { Caller = this, Answer = answerer.Terminal };
         }
 
-        public void AcceptCalling(ICaller caller)
+        public TerminalConnections AcceptCalling(ICaller caller)
         {
-            var connection = _ats.CallService.InWaitingConnectionCollection
+            var connection = _ats.CallConnections.InWaitingConnectionCollection
                 .Where(x => x.Answer == this && x.Caller == caller.Terminal)
                 .Select(x => x).FirstOrDefault();
             if (connection != null)
             {
-                _uIManager.GetInfoTerminalOperation(this, caller.Terminal, TerminalOperations.Accepting, connection);
                 OnAcceptCalling(connection);
-                this.ChangingPortCondition(PortCondition.Calling);
+                ChangingPortCondition(PortCondition.Calling);
                 caller.Terminal.ChangingPortCondition(PortCondition.Calling);
+                return connection;
             }
             else
             {
-                _uIManager.GetInfoTerminalOperation(this, caller.Terminal, TerminalOperations.Accepting);
+                return null;
             }
         }
 
-        public void StopCalling(ICaller secondCaller)
+        public TerminalConnections StopCalling(ICaller secondCaller)
         {
-            var connectionWhereStopFirstCaller = _ats.CallService.InJoinedConnectionCollection
-                .Where(x => x.Answer == this && x.Caller == secondCaller.Terminal)
-                .Select(x => x).FirstOrDefault();
-            var connectionWhereStopSecondCaller = _ats.CallService.InJoinedConnectionCollection
+            var connectionWhereStopFirstCaller = _ats.CallConnections.InJoinedConnectionCollection
                 .Where(x => x.Answer == secondCaller.Terminal && x.Caller == this)
                 .Select(x => x).FirstOrDefault();
             if (connectionWhereStopFirstCaller != null)
             {
-                _uIManager.GetInfoTerminalOperation(this, secondCaller.Terminal, TerminalOperations.Stopping, connectionWhereStopFirstCaller);
-                this.ChangingPortCondition(PortCondition.Free);
+                ChangingPortCondition(PortCondition.Free);
                 secondCaller.Terminal.ChangingPortCondition(PortCondition.Free);
                 OnCallStopped(connectionWhereStopFirstCaller);
+                return connectionWhereStopFirstCaller;
             }
             else
             {
+                var connectionWhereStopSecondCaller = _ats.CallConnections.InJoinedConnectionCollection
+                    .Where(x => x.Answer == this && x.Caller == secondCaller.Terminal)
+                    .Select(x => x).FirstOrDefault();
                 if (connectionWhereStopSecondCaller != null)
                 {
-                    _uIManager.GetInfoTerminalOperation(secondCaller.Terminal, this, TerminalOperations.Stopping, connectionWhereStopSecondCaller);
-                    this.ChangingPortCondition(PortCondition.Free);
+                    ChangingPortCondition(PortCondition.Free);
                     secondCaller.Terminal.ChangingPortCondition(PortCondition.Free);
                     OnCallStopped(connectionWhereStopSecondCaller);
+                    return new TerminalConnections() { Caller = connectionWhereStopSecondCaller.Answer, Answer = connectionWhereStopSecondCaller.Caller };
                 }
                 else
                 {
-                    _uIManager.GetInfoTerminalOperation(this, secondCaller.Terminal, TerminalOperations.Stopping);
+                    return null;
                 }
             }
         }
 
-        public void DropCalling(ICaller caller)
+        public TerminalConnections DropCalling(ICaller caller)
         {
-            var connection = _ats.CallService.InWaitingConnectionCollection
+            var connection = _ats.CallConnections.InWaitingConnectionCollection
                 .Where(x => x.Answer == this && x.Caller == caller.Terminal)
                 .Select(x => x).FirstOrDefault();
             if (connection != null)
             {
-                _uIManager.GetInfoTerminalOperation(this, caller.Terminal, TerminalOperations.Dropping, connection);
                 caller.Terminal.ChangingPortCondition(PortCondition.Free);
                 OnCallDropped(connection);
+                return connection;
             }
             else
             {
-                _uIManager.GetInfoTerminalOperation(this, caller.Terminal, TerminalOperations.Dropping);
+                return null;
             }
         }
 
-        public void UnSubcribeEvents()
+        public void UnSubscribeEvents()
         {
             Call = null;
             AcceptCall = null;
             StopCall = null;
             DropCall = null;
             ChangePortCondition = null;
+        }
+
+        private void OnCalling(TerminalConnections connection)
+        {
+            Call?.Invoke(this, connection);
+        }
+
+        private void OnAcceptCalling(TerminalConnections connection)
+        {
+            AcceptCall?.Invoke(this, connection);
+        }
+
+        private void OnCallStopped(TerminalConnections connection)
+        {
+            StopCall?.Invoke(this, connection);
+        }
+
+        private void OnCallDropped(TerminalConnections connection)
+        {
+            DropCall?.Invoke(this, connection);
+        }
+
+        private void OnChangingPortCondition(PortCondition condition)
+        {
+            ChangePortCondition?.Invoke(this, condition);
         }
     }
 }

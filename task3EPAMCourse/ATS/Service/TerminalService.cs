@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
 
-namespace task3EPAMCourse.ATS.Service
+namespace Task3EPAMCourse.ATS.Service
 {
     public class TerminalService : ITerminalService
-    { 
-        public IEnumerable<ITerminal> Terminals { get; } 
-
+    {
         public TerminalService(AutoTelephoneStation autoTelephoneStation)
         {
             Terminals = new List<ITerminal>()
@@ -18,9 +16,11 @@ namespace task3EPAMCourse.ATS.Service
                  new Terminal("001", TerminalCondition.Available, autoTelephoneStation),
                  new Terminal("002", TerminalCondition.Available, autoTelephoneStation),
                  new Terminal("003", TerminalCondition.Available, autoTelephoneStation),
-                 new Terminal("004", TerminalCondition.Available, autoTelephoneStation)
+                 new Terminal("004", TerminalCondition.Available, autoTelephoneStation),
             };
         }
+
+        public IEnumerable<ITerminal> Terminals { get; }
 
         public ITerminal GetAvailableTerminal()
         {

@@ -1,18 +1,12 @@
 ﻿using System;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.Billing.Model
+namespace Task3EPAMCourse.Billing.Model
 {
     public class Caller : ICaller
     {
-        public int CallerNumber { get; }
-
-        public ITerminal Terminal { get; }
-
-        public Contract Contract { get; } = new Contract();
-
         public Caller(int callerNumber, ITerminal terminal, IPort port)
         {
             CallerNumber = callerNumber;
@@ -20,10 +14,16 @@ namespace task3EPAMCourse.Billing.Model
             Terminal.ChangePort(port);
         }
 
-        public void ChangePortCondition(PortCondition condition)
+        public int CallerNumber { get; }
+
+        public ITerminal Terminal { get; }
+
+        public Contract Contract { get; } = new Contract();
+
+        public PortCondition ChangePortCondition(PortCondition condition)
         {
             Terminal.Port.ChangeCondition(condition);
-            Console.WriteLine($"Port condition changed on {condition} by user {CallerNumber}");
+            return condition;
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
 
-namespace task3EPAMCourse.ATS.Service
+namespace Task3EPAMCourse.ATS.Service
 {
     public class PortService : IPortService
     {
@@ -14,7 +14,7 @@ namespace task3EPAMCourse.ATS.Service
                  new Port(3301, PortCondition.Off),
                  new Port(3302, PortCondition.Off),
                  new Port(3303, PortCondition.Off),
-                 new Port(3304, PortCondition.Off)
+                 new Port(3304, PortCondition.Off),
             };
 
         public IPort GetFreePort()

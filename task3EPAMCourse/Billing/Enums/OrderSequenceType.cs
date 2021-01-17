@@ -1,10 +1,10 @@
-﻿namespace task3EPAMCourse.Billing.Enums
+﻿namespace Task3EPAMCourse.Billing.Enums
 {
     public enum OrderSequenceType
     {
         None,
         Duration,
         Cost,
-        Callers
+        Callers,
     }
 }

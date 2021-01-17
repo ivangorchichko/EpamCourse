@@ -1,8 +1,8 @@
-﻿namespace task3EPAMCourse.ATS.Enums
+﻿namespace Task3EPAMCourse.ATS.Enums
 {
     public enum TerminalCondition
     {
         IsUsed,
-        Available
+        Available,
     }
 }

@@ -1,6 +1,6 @@
-﻿using task3EPAMCourse.ATS.Enums;
+﻿using Task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.ATS.Contracts
+namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface IPort
     {

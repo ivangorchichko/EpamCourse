@@ -1,48 +1,67 @@
 ﻿using System.Linq;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Service;
-using task3EPAMCourse.Billing.Contracts;
-using task3EPAMCourse.Billing.Model;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Service;
+using Task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.Billing.Model;
 
-namespace task3EPAMCourse.ATS.Model
+namespace Task3EPAMCourse.ATS.Model
 {
     public class AutoTelephoneStation : IAts
     {
-        public IPortService PortService { get; } = new PortService();
-
-        public ICallService CallService { get; } = new CallService();
-
-        public ITerminalService TerminalService { get; }
+        private readonly IPortService _portService = new PortService();
 
         public AutoTelephoneStation()
         {
             TerminalService = new TerminalService(this);
-            RegistrationAtsEvents();
+            SubscribeAtsEvents();
         }
 
-        private void TerminalDropping(TerminalConnectionsEventArgs connection)
+        public ICallConnections CallConnections { get; } = new CallConnections();
+
+        public ITerminalService TerminalService { get; }
+
+        public ICaller CreateContract(int callerNumber, IUiManager uiManager)
         {
-            CallService.RemoveFromWaitingCollection(connection);
+            var terminal = TerminalService.GetAvailableTerminal();
+            var port = _portService.GetFreePort();
+            if (terminal != null && port != null)
+            {
+                ICaller caller = new Caller(callerNumber, terminal, port);
+                terminal.ChangeTerminalCondition(TerminalCondition.IsUsed);
+                port.ChangeCondition(PortCondition.Free);
+                uiManager.GetInfoOnCreateContract(caller);
+                return caller;
+            }
+            else
+            {
+                uiManager.GetInfoOnCreateContract();
+                return null;
+            }
         }
 
-        private void TerminalStopping(TerminalConnectionsEventArgs connection)
+        private void TerminalDropping(TerminalConnections connection)
         {
-            CallService.RemoveFromJoinedCollection(connection);
+            CallConnections.RemoveFromWaitingCollection(connection);
         }
 
-        private void TerminalCalling(TerminalConnectionsEventArgs connection)
+        private void TerminalStopping(TerminalConnections connection)
         {
-            CallService.AddInWaitingCollection(connection);
+            CallConnections.RemoveFromJoinedCollection(connection);
         }
 
-        private void TerminalAccepting(TerminalConnectionsEventArgs connection)
+        private void TerminalCalling(TerminalConnections connection)
         {
-            this.CallService.RemoveFromWaitingCollection(connection);
-            CallService.AddInJoinedCollection(connection);
+            CallConnections.AddInWaitingCollection(connection);
         }
 
-        private void RegistrationAtsEvents()
+        private void TerminalAccepting(TerminalConnections connection)
+        {
+            CallConnections.RemoveFromWaitingCollection(connection);
+            CallConnections.AddInJoinedCollection(connection);
+        }
+
+        private void SubscribeAtsEvents()
         {
             foreach (var terminal in TerminalService.Terminals.ToList())
             {
@@ -62,7 +81,7 @@ namespace task3EPAMCourse.ATS.Model
                 {
                     TerminalDropping(connection);
                 };
-                terminal.ChangePortCondition += (sender, condition) => 
+                terminal.ChangePortCondition += (sender, condition) =>
                 {
                     if (sender is Terminal chosenTerminal)
                     {
@@ -70,25 +89,6 @@ namespace task3EPAMCourse.ATS.Model
                         port.ChangeCondition(condition);
                     }
                 };
-            }
-        }
-
-        public ICaller CreateContract(int callerNumber, IUiManager uiManager)
-        {
-            var terminal = TerminalService.GetAvailableTerminal();
-            var port = PortService.GetFreePort();
-            if (terminal != null && port != null)
-            {
-                ICaller caller = new Caller(callerNumber, terminal, port);
-                terminal.ChangeTerminalCondition(TerminalCondition.IsUsed);
-                port.ChangeCondition(PortCondition.Free);
-                uiManager.GetInfoOnCreateContract(caller);
-                return caller;
-            }
-            else
-            {
-                uiManager.GetInfoOnCreateContract();
-                return null;
             }
         }
     }

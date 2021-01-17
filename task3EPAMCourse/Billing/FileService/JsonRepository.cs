@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using task3EPAMCourse.Billing.Model;
+using Newtonsoft.Json;
+using Task3EPAMCourse.Billing.Model;
 
-namespace task3EPAMCourse.Billing.FileService
+namespace Task3EPAMCourse.Billing.FileService
 {
     public class JsonRepository
     {
         private static readonly string _saveFilePath = @"Data\SavedBilling.json";
 
-        public bool IsSequenceSavedOnce = false;
+        public bool IsSequenceSavedOnce { get; set; }
 
         public void SaveFile(IList<CallInfo> callsInfoCollection)
         {

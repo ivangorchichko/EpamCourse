@@ -1,16 +1,20 @@
 ﻿using System;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
-using task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.Billing.Contracts;
 
-namespace task3EPAMCourse.ATS.Contracts
+namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface ITerminal
     {
-        event EventHandler<TerminalConnectionsEventArgs> Call;
-        event EventHandler<TerminalConnectionsEventArgs> AcceptCall;
-        event EventHandler<TerminalConnectionsEventArgs> StopCall;
-        event EventHandler<TerminalConnectionsEventArgs> DropCall;
+        event EventHandler<TerminalConnections> Call;
+
+        event EventHandler<TerminalConnections> AcceptCall;
+
+        event EventHandler<TerminalConnections> StopCall;
+
+        event EventHandler<TerminalConnections> DropCall;
+
         event EventHandler<PortCondition> ChangePortCondition;
 
         string Number { get; }
@@ -25,14 +29,14 @@ namespace task3EPAMCourse.ATS.Contracts
 
         void ChangingPortCondition(PortCondition condition);
 
-        void Calling(ICaller phone);
+        TerminalConnections Calling(ICaller phone);
 
-        void AcceptCalling(ICaller caller);
+        TerminalConnections AcceptCalling(ICaller caller);
 
-        void StopCalling(ICaller secondCaller);
+        TerminalConnections StopCalling(ICaller secondCaller);
 
-        void DropCalling(ICaller caller);
+        TerminalConnections DropCalling(ICaller caller);
 
-        void UnSubcribeEvents();
+        void UnSubscribeEvents();
     }
 }

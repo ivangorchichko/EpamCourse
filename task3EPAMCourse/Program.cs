@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
-using task3EPAMCourse.ATS.Model;
-using task3EPAMCourse.ATS.Service;
-using task3EPAMCourse.Billing.Contracts;
-using task3EPAMCourse.Billing.Enums;
-using task3EPAMCourse.Billing.Model;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
+using Task3EPAMCourse.ATS.Model;
+using Task3EPAMCourse.ATS.Service;
+using Task3EPAMCourse.Billing.Contracts;
+using Task3EPAMCourse.Billing.Enums;
+using Task3EPAMCourse.Billing.Model;
 
-namespace task3EPAMCourse
+namespace Task3EPAMCourse
 {
     internal static class Program
     {
         private static readonly IAts ATs = new AutoTelephoneStation();
         private static readonly IUiManager UiManager = new UiManager();
-        private static IList<ICaller> _callers = new List<ICaller>();
         private static readonly IBilling BillingSystem = new BillingSystem(ATs);
+        private static IList<ICaller> _callers = new List<ICaller>();
 
         private static void Main()
         {
@@ -40,60 +40,59 @@ namespace task3EPAMCourse
         private static void CreateConnections()
         {
             _callers = _callers.Where(caller => caller != null).ToList();
-            _callers[0].Terminal.Calling(_callers[1]);
-            _callers[1].Terminal.AcceptCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[0].Terminal.Calling(_callers[1]), TerminalOperations.Calling, _callers[1].Terminal.Port.Condition);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.AcceptCalling(_callers[0]), TerminalOperations.Accepting);
             Thread.Sleep(5000);
-            _callers[1].Terminal.StopCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.StopCalling(_callers[0]), TerminalOperations.Stopping);
             Console.WriteLine();
 
-            _callers[3].Terminal.Calling(_callers[2]);
+            UiManager.GetInfoTerminalOperation(_callers[3].Terminal.Calling(_callers[2]), TerminalOperations.Calling, _callers[2].Terminal.Port.Condition);
             Thread.Sleep(6000);
-            _callers[2].Terminal.DropCalling(_callers[3]);
+            UiManager.GetInfoTerminalOperation(_callers[2].Terminal.DropCalling(_callers[3]), TerminalOperations.Dropping);
             Console.WriteLine();
 
-            _callers[2].Terminal.StopCalling(_callers[0]);
-            _callers[1].Terminal.DropCalling(_callers[0]);
-            _callers[1].Terminal.AcceptCalling(_callers[2]);
+            UiManager.GetInfoTerminalOperation(_callers[2].Terminal.StopCalling(_callers[0]), TerminalOperations.Stopping);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.DropCalling(_callers[0]), TerminalOperations.Dropping);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.AcceptCalling(_callers[2]), TerminalOperations.Accepting);
             Console.WriteLine();
 
-            _callers[1].Terminal.Calling(_callers[3]);
-            _callers[3].Terminal.AcceptCalling(_callers[1]);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.Calling(_callers[3]), TerminalOperations.Calling, _callers[3].Terminal.Port.Condition);
+            UiManager.GetInfoTerminalOperation(_callers[3].Terminal.AcceptCalling(_callers[1]), TerminalOperations.Accepting);
             Thread.Sleep(4000);
-            _callers[1].Terminal.StopCalling(_callers[3]);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.StopCalling(_callers[3]), TerminalOperations.Stopping);
             Console.WriteLine();
 
-            _callers[0].Terminal.Calling(_callers[1]);
-            _callers[1].Terminal.AcceptCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[0].Terminal.Calling(_callers[1]), TerminalOperations.Calling, _callers[1].Terminal.Port.Condition);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.AcceptCalling(_callers[0]), TerminalOperations.Accepting);
             Thread.Sleep(8000);
-            _callers[1].Terminal.StopCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[0].Terminal.StopCalling(_callers[1]), TerminalOperations.Stopping);
             Console.WriteLine();
 
-            _callers[2].Terminal.Calling(_callers[3]);
-            _callers[2].Terminal.AcceptCalling(_callers[3]);
-            _callers[3].Terminal.AcceptCalling(_callers[2]);
-            _callers[0].Terminal.Calling(_callers[2]);
+            UiManager.GetInfoTerminalOperation(_callers[2].Terminal.Calling(_callers[3]), TerminalOperations.Calling, _callers[1].Terminal.Port.Condition);
+            UiManager.GetInfoTerminalOperation(_callers[3].Terminal.AcceptCalling(_callers[2]), TerminalOperations.Accepting);
             Thread.Sleep(6000);
-            _callers[3].Terminal.StopCalling(_callers[2]);
+            UiManager.GetInfoTerminalOperation(_callers[3].Terminal.StopCalling(_callers[2]), TerminalOperations.Stopping);
             Console.WriteLine();
 
-            _callers[0].Terminal.Calling(_callers[1]);
-            _callers[1].Terminal.AcceptCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[0].Terminal.Calling(_callers[1]), TerminalOperations.Calling, _callers[1].Terminal.Port.Condition);
+            UiManager.GetInfoTerminalOperation(_callers[1].Terminal.AcceptCalling(_callers[0]), TerminalOperations.Accepting);
             Thread.Sleep(7000);
-            _callers[1].Terminal.StopCalling(_callers[0]);
+            UiManager.GetInfoTerminalOperation(_callers[0].Terminal.StopCalling(_callers[1]), TerminalOperations.Stopping);
             Console.WriteLine();
 
-            _callers[0].ChangePortCondition(PortCondition.Off);
-            _callers[0].ChangePortCondition(PortCondition.Free);
+            UiManager.GetInfoIfPortConditionChanged(_callers[0].ChangePortCondition(PortCondition.Off));
+            UiManager.GetInfoIfPortConditionChanged(_callers[0].ChangePortCondition(PortCondition.Free));
             Console.WriteLine();
         }
 
         private static void UnSubscribeTerminalEvents()
         {
             foreach (var caller in _callers)
-            { 
-                caller.Terminal.UnSubcribeEvents();
+            {
+                caller.Terminal.UnSubscribeEvents();
             }
         }
+
         private static void ShowCallerInfoCollection()
         {
             Console.WriteLine("All CallsInfo with old\n");

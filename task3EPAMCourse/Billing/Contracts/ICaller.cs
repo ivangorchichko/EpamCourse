@@ -1,7 +1,7 @@
-﻿using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.ATS.Enums;
+﻿using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.Billing.Contracts
+namespace Task3EPAMCourse.Billing.Contracts
 {
     public interface ICaller
     {
@@ -9,6 +9,6 @@ namespace task3EPAMCourse.Billing.Contracts
 
         ITerminal Terminal { get; }
 
-        void ChangePortCondition(PortCondition condition);
+        PortCondition ChangePortCondition(PortCondition condition);
     }
 }

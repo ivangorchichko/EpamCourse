@@ -1,11 +1,26 @@
 ﻿using System;
-using task3EPAMCourse.ATS.Contracts;
-using task3EPAMCourse.Billing.Enums;
+using Task3EPAMCourse.ATS.Contracts;
+using Task3EPAMCourse.Billing.Enums;
 
-namespace task3EPAMCourse.Billing.Model
+namespace Task3EPAMCourse.Billing.Model
 {
     public class CallInfo
     {
+        public CallInfo()
+        {
+        }
+
+        public CallInfo(CallInfo callInfo)
+        {
+            User = callInfo.User;
+            From = callInfo.From;
+            To = callInfo.To;
+            DateTimeStart = callInfo.DateTimeStart;
+            Duration = callInfo.Duration;
+            CallType = callInfo.CallType;
+            Cost = callInfo.Cost;
+        }
+
         public ITerminal User { get; set; }
 
         public ITerminal From { get; set; }
@@ -19,19 +34,6 @@ namespace task3EPAMCourse.Billing.Model
         public CallType CallType { get; set; }
 
         public double Cost { get; set; }
-
-        public CallInfo() { }
-
-        public CallInfo(CallInfo callInfo)
-        {
-            User = callInfo.User;
-            From = callInfo.From;
-            To = callInfo.To;
-            DateTimeStart = callInfo.DateTimeStart;
-            Duration = callInfo.Duration;
-            CallType = callInfo.CallType;
-            Cost = callInfo.Cost;
-        }
 
         public override string ToString()
         {
