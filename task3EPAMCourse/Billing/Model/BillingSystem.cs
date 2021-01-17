@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.Billing.Contracts;

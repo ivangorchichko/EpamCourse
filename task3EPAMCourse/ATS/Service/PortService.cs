@@ -17,19 +17,11 @@ namespace task3EPAMCourse.ATS.Service
                  new Port(3304, PortCondition.Off)
             };
 
-        public PortService(IEnumerable<IPort> ports)
-        {
-            _ports = ports;
-        }
-
-        public PortService()
-        {
-        }
-
         public IEnumerable<IPort> GetPorts()
         {
             return _ports;
         }
+
         public IPort GetFreePort()
         {
             var port = _ports.Where(port => port.Condition == PortCondition.Off).FirstOrDefault();

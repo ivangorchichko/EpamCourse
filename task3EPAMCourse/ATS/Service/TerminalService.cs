@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Enums;
 using task3EPAMCourse.ATS.Model;
@@ -11,6 +10,7 @@ namespace task3EPAMCourse.ATS.Service
     public class TerminalService : ITerminalService
     { 
         public IEnumerable<ITerminal> Terminals { get; } 
+
         public TerminalService(AutoTelephoneStation autoTelephoneStation)
         {
             Terminals = new List<ITerminal>()
@@ -34,11 +34,6 @@ namespace task3EPAMCourse.ATS.Service
                 Console.WriteLine("All terminals are in used");
                 return null;
             }
-        }
-
-        public ICaller GetTerminalCaller(ITerminal terminal, IList<ICaller> callers)
-        {
-            return callers.Where(x => x.Terminal == terminal).FirstOrDefault();
         }
     }
 }

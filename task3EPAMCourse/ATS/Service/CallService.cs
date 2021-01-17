@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 
@@ -14,14 +13,17 @@ namespace task3EPAMCourse.ATS.Service
         {
             InWaitingConnectionCollection.Add(connection);
         }
+
         public void AddInJoinedCollection(TerminalConnectionsEventArgs connection)
         {
             InJoinedConnectionCollection.Add(connection);
         }
+
         public void RemoveFromWaitingCollection(TerminalConnectionsEventArgs connection)
         {
             InWaitingConnectionCollection.Remove(connection);
         }
+
         public void RemoveFromJoinedCollection(TerminalConnectionsEventArgs connection)
         {
             InJoinedConnectionCollection.Remove(connection);

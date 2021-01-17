@@ -7,11 +7,17 @@ namespace task3EPAMCourse.Billing.Model
     public class CallInfo
     {
         public ITerminal User { get; set; }
+
         public ITerminal From { get; set; }
+
         public ITerminal To { get; set; }
+
         public DateTime DateTimeStart { get; set; }
+
         public TimeSpan Duration { get; set; }
+
         public CallType CallType { get; set; }
+
         public double Cost { get; set; }
 
         public CallInfo() { }
@@ -37,6 +43,5 @@ namespace task3EPAMCourse.Billing.Model
                 $"Type: {CallType}\t" +
                 $"Cost: {Cost:F2}";
         }
-
     }
 }

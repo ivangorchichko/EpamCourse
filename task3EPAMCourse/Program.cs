@@ -4,10 +4,8 @@ using System.Threading;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.ATS.Service;
-using task3EPAMCourse.Billing.Contracts;
 using task3EPAMCourse.Billing.Enums;
 using task3EPAMCourse.Billing.Model;
-
 
 namespace task3EPAMCourse
 {
@@ -17,12 +15,14 @@ namespace task3EPAMCourse
         private static readonly IUIManager _uIManager = new UIManager();
         private static readonly IList<ICaller> _callers = new List<ICaller>();
         private static readonly BillingSystem _billingSystem = new BillingSystem(_aTS);
+
         static void Main(string[] args)
         {
             CreateContracts();
             CreateConnections();
             ShowCallerInfoCollection();
         }
+
         private static void CreateContracts()
         {
             _callers.Add(_aTS.CreateContract(1, _uIManager));

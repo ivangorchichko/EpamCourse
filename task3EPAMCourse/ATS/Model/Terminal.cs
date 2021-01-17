@@ -10,8 +10,11 @@ namespace task3EPAMCourse.ATS.Model
     {
         private static IATS _ats = new AutoTelephoneStation();
         private static IUIManager _uIManager = new UIManager();
+
         public string Number { get; }
+
         public IPort Port { get; private set; }
+
         public TerminalCondition TerminalCondition { get; private set; }
 
         public event EventHandler<TerminalConnectionsEventArgs> Call;

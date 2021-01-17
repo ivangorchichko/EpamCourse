@@ -30,8 +30,6 @@ namespace task3EPAMCourse.ATS.Contracts
 
         void StopCalling(ICaller secondCaller);
 
-        void DropCalling(ICaller caller);
-
-       
+        void DropCalling(ICaller caller);  
     }
 }

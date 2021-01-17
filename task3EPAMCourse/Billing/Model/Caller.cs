@@ -7,7 +7,9 @@ namespace task3EPAMCourse.Billing.Model
     public class Caller : ICaller
     {
         public int CallerNumber { get; }
+
         public ITerminal Terminal { get; }
+
         public Contract Contract { get; } = new Contract();
 
         public Caller(int callerNumber, ITerminal terminal, IPort port)

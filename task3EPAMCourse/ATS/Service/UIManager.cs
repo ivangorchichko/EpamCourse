@@ -62,46 +62,5 @@ namespace task3EPAMCourse.ATS.Service
                     }
             }
         }
-        //public void GetInfoWhenTerminalCalling(ITerminal caller, ICaller answerer, PortCondition portCondition = PortCondition.Free)
-        //{
-        //    if (portCondition == PortCondition.Free)
-        //    {
-        //        Console.WriteLine($"Terminal {caller.Number} calls to {answerer.Terminal.Number}");
-        //    }
-        //    else
-        //        Console.WriteLine($"Terminal {caller.Number} can not call to {answerer.Terminal.Number} cause them in call orr port is off");
-        //}
-
-        //public void GetInfoWhenTerminalAcepting(ITerminal answerer, ICaller caller, TerminalConnectionsEventArgs connection = null)
-        //{
-        //    if (connection != null)
-        //    {
-        //        Console.WriteLine($"Terminal {answerer.Number} acept call with {caller.Terminal.Number}");
-        //    }
-        //    else
-        //        Console.WriteLine($"Terminal {answerer.Number} can not acept calling {caller.Terminal.Number} cause them dont call");
-        //}
-
-        //public void GetInfoWhenTerminalStoping(ITerminal firstCaller, ITerminal secondCaller, TerminalConnectionsEventArgs connection = null)
-        //{
-        //    if (connection != null)
-        //    {
-        //        Console.WriteLine($"Terminal {firstCaller.Number} stop calling with {secondCaller.Number}");
-        //    }
-        //    else
-        //        Console.WriteLine($"Terminal {firstCaller.Number} not in calling with {secondCaller.Number}");
-        //}
-
-        //public void GetInfoWhenTerminalDroping(ITerminal caller, ICaller answerer, TerminalConnectionsEventArgs connection = null)
-        //{
-        //    if (connection != null)
-        //    {
-        //        Console.WriteLine($"Terminal {caller.Number} drop calling with {answerer.Terminal.Number}");
-        //    }
-        //    else
-        //        Console.WriteLine($"Terminal {caller.Number} can not drop calling {answerer.Terminal.Number} cause caller dont call");
-        //}
-
-
     }
 }

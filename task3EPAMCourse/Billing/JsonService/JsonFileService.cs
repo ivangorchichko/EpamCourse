@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -10,6 +9,7 @@ namespace task3EPAMCourse.Billing.JsonService
     public class JsonFileService
     {
         private static readonly string _saveFilePath = @"Data\SavedBilling.json";
+
         public bool IsSaved = false;
 
         public void SaveFile(IList<CallInfo> callsInfoCollection)
