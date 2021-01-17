@@ -57,5 +57,11 @@ namespace Task3EPAMCourse.ATS.Service
         {
             Console.WriteLine($"Port condition changed on {condition}");
         }
+
+        public ICaller GetInfoIfContractCreated(ICaller caller)
+        {
+            Console.WriteLine($"New contract created! User {caller.CallerNumber}");
+            return caller;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Task3EPAMCourse.ATS.Contracts
 {
-    public interface IPortService
+    public interface IPortsService
     {
         IPort GetFreePort();
 

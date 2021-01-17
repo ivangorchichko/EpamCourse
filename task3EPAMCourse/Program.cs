@@ -29,13 +29,13 @@ namespace Task3EPAMCourse
 
         private static void CreateContracts()
         {
-            _callers.Add(ATs.CreateContract(1, UiManager));
-            _callers.Add(ATs.CreateContract(2, UiManager));
-            _callers.Add(ATs.CreateContract(3, UiManager));
-            _callers.Add(ATs.CreateContract(4, UiManager));
-            ATs.TerminalService.CreateNewTerminal(new Terminal("005", TerminalCondition.Available, ATs));
-            ATs.PortService.CreateNewPort(new Port(3305, PortCondition.Off));
-            _callers.Add(ATs.CreateContract(5, UiManager));
+            _callers.Add(UiManager.GetInfoIfContractCreated(ATs.CreateContract(1)));
+            _callers.Add(UiManager.GetInfoIfContractCreated(ATs.CreateContract(2)));
+            _callers.Add(UiManager.GetInfoIfContractCreated(ATs.CreateContract(3)));
+            _callers.Add(UiManager.GetInfoIfContractCreated(ATs.CreateContract(4)));
+            ATs.TerminalsService.CreateNewTerminal(new Terminal("005", TerminalCondition.Available, ATs));
+            ATs.PortsService.CreateNewPort(new Port(3305, PortCondition.Off));
+            _callers.Add(UiManager.GetInfoIfContractCreated(ATs.CreateContract(5)));
             Console.WriteLine();
         }
 

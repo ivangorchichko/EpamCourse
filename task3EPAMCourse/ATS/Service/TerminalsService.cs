@@ -7,9 +7,9 @@ using Task3EPAMCourse.ATS.Model;
 
 namespace Task3EPAMCourse.ATS.Service
 {
-    public class TerminalService : ITerminalService
+    public class TerminalsService : ITerminalsService
     {
-        public TerminalService(AutoTelephoneStation autoTelephoneStation)
+        public TerminalsService(AutoTelephoneStation autoTelephoneStation)
         {
             Terminals = new List<ITerminal>()
             {

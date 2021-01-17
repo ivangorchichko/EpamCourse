@@ -2,7 +2,7 @@
 
 namespace Task3EPAMCourse.ATS.Contracts
 {
-    public interface ITerminalService
+    public interface ITerminalsService
     {
         IList<ITerminal> Terminals { get; }
 

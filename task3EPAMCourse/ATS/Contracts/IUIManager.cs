@@ -14,5 +14,7 @@ namespace Task3EPAMCourse.ATS.Contracts
             PortCondition portCondition = PortCondition.Free);
 
         void GetInfoIfPortConditionChanged(PortCondition condition);
+
+        ICaller GetInfoIfContractCreated(ICaller caller);
     }
 }

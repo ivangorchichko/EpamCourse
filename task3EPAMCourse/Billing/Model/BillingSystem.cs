@@ -69,7 +69,7 @@ namespace Task3EPAMCourse.Billing.Model
 
         private void RegistrationEvents()
         {
-            foreach (var terminal in _ats.TerminalService.Terminals.ToList())
+            foreach (var terminal in _ats.TerminalsService.Terminals.ToList())
             {
                 terminal.Call += (sender, connection) => { StartConnecting(connection); };
                 terminal.StopCall += (sender, connection) => { StopConnecting(connection); };

@@ -11,31 +11,29 @@ namespace Task3EPAMCourse.ATS.Model
     {
         public AutoTelephoneStation()
         {
-            TerminalService = new TerminalService(this);
+            TerminalsService = new TerminalsService(this);
             SubscribeAtsEvents();
         }
 
-        public IPortService PortService { get; } = new PortService();
+        public IPortsService PortsService { get; } = new PortsService();
 
         public ICallConnections CallConnections { get; } = new CallConnections();
 
-        public ITerminalService TerminalService { get; }
+        public ITerminalsService TerminalsService { get; }
 
-        public ICaller CreateContract(int callerNumber, IUiManager uiManager)
+        public ICaller CreateContract(int callerNumber)
         {
-            var terminal = TerminalService.GetAvailableTerminal();
-            var port = PortService.GetFreePort();
+            var terminal = TerminalsService.GetAvailableTerminal();
+            var port = PortsService.GetFreePort();
             if (terminal != null && port != null)
             {
                 ICaller caller = new Caller(callerNumber, terminal, port);
                 terminal.ChangeTerminalCondition(TerminalCondition.IsUsed);
                 port.ChangeCondition(PortCondition.Free);
-                uiManager.GetInfoOnCreateContract(caller);
                 return caller;
             }
             else
             {
-                uiManager.GetInfoOnCreateContract();
                 return null;
             }
         }
@@ -63,7 +61,7 @@ namespace Task3EPAMCourse.ATS.Model
 
         private void SubscribeAtsEvents()
         {
-            foreach (var terminal in TerminalService.Terminals.ToList())
+            foreach (var terminal in TerminalsService.Terminals.ToList())
             {
                 terminal.Call += (sender, connections) =>
                 {

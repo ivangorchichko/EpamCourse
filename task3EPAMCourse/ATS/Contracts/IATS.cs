@@ -4,12 +4,12 @@ namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface IAts
     {
-        IPortService PortService { get; }
+        IPortsService PortsService { get; }
 
         ICallConnections CallConnections { get; }
 
-        ITerminalService TerminalService { get; }
+        ITerminalsService TerminalsService { get; }
 
-        ICaller CreateContract(int callerNumber, IUiManager uiManager);
+        ICaller CreateContract(int callerNumber);
     }
 }

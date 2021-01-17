@@ -7,7 +7,7 @@ using Task3EPAMCourse.ATS.Model;
 
 namespace Task3EPAMCourse.ATS.Service
 {
-    public class PortService : IPortService
+    public class PortsService : IPortsService
     {
         private readonly IList<IPort> _ports = new List<IPort>()
             {
