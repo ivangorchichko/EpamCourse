@@ -5,6 +5,7 @@ using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.ATS.Service;
 using task3EPAMCourse.Billing.Contracts;
+using task3EPAMCourse.Billing.Enums;
 using task3EPAMCourse.Billing.Model;
 
 
@@ -24,10 +25,11 @@ namespace task3EPAMCourse
         }
         private static void CreateContracts()
         {
-            _callers.Add(_aTS.CreateContract(1));
-            _callers.Add(_aTS.CreateContract(2));
-            _callers.Add(_aTS.CreateContract(3));
-            _callers.Add(_aTS.CreateContract(4));
+            _callers.Add(_aTS.CreateContract(1, _uIManager));
+            _callers.Add(_aTS.CreateContract(2, _uIManager));
+            _callers.Add(_aTS.CreateContract(3, _uIManager));
+            _callers.Add(_aTS.CreateContract(4, _uIManager));
+            _callers.Add(_aTS.CreateContract(5, _uIManager));
             Console.WriteLine();
         }
 
@@ -92,7 +94,7 @@ namespace task3EPAMCourse
                 Console.WriteLine();
             }
 
-            var firstUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByCost(_callers[0]);
+            var firstUserCallInfoCollection = _billingSystem.GetUserCallsOrderedBy(_callers[0], OrderSequenceType.Cost);
             Console.WriteLine("User " + _callers[0].CallerNumber + "  Calls ordered by cost\n");
             foreach (var callinfo in firstUserCallInfoCollection)
             {
@@ -100,7 +102,7 @@ namespace task3EPAMCourse
                 Console.WriteLine();
             }
 
-            var secondUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByDuration(_callers[1]);
+            var secondUserCallInfoCollection = _billingSystem.GetUserCallsOrderedBy(_callers[1], OrderSequenceType.Duration);
             Console.WriteLine("User " + _callers[1].CallerNumber + "  Calls ordered by duration\n");
             foreach (var callinfo in secondUserCallInfoCollection)
             {
@@ -108,7 +110,7 @@ namespace task3EPAMCourse
                 Console.WriteLine();
             }
 
-            var thirdUserCallInfoCollection = _billingSystem.GetUserCallsOrderedByCallers(_callers[2]);
+            var thirdUserCallInfoCollection = _billingSystem.GetUserCallsOrderedBy(_callers[2], OrderSequenceType.Callers);
             Console.WriteLine("User " + _callers[2].CallerNumber + "  Calls ordered by callers\n");
             foreach (var callinfo in thirdUserCallInfoCollection)
             {
@@ -116,7 +118,7 @@ namespace task3EPAMCourse
                 Console.WriteLine();
             }
 
-            var fourthUserCallInfoCollection = _billingSystem.GetUserCalls(_callers[3]);
+            var fourthUserCallInfoCollection = _billingSystem.GetUserCallsOrderedBy(_callers[3], OrderSequenceType.None);
             Console.WriteLine("User " + _callers[3].CallerNumber + "  Calls\n");
             foreach (var callinfo in fourthUserCallInfoCollection)
             {

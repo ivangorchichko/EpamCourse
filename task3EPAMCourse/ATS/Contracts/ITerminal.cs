@@ -11,14 +11,18 @@ namespace task3EPAMCourse.ATS.Contracts
         event EventHandler<TerminalConnectionsEventArgs> StopCall;
         event EventHandler<TerminalConnectionsEventArgs> DropCall;
         event EventHandler<PortCondition> ChangePortCondition;
+
+        string Number { get; }
+
+        IPort Port { get; }
+
+        TerminalCondition TerminalCondition { get; }
+
         void ChangeTerminalCondition(TerminalCondition condition);
 
         void ChangePort(IPort port);
 
-        string Number { get; }
-        IPort Port { get; }
-
-        TerminalCondition TerminalCondition { get; }
+        void ChangingPortCondition(PortCondition condition);
 
         void Calling(ICaller phone);
 
@@ -28,6 +32,6 @@ namespace task3EPAMCourse.ATS.Contracts
 
         void DropCalling(ICaller caller);
 
-        void ChangingPortCondition(PortCondition condition);
+       
     }
 }

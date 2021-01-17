@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.Billing.Enums;
 using task3EPAMCourse.Billing.Model;
 
 namespace task3EPAMCourse.Billing.Contracts
@@ -10,12 +11,7 @@ namespace task3EPAMCourse.Billing.Contracts
     {
         IEnumerable<CallInfo> GetCalls();
 
-        IEnumerable<CallInfo> GetUserCalls(ICaller caller);
+        IEnumerable<CallInfo> GetUserCallsOrderedBy(ICaller caller, OrderSequenceType orderType);
 
-        IEnumerable<CallInfo> GetUserCallsOrderedByDuration(ICaller caller);
-
-        IEnumerable<CallInfo> GetUserCallsOrderedByCost(ICaller caller);
-
-        IEnumerable<CallInfo> GetUserCallsOrderedByCallers(ICaller caller);
     }
 }

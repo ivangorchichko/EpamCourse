@@ -6,6 +6,5 @@ namespace task3EPAMCourse.ATS.Contracts
     {
         PortCondition Condition { get; }
         void ChangeCondition(PortCondition condition);
-        public void GetPortInfo();
     }
 }

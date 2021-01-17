@@ -7,6 +7,5 @@ namespace task3EPAMCourse.ATS.Model
     {
         public ITerminal Caller { get; set; }
         public ITerminal Answer { get; set; }
-
     }
 }

@@ -17,7 +17,7 @@ namespace task3EPAMCourse.Billing.Model
         private IList<CallInfo> _callsInfoCollection = new List<CallInfo>();
         private Contract _contract = new Contract();
         private CallInfo _callInfo;
-        
+
         public BillingSystem(IATS ATS)
         {
             _ats = ATS;
@@ -54,7 +54,7 @@ namespace task3EPAMCourse.Billing.Model
                 _callInfo.From = connection.Caller;
                 _callInfo.To = connection.Answer;
                 _callInfo.DateTimeStart = DateTime.Now;
-                _callInfo.CallType = CallType.Incoming; 
+                _callInfo.CallType = CallType.Incoming;
                 _callsInfoCollection.Add(_callInfo);
             }
         }
@@ -100,53 +100,54 @@ namespace task3EPAMCourse.Billing.Model
                 return callsInfoCollection;
             }
             else return _json.GetCurrentCallInfo();
-            
+
         }
 
         public IEnumerable<CallInfo> GetCalls()
         {
-            var callsInfoCollection = SaveCallInfoCallection()
+            return SaveCallInfoCallection()
                 .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+        }
+
+        public IEnumerable<CallInfo> GetUserCallsOrderedBy(ICaller caller, OrderSequenceType orderType)
+        {
+            var callsInfoCollection = SaveCallInfoCallection()
+               .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
+            switch (orderType)
+            {
+                case OrderSequenceType.None:
+                    {
+                        callsInfoCollection = callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .Select(x => x);
+                        break;
+                    }
+                case OrderSequenceType.Duration:
+                    {
+                        callsInfoCollection = callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .Select(x => x)
+                        .OrderBy(x => x.Duration);
+                        break;
+                    }
+                case OrderSequenceType.Cost:
+                    {
+                        callsInfoCollection = callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .Select(x => x)
+                        .OrderBy(x => x.Cost);
+                        break;
+                    }
+                case OrderSequenceType.Callers:
+                    {
+                        callsInfoCollection = callsInfoCollection
+                        .Where(x => x.User.Number == caller.Terminal.Number)
+                        .Select(x => x)
+                        .OrderBy(x => x.To.Number);
+                        break;
+                    }
+            }
             return callsInfoCollection;
-        }
-
-        public IEnumerable<CallInfo> GetUserCalls(ICaller caller)
-        {
-            var callsInfoCollection = SaveCallInfoCallection()
-                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-            return callsInfoCollection
-                .Where(x => x.User.Number == caller.Terminal.Number)
-                .Select(x => x);
-        }
-
-        public IEnumerable<CallInfo> GetUserCallsOrderedByDuration(ICaller caller)
-        {
-            var callsInfoCollection = SaveCallInfoCallection()
-                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-            return callsInfoCollection
-                .Where(x => x.User.Number == caller.Terminal.Number)
-                .Select(x => x)
-                .OrderBy(x => x.Duration);
-        }
-
-        public IEnumerable<CallInfo> GetUserCallsOrderedByCost(ICaller caller)
-        {
-            var callsInfoCollection = SaveCallInfoCallection()
-                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-            return callsInfoCollection
-                .Where(x => x.User.Number == caller.Terminal.Number)
-                .Select(x => x)
-                .OrderBy(x => x.Cost);
-        }
-
-        public IEnumerable<CallInfo> GetUserCallsOrderedByCallers(ICaller caller)
-        {
-            var callsInfoCollection = SaveCallInfoCallection()
-                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
-            return callsInfoCollection
-                .Where(x => x.User.Number == caller.Terminal.Number)
-                .Select(x => x)
-                .OrderBy(x => x.To.Number);
         }
     }
 }

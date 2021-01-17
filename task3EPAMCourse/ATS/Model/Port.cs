@@ -20,9 +20,9 @@ namespace task3EPAMCourse.ATS.Model
             Condition = condition;
         }
 
-        public void GetPortInfo()
+        public override string ToString()
         {
-            Console.WriteLine($"PortNumber : {PortNumber}, Condition : {Condition}");
+            return $"PortNumber : {PortNumber}, Condition : {Condition}";
         }
     }
 }

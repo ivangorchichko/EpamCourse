@@ -71,7 +71,7 @@ namespace task3EPAMCourse.ATS.Model
             }
         }
 
-        public ICaller CreateContract(int callerNumber)
+        public ICaller CreateContract(int callerNumber, IUIManager uiManager)
         {
             var terminal = TerminalService.GetAvaibleTerminal();
             var port = PortService.GetFreePort();
@@ -80,12 +80,12 @@ namespace task3EPAMCourse.ATS.Model
                 ICaller caller = new Caller(callerNumber, terminal, port);
                 terminal.ChangeTerminalCondition(TerminalCondition.IsUsed);
                 port.ChangeCondition(PortCondition.Free);
-                Console.WriteLine($"New contract is created! User {caller.CallerNumber}");
+                uiManager.GetInfoOnCreateContract(caller);
                 return caller;
             }
             else
             {
-                Console.WriteLine("No more terminals or ports");
+                uiManager.GetInfoOnCreateContract();
                 return null;
             }
         }
