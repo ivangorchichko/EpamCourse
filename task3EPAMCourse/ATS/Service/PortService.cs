@@ -9,7 +9,7 @@ namespace Task3EPAMCourse.ATS.Service
 {
     public class PortService : IPortService
     {
-        private readonly IEnumerable<IPort> _ports = new List<IPort>()
+        private readonly IList<IPort> _ports = new List<IPort>()
             {
                  new Port(3301, PortCondition.Off),
                  new Port(3302, PortCondition.Off),
@@ -29,6 +29,11 @@ namespace Task3EPAMCourse.ATS.Service
                 Console.WriteLine("No more free ports");
                 return null;
             }
+        }
+
+        public void CreateNewPort(IPort newPort)
+        {
+            _ports.Add(newPort);
         }
     }
 }

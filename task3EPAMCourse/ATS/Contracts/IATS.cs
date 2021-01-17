@@ -4,6 +4,8 @@ namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface IAts
     {
+        IPortService PortService { get; }
+
         ICallConnections CallConnections { get; }
 
         ITerminalService TerminalService { get; }

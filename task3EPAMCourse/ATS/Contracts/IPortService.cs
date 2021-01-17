@@ -3,5 +3,7 @@
     public interface IPortService
     {
         IPort GetFreePort();
+
+        void CreateNewPort(IPort newPort);
     }
 }

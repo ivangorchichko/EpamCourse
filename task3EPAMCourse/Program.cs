@@ -33,6 +33,8 @@ namespace Task3EPAMCourse
             _callers.Add(ATs.CreateContract(2, UiManager));
             _callers.Add(ATs.CreateContract(3, UiManager));
             _callers.Add(ATs.CreateContract(4, UiManager));
+            ATs.TerminalService.CreateNewTerminal(new Terminal("005", TerminalCondition.Available, ATs));
+            ATs.PortService.CreateNewPort(new Port(3305, PortCondition.Off));
             _callers.Add(ATs.CreateContract(5, UiManager));
             Console.WriteLine();
         }

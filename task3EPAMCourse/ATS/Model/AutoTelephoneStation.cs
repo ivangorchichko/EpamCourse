@@ -9,13 +9,13 @@ namespace Task3EPAMCourse.ATS.Model
 {
     public class AutoTelephoneStation : IAts
     {
-        private readonly IPortService _portService = new PortService();
-
         public AutoTelephoneStation()
         {
             TerminalService = new TerminalService(this);
             SubscribeAtsEvents();
         }
+
+        public IPortService PortService { get; } = new PortService();
 
         public ICallConnections CallConnections { get; } = new CallConnections();
 
@@ -24,7 +24,7 @@ namespace Task3EPAMCourse.ATS.Model
         public ICaller CreateContract(int callerNumber, IUiManager uiManager)
         {
             var terminal = TerminalService.GetAvailableTerminal();
-            var port = _portService.GetFreePort();
+            var port = PortService.GetFreePort();
             if (terminal != null && port != null)
             {
                 ICaller caller = new Caller(callerNumber, terminal, port);

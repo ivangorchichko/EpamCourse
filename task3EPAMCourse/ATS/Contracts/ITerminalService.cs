@@ -4,8 +4,10 @@ namespace Task3EPAMCourse.ATS.Contracts
 {
     public interface ITerminalService
     {
-        IEnumerable<ITerminal> Terminals { get; }
+        IList<ITerminal> Terminals { get; }
 
         ITerminal GetAvailableTerminal();
+
+        void CreateNewTerminal(ITerminal newTerminal);
     }
 }

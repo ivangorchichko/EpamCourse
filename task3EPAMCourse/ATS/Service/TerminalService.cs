@@ -20,7 +20,7 @@ namespace Task3EPAMCourse.ATS.Service
             };
         }
 
-        public IEnumerable<ITerminal> Terminals { get; }
+        public IList<ITerminal> Terminals { get; }
 
         public ITerminal GetAvailableTerminal()
         {
@@ -34,6 +34,11 @@ namespace Task3EPAMCourse.ATS.Service
                 Console.WriteLine("All terminals are in used");
                 return null;
             }
+        }
+
+        public void CreateNewTerminal(ITerminal newTerminal)
+        {
+            Terminals.Add(newTerminal);
         }
     }
 }
