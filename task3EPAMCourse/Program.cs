@@ -23,6 +23,7 @@ namespace task3EPAMCourse
         {
             CreateContracts();
             CreateConnections();
+            UnSubscribeTerminalEvents();
             ShowCallerInfoCollection();
         }
 
@@ -86,6 +87,13 @@ namespace task3EPAMCourse
             Console.WriteLine();
         }
 
+        private static void UnSubscribeTerminalEvents()
+        {
+            foreach (var caller in _callers)
+            { 
+                caller.Terminal.UnSubcribeEvents();
+            }
+        }
         private static void ShowCallerInfoCollection()
         {
             Console.WriteLine("All CallsInfo with old\n");

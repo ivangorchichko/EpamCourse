@@ -89,7 +89,7 @@ namespace task3EPAMCourse.ATS.Model
 
         public void AcceptCalling(ICaller caller)
         {
-            TerminalConnectionsEventArgs connection = _ats.CallService.InWaitingConnectionCollection
+            var connection = _ats.CallService.InWaitingConnectionCollection
                 .Where(x => x.Answer == this && x.Caller == caller.Terminal)
                 .Select(x => x).FirstOrDefault();
             if (connection != null)
@@ -128,7 +128,7 @@ namespace task3EPAMCourse.ATS.Model
                     this.ChangingPortCondition(PortCondition.Free);
                     secondCaller.Terminal.ChangingPortCondition(PortCondition.Free);
                     OnCallStopped(connectionWhereStopSecondCaller);
-                } 
+                }
                 else
                 {
                     _uIManager.GetInfoTerminalOperation(this, secondCaller.Terminal, TerminalOperations.Stopping);
@@ -151,6 +151,15 @@ namespace task3EPAMCourse.ATS.Model
             {
                 _uIManager.GetInfoTerminalOperation(this, caller.Terminal, TerminalOperations.Dropping);
             }
+        }
+
+        public void UnSubcribeEvents()
+        {
+            Call = null;
+            AcceptCall = null;
+            StopCall = null;
+            DropCall = null;
+            ChangePortCondition = null;
         }
     }
 }
