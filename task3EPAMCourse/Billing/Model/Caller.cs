@@ -1,6 +1,7 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Enums;
+using task3EPAMCourse.Billing.Contracts;
 
 namespace task3EPAMCourse.Billing.Model
 {
@@ -22,6 +23,7 @@ namespace task3EPAMCourse.Billing.Model
         public void ChangePortCondition(PortCondition condition)
         {
             Terminal.Port.ChangeCondition(condition);
+            Console.WriteLine($"Port condition changed on {condition} by user {CallerNumber}");
         }
     }
 }

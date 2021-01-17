@@ -2,11 +2,12 @@
 using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Enums;
 using task3EPAMCourse.ATS.Service;
+using task3EPAMCourse.Billing.Contracts;
 using task3EPAMCourse.Billing.Model;
 
 namespace task3EPAMCourse.ATS.Model
 {
-    public class AutoTelephoneStation : IATS
+    public class AutoTelephoneStation : IAts
     {
         public IPortService PortService { get; } = new PortService();
 
@@ -17,15 +18,15 @@ namespace task3EPAMCourse.ATS.Model
         public AutoTelephoneStation()
         {
             TerminalService = new TerminalService(this);
-            RegistrATSEvents();
+            RegistrationAtsEvents();
         }
 
-        private void TerminalDroping(TerminalConnectionsEventArgs connection)
+        private void TerminalDropping(TerminalConnectionsEventArgs connection)
         {
             CallService.RemoveFromWaitingCollection(connection);
         }
 
-        private void TerminalStoping(TerminalConnectionsEventArgs connection)
+        private void TerminalStopping(TerminalConnectionsEventArgs connection)
         {
             CallService.RemoveFromJoinedCollection(connection);
         }
@@ -35,13 +36,13 @@ namespace task3EPAMCourse.ATS.Model
             CallService.AddInWaitingCollection(connection);
         }
 
-        private void TerminalAcepting(TerminalConnectionsEventArgs connection)
+        private void TerminalAccepting(TerminalConnectionsEventArgs connection)
         {
             this.CallService.RemoveFromWaitingCollection(connection);
             CallService.AddInJoinedCollection(connection);
         }
 
-        private void RegistrATSEvents()
+        private void RegistrationAtsEvents()
         {
             foreach (var terminal in TerminalService.Terminals.ToList())
             {
@@ -49,30 +50,32 @@ namespace task3EPAMCourse.ATS.Model
                 {
                     TerminalCalling(connections);
                 };
-                terminal.AceptCall += (sender, connection) =>
+                terminal.AcceptCall += (sender, connection) =>
                 {
-                    TerminalAcepting(connection);
+                    TerminalAccepting(connection);
                 };
                 terminal.StopCall += (sender, connection) =>
                 {
-                    TerminalStoping(connection);
+                    TerminalStopping(connection);
                 };
                 terminal.DropCall += (sender, connection) =>
                 {
-                    TerminalDroping(connection);
+                    TerminalDropping(connection);
                 };
                 terminal.ChangePortCondition += (sender, condition) => 
                 {
-                    var terminal = sender as Terminal;
-                    var port = terminal.Port;
-                    port.ChangeCondition(condition);
+                    if (sender is Terminal chosenTerminal)
+                    {
+                        var port = chosenTerminal.Port;
+                        port.ChangeCondition(condition);
+                    }
                 };
             }
         }
 
-        public ICaller CreateContract(int callerNumber, IUIManager uiManager)
+        public ICaller CreateContract(int callerNumber, IUiManager uiManager)
         {
-            var terminal = TerminalService.GetAvaibleTerminal();
+            var terminal = TerminalService.GetAvailableTerminal();
             var port = PortService.GetFreePort();
             if (terminal != null && port != null)
             {

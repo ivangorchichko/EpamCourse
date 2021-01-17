@@ -5,25 +5,25 @@ using task3EPAMCourse.ATS.Contracts;
 using task3EPAMCourse.ATS.Model;
 using task3EPAMCourse.Billing.Contracts;
 using task3EPAMCourse.Billing.Enums;
-using task3EPAMCourse.Billing.JsonService;
+using task3EPAMCourse.Billing.FileService;
 
 namespace task3EPAMCourse.Billing.Model
 {
     public class BillingSystem : IBilling
     {
-        private IATS _ats;
-        private static JsonFileService _json = new JsonFileService();
-        private IList<CallInfo> _callsInfoCollection = new List<CallInfo>();
-        private Contract _contract = new Contract();
+        private readonly IAts _ats;
+        private readonly JsonRepository _jsonRepository = new JsonRepository();
+        private readonly IList<CallInfo> _callsInfoCollection = new List<CallInfo>();
+        private readonly Contract _contract = new Contract();
         private CallInfo _callInfo;
 
-        public BillingSystem(IATS ATS)
+        public BillingSystem(IAts ats)
         {
-            _ats = ATS;
-            RegistrEvents();
+            _ats = ats;
+            RegistrationEvents();
         }
 
-        private void RegistrEvents()
+        private void RegistrationEvents()
         {
             foreach (var terminal in _ats.TerminalService.Terminals.ToList())
             {
@@ -48,12 +48,14 @@ namespace task3EPAMCourse.Billing.Model
                 .Select(x => x).FirstOrDefault();
             if (callInfo == null || callInfo.Cost != 0.0)
             {
-                _callInfo = new CallInfo();
-                _callInfo.User = connection.Caller;
-                _callInfo.From = connection.Caller;
-                _callInfo.To = connection.Answer;
-                _callInfo.DateTimeStart = DateTime.Now;
-                _callInfo.CallType = CallType.Incoming;
+                _callInfo = new CallInfo
+                {
+                    User = connection.Caller,
+                    From = connection.Caller,
+                    To = connection.Answer,
+                    DateTimeStart = DateTime.Now,
+                    CallType = CallType.Incoming
+                };
                 _callsInfoCollection.Add(_callInfo);
             }
         }
@@ -64,9 +66,11 @@ namespace task3EPAMCourse.Billing.Model
                 .Select(x => x).Last();
             callInfo.Duration = TimeSpan.Zero;
             callInfo.Cost = 0.0;
-            var secondSideCallInfo = new CallInfo(callInfo);
-            secondSideCallInfo.User = callInfo.To;
-            secondSideCallInfo.CallType = CallType.Skipped;
+            var secondSideCallInfo = new CallInfo(callInfo)
+            {
+                User = callInfo.To,
+                CallType = CallType.Skipped
+            };
             _callsInfoCollection.Add(secondSideCallInfo);
         }
 
@@ -76,41 +80,43 @@ namespace task3EPAMCourse.Billing.Model
                 .Select(x => x).Last();
             callInfo.Duration = DateTime.Now - _callInfo.DateTimeStart;
             callInfo.Cost = _callInfo.Duration.TotalSeconds * _contract.Rate;
-            var secondSideCallInfo = new CallInfo(callInfo);
-            secondSideCallInfo.User = callInfo.To;
-            secondSideCallInfo.CallType = CallType.Outgoing;
+            var secondSideCallInfo = new CallInfo(callInfo)
+            {
+                User = callInfo.To,
+                CallType = CallType.Outgoing
+            };
             _callsInfoCollection.Add(secondSideCallInfo);
         }
 
-        private IEnumerable<CallInfo> SaveCallInfoCallection()
+        private IEnumerable<CallInfo> SaveCallInfoCollection()
         {
-            if (_json.GetCurrentCallInfo() == null)
+            if (_jsonRepository.GetCurrentCallInfo() == null)
             {
-                _json.SaveFile(_callsInfoCollection);
-                _json.IsSaved = true;
+                _jsonRepository.SaveFile(_callsInfoCollection);
+                _jsonRepository.IsSequenceSavedOnce = true;
                 return _callsInfoCollection;
             }
             else
-            if (_json.IsSaved != true)
+            if (_jsonRepository.IsSequenceSavedOnce != true)
             {
-                var callsInfoCollection = _callsInfoCollection.Union(_json.GetCurrentCallInfo()).ToList();
-                _json.SaveFile(callsInfoCollection);
-                _json.IsSaved = true;
+                var callsInfoCollection = _callsInfoCollection.Union(_jsonRepository.GetCurrentCallInfo()).ToList();
+                _jsonRepository.SaveFile(callsInfoCollection);
+                _jsonRepository.IsSequenceSavedOnce = true;
                 return callsInfoCollection;
             }
-            else return _json.GetCurrentCallInfo();
+            else return _jsonRepository.GetCurrentCallInfo();
 
         }
 
         public IEnumerable<CallInfo> GetCalls()
         {
-            return SaveCallInfoCallection()
+            return SaveCallInfoCollection()
                 .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
         }
 
         public IEnumerable<CallInfo> GetUserCallsOrderedBy(ICaller caller, OrderSequenceType orderType)
         {
-            var callsInfoCollection = SaveCallInfoCallection()
+            var callsInfoCollection = SaveCallInfoCollection()
                .Where(x => x.DateTimeStart.Date >= DateTime.Now.AddMonths(-1).Date);
             switch (orderType)
             {

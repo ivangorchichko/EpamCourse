@@ -3,8 +3,8 @@
     public enum TerminalOperations
     {
         Calling,
-        Acepting,
-        Droping,
-        Stoping
+        Accepting,
+        Dropping,
+        Stopping
     }
 }

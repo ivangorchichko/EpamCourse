@@ -3,6 +3,6 @@
     public enum TerminalCondition
     {
         IsUsed,
-        Avaible
+        Available
     }
 }

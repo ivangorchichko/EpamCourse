@@ -1,6 +1,7 @@
-﻿using task3EPAMCourse.ATS.Enums;
+﻿using task3EPAMCourse.ATS.Contracts;
+using task3EPAMCourse.ATS.Enums;
 
-namespace task3EPAMCourse.ATS.Contracts
+namespace task3EPAMCourse.Billing.Contracts
 {
     public interface ICaller
     {

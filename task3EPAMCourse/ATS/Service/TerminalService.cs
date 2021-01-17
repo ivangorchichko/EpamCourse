@@ -15,16 +15,16 @@ namespace task3EPAMCourse.ATS.Service
         {
             Terminals = new List<ITerminal>()
             {
-                 new Terminal("001", TerminalCondition.Avaible, autoTelephoneStation),
-                 new Terminal("002", TerminalCondition.Avaible, autoTelephoneStation),
-                 new Terminal("003", TerminalCondition.Avaible, autoTelephoneStation),
-                 new Terminal("004", TerminalCondition.Avaible, autoTelephoneStation)
+                 new Terminal("001", TerminalCondition.Available, autoTelephoneStation),
+                 new Terminal("002", TerminalCondition.Available, autoTelephoneStation),
+                 new Terminal("003", TerminalCondition.Available, autoTelephoneStation),
+                 new Terminal("004", TerminalCondition.Available, autoTelephoneStation)
             };
         }
 
-        public ITerminal GetAvaibleTerminal()
+        public ITerminal GetAvailableTerminal()
         {
-            var terminal = Terminals.Where(terminal => terminal.TerminalCondition == TerminalCondition.Avaible).FirstOrDefault();
+            var terminal = Terminals.FirstOrDefault(availableTerminal => availableTerminal.TerminalCondition == TerminalCondition.Available);
             if (terminal != null)
             {
                 return terminal;

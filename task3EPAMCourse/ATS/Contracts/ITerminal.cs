@@ -1,13 +1,14 @@
 ﻿using System;
 using task3EPAMCourse.ATS.Enums;
 using task3EPAMCourse.ATS.Model;
+using task3EPAMCourse.Billing.Contracts;
 
 namespace task3EPAMCourse.ATS.Contracts
 {
     public interface ITerminal
     {
         event EventHandler<TerminalConnectionsEventArgs> Call;
-        event EventHandler<TerminalConnectionsEventArgs> AceptCall;
+        event EventHandler<TerminalConnectionsEventArgs> AcceptCall;
         event EventHandler<TerminalConnectionsEventArgs> StopCall;
         event EventHandler<TerminalConnectionsEventArgs> DropCall;
         event EventHandler<PortCondition> ChangePortCondition;
@@ -26,7 +27,7 @@ namespace task3EPAMCourse.ATS.Contracts
 
         void Calling(ICaller phone);
 
-        void AceptCalling(ICaller caller);
+        void AcceptCalling(ICaller caller);
 
         void StopCalling(ICaller secondCaller);
 

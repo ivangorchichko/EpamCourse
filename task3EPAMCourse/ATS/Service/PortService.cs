@@ -9,7 +9,7 @@ namespace task3EPAMCourse.ATS.Service
 {
     public class PortService : IPortService
     {
-        private IEnumerable<IPort> _ports = new List<IPort>()
+        private readonly IEnumerable<IPort> _ports = new List<IPort>()
             {
                  new Port(3301, PortCondition.Off),
                  new Port(3302, PortCondition.Off),
@@ -17,14 +17,9 @@ namespace task3EPAMCourse.ATS.Service
                  new Port(3304, PortCondition.Off)
             };
 
-        public IEnumerable<IPort> GetPorts()
-        {
-            return _ports;
-        }
-
         public IPort GetFreePort()
         {
-            var port = _ports.Where(port => port.Condition == PortCondition.Off).FirstOrDefault();
+            var port = _ports.FirstOrDefault(freePort => freePort.Condition == PortCondition.Off);
             if (port != null)
             {
                 return port;

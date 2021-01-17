@@ -4,13 +4,13 @@ using System.IO;
 using System.Text;
 using task3EPAMCourse.Billing.Model;
 
-namespace task3EPAMCourse.Billing.JsonService
+namespace task3EPAMCourse.Billing.FileService
 {
-    public class JsonFileService
+    public class JsonRepository
     {
         private static readonly string _saveFilePath = @"Data\SavedBilling.json";
 
-        public bool IsSaved = false;
+        public bool IsSequenceSavedOnce = false;
 
         public void SaveFile(IList<CallInfo> callsInfoCollection)
         {

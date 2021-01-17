@@ -5,7 +5,7 @@ namespace task3EPAMCourse.ATS.Model
 {
     public class Port : IPort
     {
-        public int PortNumber { get; }
+        private int PortNumber { get; }
 
         public PortCondition Condition { get; private set; }
 

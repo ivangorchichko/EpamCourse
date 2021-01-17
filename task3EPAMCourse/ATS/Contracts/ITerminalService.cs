@@ -6,6 +6,6 @@ namespace task3EPAMCourse.ATS.Contracts
     {
         IEnumerable<ITerminal> Terminals { get; }
 
-        ITerminal GetAvaibleTerminal();
+        ITerminal GetAvailableTerminal();
     }
 }
