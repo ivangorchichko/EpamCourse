@@ -24,7 +24,8 @@ namespace Task3EPAMCourse.ATS.Service
 
         public ITerminal GetAvailableTerminal()
         {
-            var terminal = Terminals.FirstOrDefault(availableTerminal => availableTerminal.TerminalCondition == TerminalCondition.Available);
+            var terminal = Terminals
+                .FirstOrDefault(availableTerminal => availableTerminal.TerminalCondition == TerminalCondition.Available);
             if (terminal != null)
             {
                 return terminal;
