@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Task4.DAL.Repositories.Contracts;
-using Task4.DAL.Repositories.Context;
+using Task4.DAL.DbContext;
 
 namespace Task4.DAL.Repositories.Model
 {
@@ -50,11 +50,6 @@ namespace Task4.DAL.Repositories.Model
         public void Reload(TEntity entity)
         {
             _context.Entry<TEntity>(entity).Reload();
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
         }
     }
 }

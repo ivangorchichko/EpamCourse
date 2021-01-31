@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +16,9 @@ namespace Task4.DomainModel.DataModel
 
         public DateTime Date { get; set; }
 
-        public ClientEntity Client { get; set; }
+        public virtual ClientEntity Client { get; set; }
 
-        public ICollection<ProductEntity> Products { get; set; }
+        public virtual ProductEntity Product { get; set; }
+
     }
 }

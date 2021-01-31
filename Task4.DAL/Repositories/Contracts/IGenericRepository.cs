@@ -17,6 +17,5 @@ namespace Task4.DAL.Repositories.Contracts
         void Remove(TEntity entity);
         void Attach(TEntity entity);
         void Reload(TEntity entity);
-        void Save();
     }
 }
