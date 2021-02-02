@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Task4.BL\Task4.BL.csproj">
-      <Project>{F913AF1E-85D4-458A-9A3E-5AECE12F82EA}</Project>
+      <Project>{f913af1e-85d4-458a-9a3e-5aece12f82ea}</Project>
       <Name>Task4.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Task4.ConsoleClient\Task4.ConsoleClient.csproj">
