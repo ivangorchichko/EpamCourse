@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DAL.DbContext;
 
@@ -49,7 +46,7 @@ namespace Task4.DAL.Repositories.Model
 
         public void Reload(TEntity entity)
         {
-            _context.Entry<TEntity>(entity).Reload();
+            _context.Entry(entity).Reload();
         }
     }
 }

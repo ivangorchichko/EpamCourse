@@ -5,6 +5,6 @@ namespace Task4.BL.Contracts
 {
     public interface ICsvParser
     {
-        IEnumerable<PurchaseDTO> ParseCsvFile(string filePath);
+        IEnumerable<PurchaseDto> ParseCsvFile(string filePath);
     }
 }

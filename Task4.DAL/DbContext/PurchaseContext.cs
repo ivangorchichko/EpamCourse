@@ -5,7 +5,7 @@ namespace Task4.DAL.DbContext
 {
     public class PurchaseContext: System.Data.Entity.DbContext
     {
-        public PurchaseContext() : base()
+        public PurchaseContext() : base("SalesDataModelContainer")
         {
 
         }
@@ -15,21 +15,5 @@ namespace Task4.DAL.DbContext
         public DbSet<PurchaseEntity> Purchases { get; set; }
 
         public DbSet<ProductEntity> Products { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<PurchaseEntity>()
-                .HasRequired(s => s.Client)
-                .WithRequiredPrincipal(ad => ad.Purchase);
-            modelBuilder.Entity<PurchaseEntity>()
-                .HasRequired(s => s.Product)
-                .WithRequiredPrincipal(ad => ad.Purchase);
-            //modelBuilder.Entity<ProductEntity>()
-            //    .HasRequired(s => s.Purchase)
-            //    .WithRequiredPrincipal(ad => ad.Product);
-            //modelBuilder.Entity<ClientEntity>()
-            //    .HasRequired(s => s.Purchase)
-            //    .WithRequiredPrincipal(ad => ad.Client);
-        }
     }
 }
