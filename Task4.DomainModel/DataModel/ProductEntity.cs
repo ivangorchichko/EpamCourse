@@ -7,5 +7,9 @@
         public string ProductName { get; set; }
 
         public double Price { get; set; }
+
+        public int PurchaseId { get; set; }
+
+        public PurchaseEntity Purchase { get; set; }
     }
 }
