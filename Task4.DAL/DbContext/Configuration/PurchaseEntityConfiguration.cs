@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.ModelConfiguration;
 using Task4.DomainModel.DataModel;
 
 namespace Task4.DAL.DbContext.Configuration
@@ -12,21 +7,15 @@ namespace Task4.DAL.DbContext.Configuration
     {
         public PurchaseEntityConfiguration()
         {
-            this.ToTable("SalesDataModelContainer");
+            this.ToTable("dbo.Purchase");
 
             this.HasKey(p => p.Id);
 
-            this.Property(p => p.Date)
-                .HasColumnName("Data")
-                .HasColumnType("datetime2");
-
             this.HasRequired(p => p.Client)
-                .WithRequiredDependent(c => c.Purchase)
-                .Map(cp => cp.MapKey("ClientId"));
+                .WithRequiredPrincipal(c => c.Purchase);
 
             this.HasRequired(pro => pro.Product)
-                .WithRequiredDependent(pur => pur.Purchase)
-                .Map(pp => pp.MapKey("ProductId"));
+                .WithRequiredPrincipal(pur => pur.Purchase);
         }
     }
 }

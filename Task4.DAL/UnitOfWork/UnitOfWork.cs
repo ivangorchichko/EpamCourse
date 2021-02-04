@@ -7,15 +7,15 @@ using Task4.DomainModel.DataModel;
 
 namespace Task4.DAL.UnitOfWork
 {
-    public sealed class UnitOfWork : IUnitOfWork
+    public sealed class UnitOfWork: IUnitOfWork 
     {
         public UnitOfWork(PurchaseContext context)
         {
             _context = context;
-            _purchaseRepository = new GenericRepository<PurchaseEntity>(context);
+            _purchaseRepository = new Repository(context);
         }
 
-        private readonly IGenericRepository<PurchaseEntity> _purchaseRepository;
+        private readonly IRepository _purchaseRepository;
         private readonly PurchaseContext _context;
         private bool _disposed;
 
@@ -27,7 +27,11 @@ namespace Task4.DAL.UnitOfWork
                 Product = product,
                 Date = date,
             };
-            _purchaseRepository.Add(purchase);
+            purchase.Client.PurchaseId = purchase.Id;
+            purchase.Product.PurchaseId = purchase.Id;
+            purchase.ClientId = purchase.Client.Id;
+            purchase.ProductId = purchase.Product.Id;
+            _purchaseRepository.Add<PurchaseEntity>(purchase);
         }
 
         public void SaveContext()

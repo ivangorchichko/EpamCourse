@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Task4.DAL.DbContext.Configuration;
+
 using Task4.DomainModel.DataModel;
 
 namespace Task4.DAL.DbContext
@@ -8,7 +9,7 @@ namespace Task4.DAL.DbContext
     {
         public PurchaseContext() : base("SalesDataModelContainer")
         {
-
+             Database.SetInitializer(new MigrateDatabaseToLatestVersion<PurchaseContext, Migrations.Configuration>());
         }
 
         public DbSet<ClientEntity> Clients { get; set; }

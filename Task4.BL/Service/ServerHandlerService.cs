@@ -59,7 +59,7 @@ namespace Task4.BL.Service
                 {
                     _unitOfWork.AddNewPurchase
                     (
-                        new ClientEntity() {ClientName = purchase.Client,},
+                        new ClientEntity() {ClientName = purchase.Client},
                         new ProductEntity() {ProductName = purchase.Product, Price = purchase.Price,},
                         purchase.Date
                     );
