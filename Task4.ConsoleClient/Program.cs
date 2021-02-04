@@ -3,6 +3,9 @@ using System.IO;
 using System.Configuration;
 using Task4.BL.Contracts;
 using Task4.BL.Service;
+using Task4.DAL.DbContext;
+using Task4.DAL.UnitOfWork;
+using Task4.DomainModel.DataModel;
 
 namespace Task4.ConsoleClient
 {

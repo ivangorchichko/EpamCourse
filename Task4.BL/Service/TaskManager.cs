@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService;
-using Task4.DAL.DbContext;
 using Task4.DAL.UnitOfWork;
 using Task4.DAL.UnitOfWork.Contacts;
 
@@ -20,13 +19,12 @@ namespace Task4.BL.Service
             _semaphore = new SemaphoreSlim(tasksCount);
         }
 
- //       private readonly CustomTaskScheduler _scheduler;
         private readonly CancellationTokenSource _cancellationToken;
-        private ICsvParser _parser;
-        private IUnitOfWork _UoW;
-        private PurchaseContext _context;
-        private ICatalogHandler _catalogHandler;
-        private SemaphoreSlim _semaphore;
+        private readonly ICsvParser _parser = new CsvParser();
+        private readonly IUnitOfWork _uoW;
+        private readonly ICatalogHandler _catalogHandler =
+            new CatalogHandler(ConfigurationManager.AppSettings.Get("serviceFolder"));
+        private readonly SemaphoreSlim _semaphore;
         private bool _disposed;
 
         public void Dispose(bool disposing)
@@ -46,14 +44,9 @@ namespace Task4.BL.Service
 
         private void RunTasks(object e, FileSystemEventArgs args)
         {
-            _parser = new CsvParser();
-            _context = new PurchaseContext();
-            _UoW = new UnitOfWork(_context);
-            _catalogHandler = new CatalogHandler(ConfigurationManager.AppSettings.Get("serviceFolder"));
-
             var task = new Task(() =>
             {
-                IServerHandlerService serverService = new ServerHandlerService(_parser, _UoW, _catalogHandler);
+                IServerHandlerService serverService = new ServerHandlerService(_parser, _uoW, _catalogHandler);
                 _semaphore.Wait();
                 try
                 {

@@ -12,7 +12,7 @@ namespace Task4.WindowsService
             = new CatalogWatcher(new FileSystemWatcher(ConfigurationManager.AppSettings.Get("sourceFolder")));
 
         private static readonly ITaskManager Manager
-            = new TaskManager(new CustomTaskScheduler(3), Watcher);
+            = new TaskManager(3, Watcher);
         public Service1()
         {
             InitializeComponent();

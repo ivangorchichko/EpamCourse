@@ -1,37 +1,29 @@
-﻿using System;
-using Task4.DAL.DbContext;
+﻿using Task4.DAL.DbContext;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DAL.Repositories.Model;
 using Task4.DAL.UnitOfWork.Contacts;
-using Task4.DomainModel.DataModel;
 
 namespace Task4.DAL.UnitOfWork
 {
-    public sealed class UnitOfWork: IUnitOfWork 
+    public sealed class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork(PurchaseContext context)
-        {
-            _context = context;
-            _purchaseRepository = new Repository(context);
-        }
-
-        private readonly IRepository _purchaseRepository;
-        private readonly PurchaseContext _context;
+        private IRepository _repository;
+        private readonly PurchaseContext _context = new PurchaseContext();
         private bool _disposed;
 
-        public void AddNewPurchase(ClientEntity client, ProductEntity product, DateTime date)
+        public IRepository Repository
         {
-            var purchase = new PurchaseEntity
+            get
             {
-                Client = client,
-                Product = product,
-                Date = date,
-            };
-            purchase.Client.PurchaseId = purchase.Id;
-            purchase.Product.PurchaseId = purchase.Id;
-            purchase.ClientId = purchase.Client.Id;
-            purchase.ProductId = purchase.Product.Id;
-            _purchaseRepository.Add<PurchaseEntity>(purchase);
+                if (_repository != null)
+                {
+                    return _repository;
+                }
+                else
+                {
+                   return _repository = new Repository(_context);
+                }
+            }
         }
 
         public void SaveContext()

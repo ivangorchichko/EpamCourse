@@ -1,4 +1,5 @@
 ﻿using System;
+using Task4.DAL.Repositories.Contracts;
 using Task4.DomainModel.DataModel;
 
 namespace Task4.DAL.UnitOfWork.Contacts
@@ -7,6 +8,6 @@ namespace Task4.DAL.UnitOfWork.Contacts
     {
         void SaveContext();
         void Dispose(bool disposing);
-        void AddNewPurchase(ClientEntity client, ProductEntity product, DateTime date);
+        IRepository Repository { get; }
     }
 }
