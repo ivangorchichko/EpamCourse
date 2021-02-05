@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Serilog;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService.Model;
 using Task4.DAL.DbContext;
@@ -10,18 +11,20 @@ using Task4.DomainModel.DataModel;
 
 namespace Task4.BL.Service
 {
-    public class ServerOperations : IServerHandlerService
+    public class ServerOperations : IServerOperations
     {
         private readonly ICsvParser _parser;
         private readonly IRepository _repository;
         private readonly ICatalogHandler _catalogHandler;
+        private readonly ILogger _logger;
         private readonly object _lockObj = new object();
 
-        public ServerOperations(ICsvParser parser, IRepository repository, ICatalogHandler catalogHandler)
+        public ServerOperations(ICsvParser parser, IRepository repository, ICatalogHandler catalogHandler, ILogger logger)
         {
             _parser = parser;
             _repository = repository;
             _catalogHandler = catalogHandler;
+            _logger = logger;
         }
 
         public void StartOperations(FileSystemEventArgs args)
@@ -29,11 +32,12 @@ namespace Task4.BL.Service
             try
             {
                 SaveDtoToDb(ParseCsvFile(args.FullPath));
+                _logger.Debug("Purchases added to Db");
                 MoveFile(args.FullPath, args.Name);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception in operation " + e);
+                _logger.Error("Exception in operation " + e);
                 throw;
             }
         }
@@ -42,11 +46,13 @@ namespace Task4.BL.Service
         {
             try
             {
-                return _parser.ParseCsvFile(path);
+                var DtoCollection = _parser.ParseCsvFile(path);
+                _logger.Debug("Parsing completed");
+                return DtoCollection;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception in parsing " + e);
+                _logger.Error("Exception in parsing " + e);
                 throw;
             }
         }
@@ -62,28 +68,37 @@ namespace Task4.BL.Service
                     {
                         _repository.Add(purchase);
                     }
-                    Console.WriteLine($"Purchase added, client = {purchaseDto.Client}, product = {purchaseDto.Product}");
+                    _logger.Verbose($"Purchase added, client = {purchaseDto.Client}, product = {purchaseDto.Product}");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Purchase not valid" + e);
+                    _logger.Error("Purchase not valid " + e);
                 }
             }
         }
 
         private void MoveFile(string filePath, string fileName)
         {
-            _catalogHandler.MoveFile(
-                filePath.Remove(
-                    filePath.IndexOf(fileName, StringComparison.Ordinal),
-                    fileName.Length),
-                fileName);
+            try
+            {
+                _catalogHandler.MoveFile(
+                           filePath.Remove(
+                               filePath.IndexOf(fileName, StringComparison.Ordinal),
+                               fileName.Length),
+                           fileName);
+                _logger.Debug("File directory was change");
+            }
+            catch (Exception e)
+            {
+                _logger.Error("File can not change directory " + e);
+            }
+
         }
 
         private PurchaseEntity CreatePurchase(PurchaseDto purchaseDto)
         {
             var purchase = new PurchaseEntity();
-           
+
             var product = _repository.
                 Get<ProductEntity>(c => c.ProductName == purchaseDto.Product)
                 .FirstOrDefault();
@@ -97,7 +112,7 @@ namespace Task4.BL.Service
             }
             else
             {
-                purchase.Client = new ClientEntity() {ClientName = purchaseDto.Client};
+                purchase.Client = new ClientEntity() { ClientName = purchaseDto.Client };
             }
             if (product != null)
             {
@@ -105,7 +120,7 @@ namespace Task4.BL.Service
             }
             else
             {
-                purchase.Product = new ProductEntity() {ProductName = purchaseDto.Product, Price = purchaseDto.Price};
+                purchase.Product = new ProductEntity() { ProductName = purchaseDto.Product, Price = purchaseDto.Price };
             }
             purchase.Date = purchaseDto.Date;
 

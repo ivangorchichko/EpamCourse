@@ -2,7 +2,7 @@
 
 namespace Task4.BL.Contracts
 {
-    public interface IServerHandlerService
+    public interface IServerOperations
     {
         void StartOperations(FileSystemEventArgs args);
     }

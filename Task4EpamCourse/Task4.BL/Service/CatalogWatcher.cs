@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Serilog;
 using Task4.BL.Contracts;
 
 namespace Task4.BL.Service
@@ -7,9 +8,11 @@ namespace Task4.BL.Service
     public sealed class CatalogWatcher : ICatalogWatcher
     {
         private readonly FileSystemWatcher _watcher;
-        public CatalogWatcher(FileSystemWatcher watcher)
+        private readonly ILogger _logger;
+        public CatalogWatcher(FileSystemWatcher watcher, ILogger logger)
         {
             _watcher = watcher;
+            _logger = logger;
             _watcher.Created += OnNewFileCreated;
         }
 
@@ -40,14 +43,14 @@ namespace Task4.BL.Service
 
         private void OnNewFileCreated(object source, FileSystemEventArgs e)
         {
-            Console.WriteLine($"File: {e.Name} {e.ChangeType}");
+            _logger.Verbose($"File: {e.Name} {e.ChangeType}");
             NewFileCreated?.Invoke(source, e);
         }
 
         private void OnWatcherStopped(object sender)
         {
-            Console.WriteLine("Watcher stopped");
             WatcherStopped?.Invoke(sender, EventArgs.Empty);
+            _logger.Verbose("Watcher stopped");
         }
     }
 }

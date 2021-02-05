@@ -4,27 +4,35 @@ using System.Data.Entity;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using Serilog;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService;
+using Task4.BL.DependenciesConfig;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DAL.Repositories.Model;
+using Serilog.Core;
 
 namespace Task4.BL.Service
 {
     public sealed class TaskManager : ITaskManager
     {
+        private readonly IContainer _container = AutofucConfig.ConfigureContainer();
         private readonly ICsvParser _parser = new CsvParser();
         private readonly IRepository _repository;
         private readonly ICatalogHandler _catalogHandler =
-            new CatalogHandler(ConfigurationManager.AppSettings.Get("serviceFolder"));
+            new CatalogHandler(ConfigurationManager.AppSettings.Get("processedFolder"));
+
+        private readonly ILogger _logger;
         private readonly SemaphoreSlim _semaphore;
         private readonly CancellationTokenSource _cancellationToken;
 
-        public TaskManager(int tasksCount, ICatalogWatcher watcher, DbContext context)
+        public TaskManager(int tasksCount, ICatalogWatcher watcher, DbContext context, ILogger logger)
         {
             _cancellationToken = new CancellationTokenSource();
             _semaphore = new SemaphoreSlim(tasksCount);
             _repository = new Repository(context);
+            _logger = logger;
             watcher.NewFileCreated += RunTasks;
             watcher.WatcherStopped += TaskStopped;
         }
@@ -40,22 +48,24 @@ namespace Task4.BL.Service
         {
             var task = new Task(() =>
             {
-                IServerHandlerService serverService = new ServerOperations(_parser, _repository, _catalogHandler);
+              //  var serverService = _container.Resolve<ServerOperations>();
+                IServerOperations serverService = new ServerOperations(_parser, _repository, _catalogHandler, _logger);
                 _semaphore.Wait();
                 try
                 {
                     if (!_cancellationToken.IsCancellationRequested)
                     {
                         serverService.StartOperations(args);
+                        _logger.Debug("Operations started");
                     }
                     else
                     {
-                        Console.WriteLine("Cancellation token is true");
+                        _logger.Warning("Cancellation token is true");
                     }
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
-                    throw new Exception("Operation failed");
+                    _logger.Error("Operation failed " + exception);
                 }
                 _semaphore.Release();
             }, _cancellationToken.Token);
@@ -64,7 +74,16 @@ namespace Task4.BL.Service
 
         private void TaskStopped(object e, EventArgs args)
         {
-            _cancellationToken.Cancel();
+            try
+            {
+                _cancellationToken.Cancel();
+                _logger.Debug("Task stopped");
+            }
+            catch (Exception exception)
+            {
+                _logger.Error("Can not stop task " + exception);
+            }
+           
         }
     }
 }
