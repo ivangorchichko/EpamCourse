@@ -12,6 +12,7 @@ using Task4.BL.DependenciesConfig;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DAL.Repositories.Model;
 using Serilog.Core;
+using Task4.DAL.DbContext;
 
 namespace Task4.BL.Service
 {
@@ -19,7 +20,7 @@ namespace Task4.BL.Service
     {
         private readonly IContainer _container = AutofucConfig.ConfigureContainer();
         private readonly ICsvParser _parser = new CsvParser();
-        private readonly IRepository _repository;
+        private IRepository _repository;
         private readonly ICatalogHandler _catalogHandler =
             new CatalogHandler(ConfigurationManager.AppSettings.Get("processedFolder"));
 
@@ -27,11 +28,10 @@ namespace Task4.BL.Service
         private readonly SemaphoreSlim _semaphore;
         private readonly CancellationTokenSource _cancellationToken;
 
-        public TaskManager(int tasksCount, ICatalogWatcher watcher, DbContext context, ILogger logger)
+        public TaskManager(int tasksCount, ICatalogWatcher watcher, ILogger logger)
         {
             _cancellationToken = new CancellationTokenSource();
             _semaphore = new SemaphoreSlim(tasksCount);
-            _repository = new Repository(context);
             _logger = logger;
             watcher.NewFileCreated += RunTasks;
             watcher.WatcherStopped += TaskStopped;
@@ -48,15 +48,17 @@ namespace Task4.BL.Service
         {
             var task = new Task(() =>
             {
-              //  var serverService = _container.Resolve<ServerOperations>();
-                IServerOperations serverService = new ServerOperations(_parser, _repository, _catalogHandler, _logger);
+                _repository = new Repository();
+                IServerOperations serverService =
+                    new ServerOperations(_parser, _repository, _catalogHandler, _logger);
+
                 _semaphore.Wait();
                 try
                 {
                     if (!_cancellationToken.IsCancellationRequested)
                     {
-                        serverService.StartOperations(args);
                         _logger.Debug("Operations started");
+                        serverService.StartOperations(args);
                     }
                     else
                     {
@@ -68,9 +70,10 @@ namespace Task4.BL.Service
                     _logger.Error("Operation failed " + exception);
                 }
                 _semaphore.Release();
+
             }, _cancellationToken.Token);
             task.Start();
-        }   
+        }
 
         private void TaskStopped(object e, EventArgs args)
         {
@@ -83,7 +86,6 @@ namespace Task4.BL.Service
             {
                 _logger.Error("Can not stop task " + exception);
             }
-           
         }
     }
 }

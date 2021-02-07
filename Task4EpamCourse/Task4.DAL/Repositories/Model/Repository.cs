@@ -11,9 +11,9 @@ namespace Task4.DAL.Repositories.Model
 {
     public class Repository : IRepository
     {
-        public Repository(Context context)
+        public Repository()
         {
-            _context = context;
+            _context = new PurchaseContext();
         }
 
         private readonly Context _context;

@@ -28,11 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            // 
-            // Service1
-            // 
-            this.ServiceName = "WindowsClient";
-
+            components = new System.ComponentModel.Container();
+            this.ServiceName = "Service1";
         }
 
         #endregion

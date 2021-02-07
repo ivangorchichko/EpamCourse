@@ -63,9 +63,9 @@ namespace Task4.BL.Service
             {
                 try
                 {
-                    var purchase = CreatePurchase(purchaseDto);
                     lock (_lockObj)
                     {
+                        var purchase = CreatePurchase(purchaseDto);
                         _repository.Add(purchase);
                     }
                     _logger.Verbose($"Purchase added, client = {purchaseDto.Client}, product = {purchaseDto.Product}");

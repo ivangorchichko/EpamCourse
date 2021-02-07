@@ -52,5 +52,10 @@ namespace Task4.BL.Service
             WatcherStopped?.Invoke(sender, EventArgs.Empty);
             _logger.Verbose("Watcher stopped");
         }
+
+        private bool IsValidFile(string file)
+        {
+            return true;
+        }
     }
 }

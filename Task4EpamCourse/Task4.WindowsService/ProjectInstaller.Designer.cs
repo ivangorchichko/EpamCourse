@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "WindowsClient";
+            this.serviceInstaller1.ServiceName = "Service1";
             // 
             // ProjectInstaller
             // 
