@@ -2,32 +2,29 @@
 using System.IO;
 using System.Configuration;
 using Serilog;
-using Serilog.Core;
 using Task4.BL.Contracts;
+using Task4.BL.CSVService;
+using Task4.BL.DependenciesConfig;
+using Task4.BL.Enum;
+using Task4.BL.Logger;
 using Task4.BL.Service;
-using Task4.DAL.DbContext;
-using Task4.DAL.Repositories.Model;
-using Task4.DomainModel.DataModel;
 
 namespace Task4.ConsoleClient
 {
     class Program
     {
-        private static readonly ILogger Logger = new LoggerConfiguration()
-            .MinimumLevel.Verbose()
-            .WriteTo.Console()
-            //.WriteTo.File(ConfigurationManager.AppSettings.Get("loggerFile"),
-            //    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-            .CreateLogger();
-
+        private static readonly ILogger Logger = LoggerFactory.GetLogger(LoggerType.Console);
+        private static readonly ICsvParser Parser = new CsvParser();
+        private static readonly FileSystemWatcher FileWatcher =
+            new FileSystemWatcher(ConfigurationManager.AppSettings.Get("receivedFolder"));
         private static readonly ICatalogWatcher Watcher
-            = new CatalogWatcher(new FileSystemWatcher(ConfigurationManager.AppSettings.Get("receivedFolder")), Logger);
-
+            = new CatalogWatcher(FileWatcher, Logger);
         private static readonly ITaskManager Manager
-            = new TaskManager(3, Watcher,  Logger);
+            = new TaskManager(Watcher,  Logger, Parser);
         
-        static void Main(string[] args)
+        static void Main()
         {
+            AutofacConfiguration.ConfigureContainer(LoggerType.Console);
             using (Watcher)
             using (Manager)
             {

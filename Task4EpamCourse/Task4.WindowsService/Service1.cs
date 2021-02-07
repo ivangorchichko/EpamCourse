@@ -1,53 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using Serilog;
 using Task4.BL.Contracts;
+using Task4.BL.CSVService;
+using Task4.BL.DependenciesConfig;
+using Task4.BL.Enum;
+using Task4.BL.Logger;
 using Task4.BL.Service;
 
 namespace Task4.WindowsService
 {
     public partial class Service1 : ServiceBase
     {
-        private static ILogger Logger;
-
-        private static ICatalogWatcher Watcher;
-        private static ITaskManager Manager;
+        private static ILogger _logger;
+        private static ICsvParser _parser;
+        private static ICatalogWatcher _watcher;
+        private static ITaskManager _manager;
         public Service1()
         {
+            _logger = LoggerFactory.GetLogger(LoggerType.File);
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args)
         {
-            Watcher
-                = new CatalogWatcher(new FileSystemWatcher(ConfigurationManager.AppSettings.Get("receivedFolder")), Logger);
-            Manager = new TaskManager(3, Watcher, Logger);
-            Logger = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .WriteTo.Console()
-                //.WriteTo.File(ConfigurationManager.AppSettings.Get("loggerFile"),
-                //    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-                .CreateLogger();
-            Logger.Verbose("Application started");
-            Watcher.Start();
+            _parser = new CsvParser();
+            _watcher
+                = new CatalogWatcher(new FileSystemWatcher(ConfigurationManager.AppSettings.Get("receivedFolder")), _logger);
+            _manager = new TaskManager( _watcher, _logger, _parser);
+            _logger.Verbose("Application started");
+            _watcher.Start();
             base.OnStart(args);
         }
 
         protected override void OnStop()
         {
-            Watcher.Stop();
-            Logger.Verbose("Application stopped");
-            Watcher.Dispose();
-            Manager.Dispose();
+            _watcher.Stop();
+            _logger.Verbose("Application stopped");
+            _watcher.Dispose();
+            _manager.Dispose();
             base.OnStop();
         }
     }

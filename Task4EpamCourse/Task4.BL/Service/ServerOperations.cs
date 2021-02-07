@@ -5,7 +5,6 @@ using System.Linq;
 using Serilog;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService.Model;
-using Task4.DAL.DbContext;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DomainModel.DataModel;
 
@@ -46,9 +45,9 @@ namespace Task4.BL.Service
         {
             try
             {
-                var DtoCollection = _parser.ParseCsvFile(path);
+                var dtoCollection = _parser.ParseCsvFile(path);
                 _logger.Debug("Parsing completed");
-                return DtoCollection;
+                return dtoCollection;
             }
             catch (Exception e)
             {

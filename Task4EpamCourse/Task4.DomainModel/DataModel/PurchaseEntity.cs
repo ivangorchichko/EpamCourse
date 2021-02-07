@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Task4.DomainModel.DataModel
 {
@@ -16,6 +15,5 @@ namespace Task4.DomainModel.DataModel
         public int ProductId { get; set; }
 
         public ProductEntity Product { get; set; }
-
     }
 }

@@ -1,40 +1,33 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.Entity;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac;
 using Serilog;
 using Task4.BL.Contracts;
-using Task4.BL.CSVService;
-using Task4.BL.DependenciesConfig;
 using Task4.DAL.Repositories.Contracts;
 using Task4.DAL.Repositories.Model;
-using Serilog.Core;
-using Task4.DAL.DbContext;
 
 namespace Task4.BL.Service
 {
     public sealed class TaskManager : ITaskManager
     {
-        private readonly IContainer _container = AutofucConfig.ConfigureContainer();
-        private readonly ICsvParser _parser = new CsvParser();
+        private readonly ICsvParser _parser;
         private IRepository _repository;
+        private readonly ILogger _logger;
         private readonly ICatalogHandler _catalogHandler =
             new CatalogHandler(ConfigurationManager.AppSettings.Get("processedFolder"));
-
-        private readonly ILogger _logger;
         private readonly SemaphoreSlim _semaphore;
         private readonly CancellationTokenSource _cancellationToken;
-
-        public TaskManager(int tasksCount, ICatalogWatcher watcher, ILogger logger)
+        private const int TasksCount = 3;
+        public TaskManager(ICatalogWatcher watcher, ILogger logger, ICsvParser parser)
         {
             _cancellationToken = new CancellationTokenSource();
-            _semaphore = new SemaphoreSlim(tasksCount);
+            _semaphore = new SemaphoreSlim(TasksCount);
             _logger = logger;
             watcher.NewFileCreated += RunTasks;
             watcher.WatcherStopped += TaskStopped;
+            _parser = parser;
         }
 
         public void Dispose()
@@ -51,7 +44,6 @@ namespace Task4.BL.Service
                 _repository = new Repository();
                 IServerOperations serverService =
                     new ServerOperations(_parser, _repository, _catalogHandler, _logger);
-
                 _semaphore.Wait();
                 try
                 {
@@ -70,7 +62,6 @@ namespace Task4.BL.Service
                     _logger.Error("Operation failed " + exception);
                 }
                 _semaphore.Release();
-
             }, _cancellationToken.Token);
             task.Start();
         }

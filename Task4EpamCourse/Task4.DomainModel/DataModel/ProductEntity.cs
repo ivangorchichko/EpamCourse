@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Task4.DomainModel.DataModel
+﻿namespace Task4.DomainModel.DataModel
 {
     public class ProductEntity
     {
