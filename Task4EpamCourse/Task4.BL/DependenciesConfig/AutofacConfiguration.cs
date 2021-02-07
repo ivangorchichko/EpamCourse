@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Serilog;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService;
 using Task4.BL.Enum;
@@ -23,12 +22,12 @@ namespace Task4.BL.DependenciesConfig
             {
                 case LoggerType.Console:
                 {
-                    builder.RegisterInstance<ILogger>(LoggerFactory.GetLogger(type));
+                    builder.RegisterInstance(LoggerFactory.GetLogger(type));
                     break;
                 }
                 case LoggerType.File:
                 {
-                    builder.RegisterInstance<ILogger>(LoggerFactory.GetLogger(type));
+                    builder.RegisterInstance(LoggerFactory.GetLogger(type));
                     break;
                 }
             }

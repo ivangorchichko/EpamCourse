@@ -4,7 +4,6 @@ using System.ServiceProcess;
 using Serilog;
 using Task4.BL.Contracts;
 using Task4.BL.CSVService;
-using Task4.BL.DependenciesConfig;
 using Task4.BL.Enum;
 using Task4.BL.Logger;
 using Task4.BL.Service;
