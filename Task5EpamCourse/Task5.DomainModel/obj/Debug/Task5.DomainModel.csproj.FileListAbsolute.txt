@@ -1,0 +1,12 @@
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\Task5.DomainModel.dll.config
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\Task5.DomainModel.dll
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\Task5.DomainModel.pdb
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\EntityFramework.dll
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\EntityFramework.SqlServer.dll
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\EntityFramework.xml
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\bin\Debug\EntityFramework.SqlServer.xml
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\obj\Debug\Task5.DomainModel.csproj.CoreCompileInputs.cache
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\obj\Debug\Task5.DomainModel.csproj.CopyComplete
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\obj\Debug\Task5.DomainModel.dll
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\obj\Debug\Task5.DomainModel.pdb
+D:\Course .Net\EpamTasks\EpamTasks\Task5EpamCourse\Task5.DomainModel\obj\Debug\Task5.DomainModel.csprojAssemblyReference.cache

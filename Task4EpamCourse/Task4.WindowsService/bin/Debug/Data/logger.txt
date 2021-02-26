@@ -1,0 +1,559 @@
+2021-02-06 18:49:36.353 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 18:49:36.397 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 18:49:36.484 +03:00 [DBG] Parsing completed
+2021-02-06 18:49:36.484 +03:00 [DBG] Parsing completed
+2021-02-06 18:49:36.571 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.580 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.592 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.602 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.611 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.623 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.631 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.640 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 18:49:36.642 +03:00 [DBG] Purchases added to Db
+2021-02-06 18:49:36.644 +03:00 [DBG] File directory was change
+2021-02-06 18:49:36.648 +03:00 [DBG] Operations started
+2021-02-06 18:59:05.724 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 18:59:05.754 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 18:59:05.834 +03:00 [DBG] Parsing completed
+2021-02-06 18:59:05.834 +03:00 [DBG] Parsing completed
+2021-02-06 19:01:36.254 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:01:36.291 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:01:36.370 +03:00 [DBG] Parsing completed
+2021-02-06 19:01:36.370 +03:00 [DBG] Parsing completed
+2021-02-06 19:01:36.429 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.437 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.445 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.454 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.463 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.472 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.480 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.488 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:01:36.492 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:01:36.493 +03:00 [DBG] File directory was change
+2021-02-06 19:01:36.494 +03:00 [DBG] Operations started
+2021-02-06 19:01:39.372 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:01:39.377 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:01:39.380 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:01:39.383 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:01:39.385 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:01:39.386 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:01:39.387 +03:00 [DBG] File directory was change
+2021-02-06 19:01:39.389 +03:00 [DBG] Operations started
+2021-02-06 19:02:34.678 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:03:05.870 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:03:05.871 +03:00 [DBG] Parsing completed
+2021-02-06 19:03:20.322 +03:00 [DBG] Parsing completed
+2021-02-06 19:03:20.365 +03:00 [ERR] Purchase not valid System.Data.Entity.Infrastructure.CommitFailedException: An error was reported while committing a database transaction but it could not be determined whether the transaction succeeded or failed on the database server. See the inner exception and http://go.microsoft.com/fwlink/?LinkId=313468 for more information. ---> System.Data.SqlClient.SqlException: Невозможно выполнить операцию транзакции, так как имеются ожидающие запросы, работающие в данной транзакции.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   в System.Data.SqlClient.TdsParser.TdsExecuteTransactionManagerRequest(Byte[] buffer, TransactionManagerRequestType request, String transactionName, TransactionManagerIsolationLevel isoLevel, Int32 timeout, SqlInternalTransaction transaction, TdsParserStateObject stateObj, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalConnectionTds.ExecuteTransactionYukon(TransactionRequest transactionRequest, String transactionName, IsolationLevel iso, SqlInternalTransaction internalTransaction, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalConnectionTds.ExecuteTransaction(TransactionRequest transactionRequest, String name, IsolationLevel iso, SqlInternalTransaction internalTransaction, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalTransaction.Commit()
+   в System.Data.SqlClient.SqlTransaction.Commit()
+   в System.Data.Entity.Infrastructure.Interception.DbTransactionDispatcher.<>c.<Commit>b__6_0(DbTransaction t, DbTransactionInterceptionContext c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbTransactionDispatcher.Commit(DbTransaction transaction, DbInterceptionContext interceptionContext)
+   в System.Data.Entity.Core.EntityClient.EntityTransaction.Commit()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:03:20.366 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:03:20.390 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:03:20.397 +03:00 [ERR] Purchase not valid System.Data.Entity.Core.EntityException: The underlying provider failed on Open. ---> System.InvalidOperationException: Подключение не было закрыто. Подключение устанавливается.
+   в System.Data.ProviderBase.DbConnectionClosedConnecting.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   в System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   в System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   в System.Data.SqlClient.SqlConnection.Open()
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<>c.<Open>b__13_0(DbConnection t, DbConnectionInterceptionContext c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.Open(DbConnection connection, DbInterceptionContext interceptionContext)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.<Open>b__55_0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass2_0.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   в System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:03:20.406 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:03:20.418 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:03:20.418 +03:00 [ERR] Purchase not valid System.Data.Entity.Core.EntityException: An error occurred while starting a transaction on the provider connection. See the inner exception for details. ---> System.InvalidOperationException: SqlConnection не поддерживает параллельные транзакции.
+   в System.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   в System.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   в System.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Common.DbConnection.BeginTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<>c.<BeginTransaction>b__4_0(DbConnection t, BeginTransactionInterceptionContext c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.BeginTransaction(DbConnection connection, BeginTransactionInterceptionContext interceptionContext)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.<>c__DisplayClass63_0.<BeginDbTransaction>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginTransaction()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:03:20.426 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:03:20.431 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:03:20.433 +03:00 [DBG] File directory was change
+2021-02-06 19:03:20.433 +03:00 [DBG] Operations started
+2021-02-06 19:03:20.433 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:03:20.438 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:03:20.451 +03:00 [VRB] Purchase added, client = John, product = beer
+2021-02-06 19:03:20.455 +03:00 [VRB] Purchase added, client = John, product = pizza
+2021-02-06 19:03:20.459 +03:00 [VRB] Purchase added, client = John, product = cake
+2021-02-06 19:03:20.459 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:03:20.460 +03:00 [DBG] File directory was change
+2021-02-06 19:03:20.461 +03:00 [DBG] Operations started
+2021-02-06 19:03:44.388 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:03:46.721 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:04:57.688 +03:00 [DBG] Parsing completed
+2021-02-06 19:04:58.457 +03:00 [DBG] Parsing completed
+2021-02-06 19:06:34.723 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:06:41.823 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:07:29.793 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:07:32.812 +03:00 [ERR] Purchase not valid System.Data.Entity.Core.EntityException: An error occurred while starting a transaction on the provider connection. See the inner exception for details. ---> System.InvalidOperationException: SqlConnection не поддерживает параллельные транзакции.
+   в System.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   в System.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   в System.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Common.DbConnection.BeginTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<>c.<BeginTransaction>b__4_0(DbConnection t, BeginTransactionInterceptionContext c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.BeginTransaction(DbConnection connection, BeginTransactionInterceptionContext interceptionContext)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.<>c__DisplayClass63_0.<BeginDbTransaction>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginTransaction()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:08:00.642 +03:00 [ERR] Purchase not valid System.Data.Entity.Core.EntityException: An error occurred while starting a transaction on the provider connection. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Новая транзакция не допускается, так как в данном сеансе запущены другие потоки.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   в System.Data.SqlClient.TdsParser.TdsExecuteTransactionManagerRequest(Byte[] buffer, TransactionManagerRequestType request, String transactionName, TransactionManagerIsolationLevel isoLevel, Int32 timeout, SqlInternalTransaction transaction, TdsParserStateObject stateObj, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalConnectionTds.ExecuteTransactionYukon(TransactionRequest transactionRequest, String transactionName, IsolationLevel iso, SqlInternalTransaction internalTransaction, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalConnectionTds.ExecuteTransaction(TransactionRequest transactionRequest, String name, IsolationLevel iso, SqlInternalTransaction internalTransaction, Boolean isDelegateControlRequest)
+   в System.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)
+   в System.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)
+   в System.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Common.DbConnection.BeginTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.<>c.<BeginTransaction>b__4_0(DbConnection t, BeginTransactionInterceptionContext c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.BeginTransaction(DbConnection connection, BeginTransactionInterceptionContext interceptionContext)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.<>c__DisplayClass63_0.<BeginDbTransaction>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)
+   в System.Data.Entity.Core.EntityClient.EntityConnection.BeginTransaction()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:08:01.637 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:08:03.395 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:08:03.789 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:08:04.267 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:08:04.467 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:08:04.678 +03:00 [DBG] File directory was change
+2021-02-06 19:08:05.026 +03:00 [DBG] Operations started
+2021-02-06 19:08:05.034 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The property 'Id' is part of the object's key information and cannot be modified. 
+   в System.Data.Entity.Core.Objects.EntityEntry.VerifyEntityValueIsEditable(StateManagerTypeMetadata typeMetadata, Int32 ordinal, String memberName)
+   в System.Data.Entity.Core.Objects.EntityEntry.GetAndValidateChangeMemberInfo(String entityMemberName, Object complexObject, String complexObjectMemberName, StateManagerTypeMetadata& typeMetadata, String& changingMemberName, Object& changingObject)
+   в System.Data.Entity.Core.Objects.EntityEntry.EntityMemberChanging(String entityMemberName, Object complexObject, String complexObjectMemberName)
+   в System.Data.Entity.Core.Objects.EntityEntry.EntityMemberChanging(String entityMemberName)
+   в System.Data.Entity.Core.Objects.ObjectStateEntry.System.Data.Entity.Core.Objects.DataClasses.IEntityChangeTracker.EntityMemberChanging(String entityMemberName)
+   в System.Data.Entity.Core.Objects.Internal.SnapshotChangeTrackingStrategy.SetCurrentValue(EntityEntry entry, StateManagerMemberMetadata member, Int32 ordinal, Object target, Object value)
+   в System.Data.Entity.Core.Objects.Internal.EntityWrapper`1.SetCurrentValue(EntityEntry entry, StateManagerMemberMetadata member, Int32 ordinal, Object target, Object value)
+   в System.Data.Entity.Core.Objects.EntityEntry.SetCurrentEntityValue(StateManagerTypeMetadata metadata, Int32 ordinal, Object userObject, Object newValue)
+   в System.Data.Entity.Core.Objects.ObjectStateEntryDbUpdatableDataRecord.SetRecordValue(Int32 ordinal, Object value)
+   в System.Data.Entity.Core.Mapping.Update.Internal.PropagatorResult.SetServerGenValue(Object value)
+   в System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.BackPropagateServerGen(List`1 generatedValues)
+   в System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   в System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<>c.<Update>b__21_0(UpdateTranslator ut)
+   в System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   в System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   в System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__153_0()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass148_0.<SaveChangesInternal>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в Task4.DAL.Repositories.Model.Repository.Add[TEntity](TEntity entity) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 35
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 69
+2021-02-06 19:08:05.675 +03:00 [VRB] Purchase added, client = John, product = beer
+2021-02-06 19:08:06.093 +03:00 [VRB] Purchase added, client = John, product = pizza
+2021-02-06 19:08:06.505 +03:00 [VRB] Purchase added, client = John, product = cake
+2021-02-06 19:08:06.785 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:08:06.826 +03:00 [DBG] File directory was change
+2021-02-06 19:08:07.058 +03:00 [DBG] Operations started
+2021-02-06 19:08:08.427 +03:00 [DBG] Task stopped
+2021-02-06 19:08:08.429 +03:00 [VRB] Watcher stopped
+2021-02-06 19:09:17.021 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:09:17.057 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:09:17.138 +03:00 [DBG] Parsing completed
+2021-02-06 19:09:17.138 +03:00 [DBG] Parsing completed
+2021-02-06 19:09:17.188 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.195 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.204 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.215 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.226 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.239 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.249 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.262 +03:00 [ERR] Purchase not valid System.InvalidOperationException: The context cannot be used while the model is being created. This exception may be thrown if the context is used inside the OnModelCreating method or if the same context instance is accessed by multiple threads concurrently. Note that instance members of DbContext and related classes are not guaranteed to be thread safe.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Task4.DAL.Repositories.Model.Repository.Get[TEntity](Expression`1 predicate) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.DAL\Repositories\Model\Repository.cs:строка 29
+   в Task4.BL.Service.ServerOperations.CreatePurchase(PurchaseDto purchaseDto) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 102
+   в Task4.BL.Service.ServerOperations.SaveDtoToDb(IEnumerable`1 parseCollection) в D:\Course .Net\EpamTasks\EpamTasks\Task4EpamCourse\Task4.BL\Service\ServerOperations.cs:строка 68
+2021-02-06 19:09:17.267 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:09:17.269 +03:00 [DBG] File directory was change
+2021-02-06 19:09:17.270 +03:00 [DBG] Operations started
+2021-02-06 19:09:19.779 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:09:19.787 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:09:19.794 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:09:19.802 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:09:19.810 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:09:19.812 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:09:19.813 +03:00 [DBG] File directory was change
+2021-02-06 19:09:19.816 +03:00 [DBG] Operations started
+2021-02-06 19:17:48.330 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:17:48.393 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:17:48.467 +03:00 [DBG] Parsing completed
+2021-02-06 19:17:48.467 +03:00 [DBG] Parsing completed
+2021-02-06 19:17:50.864 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:17:50.864 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:17:50.870 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:17:50.870 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:17:50.873 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:17:50.874 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:17:50.876 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:17:50.878 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:17:50.879 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:17:50.880 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:17:50.881 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:17:50.881 +03:00 [DBG] File directory was change
+2021-02-06 19:17:50.882 +03:00 [DBG] Operations started
+2021-02-06 19:17:50.886 +03:00 [VRB] Purchase added, client = John, product = beer
+2021-02-06 19:17:50.890 +03:00 [VRB] Purchase added, client = John, product = pizza
+2021-02-06 19:17:50.893 +03:00 [VRB] Purchase added, client = John, product = cake
+2021-02-06 19:17:50.893 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:17:50.894 +03:00 [DBG] File directory was change
+2021-02-06 19:17:50.895 +03:00 [DBG] Operations started
+2021-02-06 19:24:19.390 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-06 19:24:19.460 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-06 19:24:19.682 +03:00 [DBG] Parsing completed
+2021-02-06 19:24:19.682 +03:00 [DBG] Parsing completed
+2021-02-06 19:24:22.595 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:24:22.595 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-06 19:24:22.601 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:24:22.603 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:24:22.604 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-06 19:24:22.608 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:24:22.609 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-06 19:24:22.612 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:24:22.613 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-06 19:24:22.615 +03:00 [VRB] Purchase added, client = John, product = beer
+2021-02-06 19:24:22.616 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-06 19:24:22.616 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:24:22.618 +03:00 [DBG] File directory was change
+2021-02-06 19:24:22.619 +03:00 [DBG] Operations started
+2021-02-06 19:24:22.619 +03:00 [VRB] Purchase added, client = John, product = pizza
+2021-02-06 19:24:22.624 +03:00 [VRB] Purchase added, client = John, product = cake
+2021-02-06 19:24:22.625 +03:00 [DBG] Purchases added to Db
+2021-02-06 19:24:22.625 +03:00 [DBG] File directory was change
+2021-02-06 19:24:22.626 +03:00 [DBG] Operations started

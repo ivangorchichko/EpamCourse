@@ -1,0 +1,27 @@
+2021-02-07 20:40:30.282 +03:00 [VRB] Application started
+2021-02-07 20:41:18.208 +03:00 [VRB] File: Gorchichko_02022020.csv Created
+2021-02-07 20:41:18.245 +03:00 [VRB] File: Gorchichko_03012020.csv Created
+2021-02-07 20:41:18.472 +03:00 [DBG] Operations started
+2021-02-07 20:41:18.472 +03:00 [DBG] Operations started
+2021-02-07 20:41:18.548 +03:00 [DBG] Parsing completed
+2021-02-07 20:41:18.548 +03:00 [DBG] Parsing completed
+2021-02-07 20:41:20.872 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-07 20:41:20.872 +03:00 [VRB] Purchase added, client = John, product = juice
+2021-02-07 20:41:20.876 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-07 20:41:20.876 +03:00 [VRB] Purchase added, client = Mike, product = water
+2021-02-07 20:41:20.880 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-07 20:41:20.880 +03:00 [VRB] Purchase added, client = Jencen, product = soda
+2021-02-07 20:41:20.883 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-07 20:41:20.883 +03:00 [VRB] Purchase added, client = Lidia, product = coffee
+2021-02-07 20:41:20.886 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-07 20:41:20.886 +03:00 [VRB] Purchase added, client = Oleg, product = tea
+2021-02-07 20:41:20.886 +03:00 [DBG] Purchases added to Db
+2021-02-07 20:41:20.887 +03:00 [DBG] File directory was change
+2021-02-07 20:41:20.890 +03:00 [VRB] Purchase added, client = John, product = beer
+2021-02-07 20:41:20.892 +03:00 [VRB] Purchase added, client = John, product = pizza
+2021-02-07 20:41:20.895 +03:00 [VRB] Purchase added, client = John, product = cake
+2021-02-07 20:41:20.895 +03:00 [DBG] Purchases added to Db
+2021-02-07 20:41:20.895 +03:00 [DBG] File directory was change
+2021-02-07 20:43:18.334 +03:00 [DBG] Task stopped
+2021-02-07 20:43:18.334 +03:00 [VRB] Watcher stopped
+2021-02-07 20:43:18.334 +03:00 [VRB] Application stopped

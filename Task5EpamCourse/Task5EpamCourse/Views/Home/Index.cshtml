@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model IEnumerable<Task5EpamCourse.Models.Purchase.IndexPurchaseViewModel>
+
+<div class="jumbotron">
+    <h2>Приветствую вас на статистике продаж!</h2>
+</div>
+
+<div class="row">
+    <h3>Последние продажи!</h3>
+    @using (Ajax.BeginForm("Index", new AjaxOptions()))
+    {
+        <table class="table table-striped">
+            <thead class="bg-info">
+            <td><p>Клиент</p></td>
+            <td><p>Продукт</p></td>
+            <td><p>Цена</p></td>
+            <td><p>Дата</p></td>
+            </thead>
+            @for (int i = 3; i > 0; i--)
+            {
+                <tr>
+                    <td><p>@Model.ToList()[i].Client.ClientName</p></td>
+                    <td><p>@Model.ToList()[i].Product.ProductName</p></td>
+                    <td><p>@Model.ToList()[i].Product.Price</p></td>
+                    <td><p>@Model.ToList()[i].Date</p></td>
+                </tr>
+            }
+        </table>
+    }
+</div>

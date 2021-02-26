@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using Task5EpamCourse.PageHelper
+@using Task5.BL.Enums
+@model Task5EpamCourse.Models.Page.IndexPurchasesInPageViewModel
+
+<div class="jumbotron">
+    <h2>Все продажи</h2>
+</div>
+<div>
+    @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <div>
+            <table class="table">
+                <tr>
+                    <td>
+                        <div class="editor-label">
+                            <label>Введите строку фильтрации</label>
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("fieldString")
+                        </div>
+                        <div id="filter-radio-button">
+                            <input name="filter" type="radio" value=@TextFieldFilter.Default checked>
+                            <span>Нету</span><br>
+                            <input name="filter" type="radio" value=@TextFieldFilter.ProductName>
+                            <span>Имя продукта</span><br>
+                            <input name="filter" type="radio" value=@TextFieldFilter.ClientName>
+                            <span>Имя клиента</span><br>
+                            <input name="filter" type="radio" value=@TextFieldFilter.Date>
+                            <span>Дата</span><br>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Поиск" class="btn btn-success"/>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead class="bg-info">
+                <td><p>Клиент</p></td>
+                <td><p>Продукт</p></td>
+                <td><p>Дата</p></td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                        <p>@Html.ActionLink("Create", "Create")</p>
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                </thead>
+                @foreach (var b in Model.Purchases)
+                {
+                    <tr>
+                        <td><p>@b.Client.ClientName</p></td>
+                        <td><p>@b.Product.ProductName</p></td>
+                        <td><p>@b.Date</p></td>
+                        <td>
+                            @if (User.IsInRole("admin"))
+                            {
+                                @Html.ActionLink("Modify", "Modify", new { id = b.Id })
+                            }
+                            @Html.ActionLink("Details", "Details", new { id = @b.Id })
+                            @if (User.IsInRole("admin"))
+                            {
+                                @Html.ActionLink("Delete", "Delete", new { id = @b.Id })
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+            <br />
+            <div class="btn-group">
+                @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+            </div>
+        </div>
+    }
+</div>
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+
