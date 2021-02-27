@@ -19,10 +19,20 @@ namespace Task5.BL.MapperBLHelper
                     .ForPath(x => x.ClientName, o => o.MapFrom(z => z.ClientName))
                     .ForPath(x => x.ClientTelephone, y => y.MapFrom(z => z.ClientTelephone))
                     .ForPath(x => x.Id, y => y.MapFrom(z => z.Id));
+                conf.CreateMap<ClientDto, ClientEntity>()
+                    .ForPath(x => x.ClientName, o => o.MapFrom(z => z.ClientName))
+                    .ForPath(x => x.ClientTelephone, y => y.MapFrom(z => z.ClientTelephone))
+                    .ForPath(x => x.Id, y => y.MapFrom(z => z.Id));
+
                 conf.CreateMap<ProductEntity, ProductDto>()
                     .ForPath(x => x.ProductName, y => y.MapFrom(z => z.ProductName))
                     .ForPath(x => x.Price, y => y.MapFrom(z => z.Price))
                     .ForPath(x => x.Id, y => y.MapFrom(z => z.Id));
+                conf.CreateMap<ProductDto, ProductEntity>()
+                    .ForPath(x => x.ProductName, y => y.MapFrom(z => z.ProductName))
+                    .ForPath(x => x.Price, y => y.MapFrom(z => z.Price))
+                    .ForPath(x => x.Id, y => y.MapFrom(z => z.Id));
+
                 conf.CreateMap<PurchaseEntity, PurchaseDto>()
                     .ForPath(x => x.Client.ClientName, o => o.MapFrom(z => z.Client.ClientName))
                     .ForPath(x => x.Client.ClientTelephone, y => y.MapFrom(z => z.Client.ClientTelephone))

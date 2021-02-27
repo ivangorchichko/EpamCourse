@@ -64,7 +64,7 @@ namespace Task5.BL.Service
             _repository.Remove(purchaseEntity);
         }
 
-        public IEnumerable<PurchaseDto> GetFilteresPurchaseDto(TextFieldFilter filter, string fieldString)
+        public IEnumerable<PurchaseDto> GetFilteredPurchaseDto(TextFieldFilter filter, string fieldString)
         {
             var purchases = GetPurchaseDto();
             switch (filter)

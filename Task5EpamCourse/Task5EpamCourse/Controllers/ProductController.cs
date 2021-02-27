@@ -1,21 +1,24 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Task5.BL.Enums;
 using Task5.BL.Service;
 using Task5.DAL.Repository.Contract;
 using Task5.DAL.Repository.Model;
 using Task5EpamCourse.MapperWebHelper;
-using Task5EpamCourse.Models.Purchase;
+using Task5EpamCourse.Models.Client;
+using Task5EpamCourse.Models.Product;
 using Task5EpamCourse.PageHelper;
 
 namespace Task5EpamCourse.Controllers
 {
-    [Authorize]
-    public class PurchaseController : Controller
+    public class ProductController : Controller
     {
         private static readonly IRepository Repository = new Repository();
-        private static readonly PurchaseService PurchaseService = new PurchaseService(Repository);
+        private static readonly ProductService ProductService = new ProductService(Repository);
 
         [Authorize]
         [HttpGet]
@@ -26,8 +29,8 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
 
-            return View(PagingHelper.GetPurchasesPages(
-                MapperWebService.GetPurchasesViewModels(PurchaseService.GetPurchaseDto()), page));
+            return View(PagingHelper.GetProductPages(
+                MapperWebService.GetProductViewModels(ProductService.GetProductDto()), page));
         }
 
         [Authorize]
@@ -38,9 +41,9 @@ namespace Task5EpamCourse.Controllers
             {
                 return View("Error");
             }
-            var purchases = MapperWebService
-                .GetPurchasesViewModels(PurchaseService.GetFilteredPurchaseDto(filter,fieldString));
-            return View(PagingHelper.GetPurchasesPages(purchases, page));
+            var products = MapperWebService
+                .GetProductViewModels(ProductService.GetFilteredProductDto(filter, fieldString));
+            return View(PagingHelper.GetProductPages(products, page));
         }
 
         [Authorize]
@@ -53,9 +56,9 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = MapperWebService.GetPurchasesViewModels(PurchaseService.GetPurchaseDto())
+                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDetailsPurchaseViewModel(purchase));
+                return View(MapperWebService.GetDetailsProductViewModel(product));
             }
         }
 
@@ -68,14 +71,14 @@ namespace Task5EpamCourse.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Create(CreatePurchaseViewModel purchaseViewModel)
+        public ActionResult Create(CreateProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
                 //???
-                purchaseViewModel.Id = PurchaseService.GetPurchaseDto().ToList().Count;
-                PurchaseService.AddPurchase(MapperWebService.GetPurchaseDto(purchaseViewModel));
-                return View("Details", MapperWebService.GetDetailsPurchaseViewModel(purchaseViewModel));
+                productViewModel.Id = ProductService.GetProductDto().ToList().Count;
+                ProductService.AddProduct(MapperWebService.GetProductDto(productViewModel));
+                return View("Details", MapperWebService.GetDetailsProductViewModel(productViewModel));
             }
             else
             {
@@ -93,19 +96,19 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = MapperWebService.GetPurchasesViewModels(PurchaseService.GetPurchaseDto())
+                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetModifyPurchaseViewModel(purchase));
+                return View(MapperWebService.GetModifyProductViewModel(product));
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Modify(ModifyPurchaseViewModel purchaseViewModel)
+        public ActionResult Modify(ModifyProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                PurchaseService.ModifyPurchase(MapperWebService.GetPurchaseDto(purchaseViewModel));
+                ProductService.ModifyProduct(MapperWebService.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else
@@ -124,19 +127,19 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = MapperWebService.GetPurchasesViewModels(PurchaseService.GetPurchaseDto())
+                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDeletePurchaseViewModel(purchase));
+                return View(MapperWebService.GetDeleteProductViewModel(product));
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Delete(DeletePurchaseViewModel purchaseViewModel)
+        public ActionResult Delete(DeleteProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                PurchaseService.RemovePurchase(MapperWebService.GetPurchaseDto(purchaseViewModel));
+                ProductService.RemoveProduct(MapperWebService.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else

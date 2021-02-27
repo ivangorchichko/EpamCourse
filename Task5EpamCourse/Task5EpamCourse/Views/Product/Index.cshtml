@@ -3,7 +3,7 @@
 }
 @using Task5EpamCourse.PageHelper
 @using Task5.BL.Enums
-@model Task5EpamCourse.Models.Page.PurchasesInPageViewModel
+@model Task5EpamCourse.Models.Page.ProductsInPageViewModel
 
 <div class="jumbotron">
     <h2>Все продажи</h2>
@@ -26,16 +26,14 @@
                             <span>Нету</span><br>
                             <input name="filter" type="radio" value=@TextFieldFilter.ProductName>
                             <span>Имя продукта</span><br>
-                            <input name="filter" type="radio" value=@TextFieldFilter.ClientName>
-                            <span>Имя клиента</span><br>
-                            <input name="filter" type="radio" value=@TextFieldFilter.Date>
-                            <span>Дата</span><br>
+                            <input name="filter" type="radio" value=@TextFieldFilter.Price>
+                            <span>Цена</span><br>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="Поиск" class="btn btn-success"/>
+                        <input type="submit" value="Поиск" class="btn btn-success" />
                     </td>
                     <td>
                     </td>
@@ -59,12 +57,11 @@
                     <td></td>
                 }
                 </thead>
-                @foreach (var b in Model.Purchases)
+                @foreach (var b in Model.Products)
                 {
                     <tr>
-                        <td><p>@b.Client.ClientName</p></td>
-                        <td><p>@b.Product.ProductName</p></td>
-                        <td><p>@b.Date</p></td>
+                        <td><p>@b.ProductName</p></td>
+                        <td><p>@b.Price</p></td>
                         <td>
                             @if (User.IsInRole("admin"))
                             {
@@ -74,7 +71,6 @@
                             @if (User.IsInRole("admin"))
                             {
                                 @Html.ActionLink("Delete", "Delete", new { id = @b.Id })
-
                             }
                         </td>
                     </tr>

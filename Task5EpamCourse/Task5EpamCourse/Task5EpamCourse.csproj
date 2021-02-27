@@ -159,6 +159,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -166,8 +167,13 @@
     <Compile Include="Models\Client\DeleteClientViewModel.cs" />
     <Compile Include="Models\Client\DetailsClientViewModel.cs" />
     <Compile Include="Models\Client\ModifyClientViewModel.cs" />
-    <Compile Include="Models\Page\IndexPurchasesInPageViewModel.cs" />
+    <Compile Include="Models\Page\ClientInPageViewModel.cs" />
+    <Compile Include="Models\Page\PurchasesInPageViewModel.cs" />
     <Compile Include="Models\Page\PageInfo.cs" />
+    <Compile Include="Models\Page\ProductsInPageViewModel.cs" />
+    <Compile Include="Models\Product\DeleteProductViewModel.cs" />
+    <Compile Include="Models\Product\DetailsProductViewModel.cs" />
+    <Compile Include="Models\Product\ModifyProductViewModel.cs" />
     <Compile Include="PageHelper\PagingHelper.cs" />
     <Compile Include="MapperWebHelper\AutoMapperWebConfig.cs" />
     <Compile Include="MapperWebHelper\MapperWebService.cs" />
@@ -217,10 +223,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Modify.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\Purchase\Details.cshtml" />
     <Content Include="Views\Purchase\Modify.cshtml" />
@@ -230,10 +233,19 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\LoginInfo.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\Details.cshtml" />
+    <Content Include="Views\Client\Create.cshtml" />
+    <Content Include="Views\Client\Modify.cshtml" />
+    <Content Include="Views\Client\Delete.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Modify.cshtml" />
+    <Content Include="Views\Product\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Client\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

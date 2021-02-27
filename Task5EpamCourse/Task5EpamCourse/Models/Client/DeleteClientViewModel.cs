@@ -7,5 +7,10 @@ namespace Task5EpamCourse.Models.Client
 {
     public class DeleteClientViewModel
     {
+        public int Id { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string ClientTelephone { get; set; }
     }
 }
