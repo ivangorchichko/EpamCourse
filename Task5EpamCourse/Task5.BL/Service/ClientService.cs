@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Task5.BL.Contacts;
 using Task5.BL.Enums;
 using Task5.BL.MapperBLHelper;
 using Task5.BL.Models;
@@ -12,7 +13,7 @@ using Task5.DomainModel.DataModel;
 
 namespace Task5.BL.Service
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private bool _disposed = false;
         private static IMapper _mapper;

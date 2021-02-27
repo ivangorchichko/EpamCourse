@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Task5.BL.Contacts;
 using Task5.BL.Enums;
 using Task5.BL.Service;
 using Task5.DAL.Repository.Contract;
@@ -18,7 +19,7 @@ namespace Task5EpamCourse.Controllers
     public class ProductController : Controller
     {
         private static readonly IRepository Repository = new Repository();
-        private static readonly ProductService ProductService = new ProductService(Repository);
+        private static readonly IProductService ProductService = new ProductService(Repository);
 
         [Authorize]
         [HttpGet]

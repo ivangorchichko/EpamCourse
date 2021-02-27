@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using Task5.BL.Contacts;
 using Task5.BL.Service;
 using Task5.DAL.Repository.Contract;
 using Task5.DAL.Repository.Model;
@@ -20,7 +21,7 @@ namespace Task5EpamCourse.Controllers
     public class HomeController : Controller
     {
         private static readonly IRepository Repository = new Repository();
-        private static readonly PurchaseService PurchaseService = new PurchaseService(Repository);
+        private static readonly IPurchaseService PurchaseService = new PurchaseService(Repository);
         public ActionResult Index()
         {
             return View(MapperWebService.GetPurchasesViewModels(PurchaseService.GetPurchaseDto())

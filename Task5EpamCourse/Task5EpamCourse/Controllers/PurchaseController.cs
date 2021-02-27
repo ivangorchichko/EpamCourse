@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Task5.BL.Contacts;
 using Task5.BL.Enums;
 using Task5.BL.Service;
 using Task5.DAL.Repository.Contract;
@@ -15,7 +16,7 @@ namespace Task5EpamCourse.Controllers
     public class PurchaseController : Controller
     {
         private static readonly IRepository Repository = new Repository();
-        private static readonly PurchaseService PurchaseService = new PurchaseService(Repository);
+        private static readonly IPurchaseService PurchaseService = new PurchaseService(Repository);
 
         [Authorize]
         [HttpGet]
