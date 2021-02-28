@@ -13,7 +13,7 @@ namespace Task5.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202102281537577_DatabaseMigration"; }
+            get { return "202102281918042_DatabaseMigration"; }
         }
         
         string IMigrationMetadata.Source

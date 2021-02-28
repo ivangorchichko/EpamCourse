@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\IGenericProperty.cs" />
     <Compile Include="DataModel\ClientEntity.cs" />
+    <Compile Include="DataModel\ManagerEntity.cs" />
     <Compile Include="DataModel\ProductEntity.cs" />
     <Compile Include="DataModel\PurchaseEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,5 +61,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

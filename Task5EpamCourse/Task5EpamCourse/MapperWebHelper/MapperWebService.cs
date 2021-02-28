@@ -7,6 +7,7 @@ using Task5.BL.Models;
 using Task5.DAL.Repository.Contract;
 using Task5.DomainModel.DataModel;
 using Task5EpamCourse.Models.Client;
+using Task5EpamCourse.Models.Manager;
 using Task5EpamCourse.Models.Product;
 using Task5EpamCourse.Models.Purchase;
 
@@ -50,6 +51,18 @@ namespace Task5EpamCourse.MapperWebHelper
         public static ProductDto GetProductDto(ProductViewModel client)
         {
             return mapper.Map<ProductDto>(client);
+        }
+
+        //Manager//
+        public static IEnumerable<ManagerViewModel> GetManagerViewModels(IEnumerable<ManagerDto> productsDto)
+        {
+            var products =
+                mapper.Map<IEnumerable<ManagerViewModel>>(productsDto);
+            return products;
+        }
+        public static ManagerDto GetManagerDto(ManagerViewModel client)
+        {
+            return mapper.Map<ManagerDto>(client);
         }
     }
 }

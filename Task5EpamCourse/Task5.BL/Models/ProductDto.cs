@@ -13,5 +13,7 @@ namespace Task5.BL.Models
         public string ProductName { get; set; }
 
         public double Price { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

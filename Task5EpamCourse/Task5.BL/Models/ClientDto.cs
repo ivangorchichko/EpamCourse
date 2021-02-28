@@ -13,5 +13,7 @@ namespace Task5.BL.Models
         public string ClientName { get; set; }
 
         public string ClientTelephone { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

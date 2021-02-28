@@ -42,7 +42,7 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
             _logger.Debug("Sharing Index view");
-            return View(PagingHelper.GetClientsPages(
+            return View(PageService.GetClientsPages(
                 MapperWebService.GetClientViewModels(_clientService.GetClientDto()), page));
         }
 
@@ -59,7 +59,7 @@ namespace Task5EpamCourse.Controllers
             _logger.Debug("Sharing Index view");
             var clients = MapperWebService
                 .GetClientViewModels(_clientService.GetFilteredClientDto(filter, fieldString));
-            return View(PagingHelper.GetClientsPages(clients, page));
+            return View(PageService.GetClientsPages(clients, page));
         }
 
         [Authorize]

@@ -35,7 +35,7 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
 
-            return View(PagingHelper.GetProductPages(
+            return View(PageService.GetProductPages(
                 MapperWebService.GetProductViewModels(_productService.GetProductDto()), page));
         }
 
@@ -49,7 +49,7 @@ namespace Task5EpamCourse.Controllers
             }
             var products = MapperWebService
                 .GetProductViewModels(_productService.GetFilteredProductDto(filter, fieldString));
-            return View(PagingHelper.GetProductPages(products, page));
+            return View(PageService.GetProductPages(products, page));
         }
 
         [Authorize]

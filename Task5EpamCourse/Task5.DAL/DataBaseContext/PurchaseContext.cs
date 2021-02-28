@@ -23,11 +23,14 @@ namespace Task5.DAL.DataBaseContext
 
         public DbSet<ProductEntity> Products { get; set; }
 
+        public DbSet<ManagerEntity> Managers { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new PurchaseEntityConfiguration());
             modelBuilder.Configurations.Add(new ProductEntityConfiguration());
             modelBuilder.Configurations.Add(new ClientEntityConfiguration());
+            modelBuilder.Configurations.Add(new ManagerEntityConfiguration());
         }
     }
 }

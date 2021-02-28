@@ -31,5 +31,11 @@ namespace Task5EpamCourse.Models.Purchase
         [Required(ErrorMessage = "Пожалуйста, введите цену продукта")]
         [DataType(DataType.Currency,ErrorMessage = "Неверный ввод цены")]
         public double Price { get; set; }
+
+        public string ManagerName { get; set; }
+
+        public string ManagerTelephone { get; set; }
+
+        public string ManagerRank { get; set; }
     }
 }

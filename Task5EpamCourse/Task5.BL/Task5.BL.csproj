@@ -121,6 +121,7 @@
     <Compile Include="Logger\LoggerFactory.cs" />
     <Compile Include="MapperBLHelper\AutoMapperBLConfig.cs" />
     <Compile Include="Models\ClientDto.cs" />
+    <Compile Include="Models\ManagerDto.cs" />
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Models\PurchaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

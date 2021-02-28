@@ -23,6 +23,10 @@ namespace Task5.DAL.DataBaseContext.Configuration
             HasRequired(x => x.Product)
                 .WithMany(x => x.Purchases)
                 .HasForeignKey(x => x.ProductId);
+
+            HasRequired(x => x.Manager)
+                .WithMany(x => x.Purchases)
+                .HasForeignKey(x => x.ManagerId);
         }
     }
 }

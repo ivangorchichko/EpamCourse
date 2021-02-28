@@ -198,17 +198,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Manager\ManagerViewModel.cs" />
     <Compile Include="Models\Page\ClientInPageViewModel.cs" />
+    <Compile Include="Models\Page\ModelsInPageViewModel.cs" />
     <Compile Include="Models\Page\PurchasesInPageViewModel.cs" />
     <Compile Include="Models\Page\PageInfo.cs" />
     <Compile Include="Models\Page\ProductsInPageViewModel.cs" />
-    <Compile Include="PageHelper\PagingHelper.cs" />
+    <Compile Include="PageHelper\Contacts\IPageService.cs" />
+    <Compile Include="PageHelper\PageService.cs" />
     <Compile Include="MapperWebHelper\AutoMapperWebConfig.cs" />
     <Compile Include="MapperWebHelper\MapperWebService.cs" />
     <Compile Include="Models\Client\ClientViewModel.cs" />
     <Compile Include="Models\Product\ProductViewModel.cs" />
     <Compile Include="Models\Purchase\PurchaseViewModel.cs" />
+    <Compile Include="PageHelper\PageViewHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Contracts\IPurchaseMapper.cs" />
+    <Compile Include="Service\PurchaseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

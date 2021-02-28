@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
@@ -14,6 +15,11 @@ using Task5.BL.DIConfig;
 using Task5EpamCourse.Identity.DbContext;
 using Task5EpamCourse.Identity.Models.Account;
 using Task5EpamCourse.Identity.Models.Manager;
+using Task5EpamCourse.MapperWebHelper;
+using Task5EpamCourse.PageHelper;
+using Task5EpamCourse.PageHelper.Contacts;
+using Task5EpamCourse.Service;
+using Task5EpamCourse.Service.Contracts;
 
 [assembly: OwinStartupAttribute(typeof(Task5EpamCourse.App_Start.Startup))]
 namespace Task5EpamCourse.App_Start
@@ -22,7 +28,7 @@ namespace Task5EpamCourse.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-           RegistrContainer();
+            RegistrContainer();
             app.CreatePerOwinContext<AccountContext>(AccountContext.Create);
             app.CreatePerOwinContext<IdentityUserManager>(IdentityUserManager.Create);
 
@@ -38,9 +44,11 @@ namespace Task5EpamCourse.App_Start
 
         private void RegistrContainer()
         {
-            var bulder = AutofacConfiguration.ConfigureContainer();
-            bulder.RegisterControllers(Assembly.GetExecutingAssembly());
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(bulder.Build()));
+            var builder = AutofacConfiguration.ConfigureContainer();
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterType<PageService>().As<IPageService>();
+            builder.RegisterType<PurchaseMapper>().As<IPurchaseMapper>();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
     }
 }

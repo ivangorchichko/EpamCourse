@@ -1,5 +1,4 @@
 ﻿@model Task5EpamCourse.Models.Purchase.PurchaseViewModel
-
 @{
     ViewBag.Title = "View";
 }
@@ -30,6 +29,12 @@
             <div class="form-group">
                 <label>Цена продукта</label>
                 @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+            </div>
+            <div id="filter-radio-button">
+                @foreach (var manager in ViewBag.Managers)
+                {
+                    <label>@InputExtensions.RadioButton(Html, "selectManager", manager) @manager</label>
+                }
             </div>
             <div class="text-center">
                 <input type="submit" value="Сохранить" class="btn btn-success" />

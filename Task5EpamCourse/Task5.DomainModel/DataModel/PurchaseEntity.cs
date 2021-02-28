@@ -1,12 +1,15 @@
 ﻿using System;
+using Task5.DomainModel.Contract;
 
 namespace Task5.DomainModel.DataModel
 {
-    public class PurchaseEntity
+    public class PurchaseEntity : IGenericProperty
     {
         public int Id { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int ContractNumber { get; set; }
 
         public int ClientId { get; set; }
 
@@ -15,5 +18,9 @@ namespace Task5.DomainModel.DataModel
         public int ProductId { get; set; }
 
         public virtual ProductEntity Product { get; set; }
+
+        public int ManagerId { get; set; }
+
+        public virtual ManagerEntity Manager { get; set; }
     }
 }

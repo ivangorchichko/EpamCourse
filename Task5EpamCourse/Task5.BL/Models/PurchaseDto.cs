@@ -17,6 +17,8 @@ namespace Task5.BL.Models
 
         public ProductDto Product { get; set; }
 
+        public ManagerDto Manager { get; set; }
+
         public DateTime Date { get; set; }
     }
 }
