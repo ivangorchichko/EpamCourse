@@ -8,7 +8,7 @@ namespace Task5EpamCourse.Models.Page
 {
     public class PurchasesInPageViewModel
     {
-        public IEnumerable<IndexPurchaseViewModel> Purchases { get; set; }
+        public IEnumerable<PurchaseViewModel> Purchases { get; set; }
         public PageInfo PageInfo { get; set; }
     }
 }

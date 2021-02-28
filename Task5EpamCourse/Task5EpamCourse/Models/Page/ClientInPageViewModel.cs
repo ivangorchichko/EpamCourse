@@ -8,7 +8,7 @@ namespace Task5EpamCourse.Models.Page
 {
     public class ClientInPageViewModel
     {
-        public IEnumerable<IndexClientViewModel> Clients { get; set; }
+        public IEnumerable<ClientViewModel> Clients { get; set; }
         public PageInfo PageInfo { get; set; }
     }
 }

@@ -10,10 +10,10 @@ namespace Task5.DomainModel.DataModel
 
         public int ClientId { get; set; }
 
-        public ClientEntity Client { get; set; }
+        public virtual ClientEntity Client { get; set; }
 
         public int ProductId { get; set; }
 
-        public ProductEntity Product { get; set; }
+        public virtual ProductEntity Product { get; set; }
     }
 }

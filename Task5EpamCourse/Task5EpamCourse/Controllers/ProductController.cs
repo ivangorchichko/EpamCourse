@@ -18,8 +18,13 @@ namespace Task5EpamCourse.Controllers
 {
     public class ProductController : Controller
     {
-        private static readonly IRepository Repository = new Repository();
-        private static readonly IProductService ProductService = new ProductService(Repository);
+        private readonly IProductService _productService;
+
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
+        }
+
 
         [Authorize]
         [HttpGet]
@@ -31,7 +36,7 @@ namespace Task5EpamCourse.Controllers
             }
 
             return View(PagingHelper.GetProductPages(
-                MapperWebService.GetProductViewModels(ProductService.GetProductDto()), page));
+                MapperWebService.GetProductViewModels(_productService.GetProductDto()), page));
         }
 
         [Authorize]
@@ -43,7 +48,7 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
             var products = MapperWebService
-                .GetProductViewModels(ProductService.GetFilteredProductDto(filter, fieldString));
+                .GetProductViewModels(_productService.GetFilteredProductDto(filter, fieldString));
             return View(PagingHelper.GetProductPages(products, page));
         }
 
@@ -57,9 +62,9 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
+                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDetailsProductViewModel(product));
+                return View(product);
             }
         }
 
@@ -72,14 +77,14 @@ namespace Task5EpamCourse.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Create(CreateProductViewModel productViewModel)
+        public ActionResult Create(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
                 //???
-                productViewModel.Id = ProductService.GetProductDto().ToList().Count;
-                ProductService.AddProduct(MapperWebService.GetProductDto(productViewModel));
-                return View("Details", MapperWebService.GetDetailsProductViewModel(productViewModel));
+                productViewModel.Id = _productService.GetProductDto().ToList().Count;
+                _productService.AddProduct(MapperWebService.GetProductDto(productViewModel));
+                return View("Details", productViewModel);
             }
             else
             {
@@ -97,19 +102,19 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
+                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetModifyProductViewModel(product));
+                return View(product);
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Modify(ModifyProductViewModel productViewModel)
+        public ActionResult Modify(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                ProductService.ModifyProduct(MapperWebService.GetProductDto(productViewModel));
+                _productService.ModifyProduct(MapperWebService.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else
@@ -128,19 +133,19 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(ProductService.GetProductDto())
+                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDeleteProductViewModel(product));
+                return View(product);
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Delete(DeleteProductViewModel productViewModel)
+        public ActionResult Delete(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                ProductService.RemoveProduct(MapperWebService.GetProductDto(productViewModel));
+                _productService.RemoveProduct(MapperWebService.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else

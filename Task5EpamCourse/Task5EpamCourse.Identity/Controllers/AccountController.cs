@@ -28,7 +28,7 @@ namespace Task5EpamCourse.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                AccountUser user = new AccountUser { UserName = model.NickName, Email = model.Email, NickName = model.NickName};
+                AccountUser user = new AccountUser { UserName = model.Email, Email = model.Email, NickName = model.NickName};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -66,8 +66,8 @@ namespace Task5EpamCourse.Identity.Controllers
 
         public async Task<ActionResult> Login(string returnUrl)
         {
-            var user = UserManager.FindAsync("Admin@mail.ru", "admin1");
-            if (UserManager.FindAsync("Admin@mail.ru", "admin1") != null)
+            var user = await UserManager.FindAsync("aadmin", "device");
+            if (user != null)
             {
                 ViewBag.returnUrl = returnUrl;
                 return View();
@@ -85,7 +85,6 @@ namespace Task5EpamCourse.Identity.Controllers
         {
             if (ModelState.IsValid)
             {
-                //не работает админ
                 AccountUser user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user == null)
                 {

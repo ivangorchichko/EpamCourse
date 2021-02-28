@@ -21,39 +21,44 @@ namespace Task5EpamCourse.Controllers
     [Authorize]
     public class ClientController : Controller
     {
-        // GET: Client
-        private static readonly IRepository Repository = new Repository();
-        private static readonly IClientService ClientService = new ClientService(Repository);
-        private static readonly ILogger Logger = LoggerFactory.GetLogger();
+        private readonly IClientService _clientService;
+        private readonly ILogger _logger;
+
+        public ClientController(IClientService clientService, ILogger logger)
+        {
+            _clientService = clientService;
+            _logger = logger;
+        }
+
 
         [Authorize]
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            Logger.Debug("Running Index Get method in ClientController");
+            _logger.Debug("Running Index Get method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated == false)
             {
-                Logger.Error("Error with authenticated");
+                _logger.Error("Error with authenticated");
                 return View("Error");
             }
-            Logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing Index view");
             return View(PagingHelper.GetClientsPages(
-                MapperWebService.GetClientViewModels(ClientService.GetClientDto()), page));
+                MapperWebService.GetClientViewModels(_clientService.GetClientDto()), page));
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
         {
-            Logger.Debug("Running Index Post method in ClientController");
+            _logger.Debug("Running Index Post method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated == false)
             {
-                Logger.Error("Error with authenticated");
+                _logger.Error("Error with authenticated");
                 return View("Error");
             }
-            Logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing Index view");
             var clients = MapperWebService
-                .GetClientViewModels(ClientService.GetFilteredClientDto(filter, fieldString));
+                .GetClientViewModels(_clientService.GetFilteredClientDto(filter, fieldString));
             return View(PagingHelper.GetClientsPages(clients, page));
         }
 
@@ -61,18 +66,18 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Details(int? id)
         {
-            Logger.Debug("Running Details Get method in ClientController");
+            _logger.Debug("Running Details Get method in ClientController");
             if (id == null)
             {
-                Logger.Error("Error in chosen model");
+                _logger.Error("Error in chosen model");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             else
             {
-                Logger.Debug("Sharing Details view");
-                var client = MapperWebService.GetClientViewModels(ClientService.GetClientDto())
+                _logger.Debug("Sharing Details view");
+                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDetailsClientViewModel(client));
+                return View(client);
             }
         }
 
@@ -80,27 +85,27 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            Logger.Debug("Running Create Get method in ClientController, sharing Create view");
+            _logger.Debug("Running Create Get method in ClientController, sharing Create view");
             return View();
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Create(CreateClientViewModel clientViewModel)
+        public ActionResult Create(ClientViewModel clientViewModel)
         {
-            Logger.Debug("Running Create Post method in ClientController");
+            _logger.Debug("Running Create Post method in ClientController");
             if (ModelState.IsValid)
             {
-                Logger.Debug("Adding new client");
+                _logger.Debug("Adding new client");
                 //???
-                clientViewModel.Id = ClientService.GetClientDto().ToList().Count;
-                ClientService.AddClient(MapperWebService.GetClientDto(clientViewModel));
-                Logger.Debug("Adding complete");
-                return View("Details", MapperWebService.GetDetailsClientViewModel(clientViewModel));
+                clientViewModel.Id = _clientService.GetClientDto().ToList().Count;
+                _clientService.AddClient(MapperWebService.GetClientDto(clientViewModel));
+                _logger.Debug("Adding complete");
+                return View("Details", clientViewModel);
             }
             else
             {
-                Logger.Error("Error in model state");
+                _logger.Error("Error in model state");
                 return View();
             }
         }
@@ -109,36 +114,36 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Modify(int? id)
         {
-            Logger.Debug("Running Modify Get method in ClientController");
+            _logger.Debug("Running Modify Get method in ClientController");
             if (id == null)
             {
-                Logger.Error("Error in chosen model");
+                _logger.Error("Error in chosen model");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             else
             {
-                Logger.Debug("Sharing Modify view");
-                var client = MapperWebService.GetClientViewModels(ClientService.GetClientDto())
+                _logger.Debug("Sharing Modify view");
+                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetModifyClientViewModel(client));
+                return View(client);
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Modify(ModifyClientViewModel clientViewModel)
+        public ActionResult Modify(ClientViewModel clientViewModel)
         {
-            Logger.Debug("Running Modify Post method in ClientController");
+            _logger.Debug("Running Modify Post method in ClientController");
             if (ModelState.IsValid)
             {
-                Logger.Debug("Modify client model");
-                ClientService.ModifyClient(MapperWebService.GetClientDto(clientViewModel));
-                Logger.Debug("Modify complete");
+                _logger.Debug("Modify client model");
+                _clientService.ModifyClient(MapperWebService.GetClientDto(clientViewModel));
+                _logger.Debug("Modify complete");
                 return RedirectToAction("Index");
             }
             else
             {
-                Logger.Error("Error in model state");
+                _logger.Error("Error in model state");
                 return View();
             }
         }
@@ -147,36 +152,36 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            Logger.Debug("Running Delete Get method in ClientController");
+            _logger.Debug("Running Delete Get method in ClientController");
             if (id == null)
             {
-                Logger.Error("Error in chosen model");
+                _logger.Error("Error in chosen model");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             else
             {
-                Logger.Debug("Sharing Delete view");
-                var client = MapperWebService.GetClientViewModels(ClientService.GetClientDto())
+                _logger.Debug("Sharing Delete view");
+                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
                     .ToList().Find(x => x.Id == id);
-                return View(MapperWebService.GetDeleteClientViewModel(client));
+                return View(client);
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Delete(DeleteClientViewModel clientViewModel)
+        public ActionResult Delete(ClientViewModel clientViewModel)
         {
-            Logger.Debug("Running Delete Post method in ClientController");
+            _logger.Debug("Running Delete Post method in ClientController");
             if (ModelState.IsValid)
             {
-                Logger.Debug("Remove client from db");
-                ClientService.RemoveClient(MapperWebService.GetClientDto(clientViewModel));
-                Logger.Debug("Remove complete");
+                _logger.Debug("Remove client from db");
+                _clientService.RemoveClient(MapperWebService.GetClientDto(clientViewModel));
+                _logger.Debug("Remove complete");
                 return RedirectToAction("Index");
             }
             else
             {
-                Logger.Error("Error in chosen model");
+                _logger.Error("Error in chosen model");
                 return View();
             }
         }

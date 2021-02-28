@@ -1,4 +1,6 @@
-﻿namespace Task5.DomainModel.DataModel
+﻿using System.Collections.Generic;
+
+namespace Task5.DomainModel.DataModel
 {
     public class ProductEntity
     {
@@ -8,8 +10,11 @@
 
         public double Price { get; set; }
 
-        public int PurchaseId { get; set; }
+        public virtual ICollection<PurchaseEntity> Purchases { get; set; }
 
-        public PurchaseEntity Purchase { get; set; }
+        public ProductEntity()
+        {
+            Purchases = new List<PurchaseEntity>();
+        }
     }
 }

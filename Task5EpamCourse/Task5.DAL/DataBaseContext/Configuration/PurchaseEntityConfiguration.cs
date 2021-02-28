@@ -16,11 +16,13 @@ namespace Task5.DAL.DataBaseContext.Configuration
 
             HasKey(p => p.Id);
 
-            HasRequired(p => p.Client)
-                .WithRequiredPrincipal(c => c.Purchase);
+            HasRequired(x => x.Client)
+                .WithMany(x => x.Purchases)
+                .HasForeignKey(x => x.ClientId);
 
-            HasRequired(pro => pro.Product)
-                .WithRequiredPrincipal(pur => pur.Purchase);
+            HasRequired(x => x.Product)
+                .WithMany(x => x.Purchases)
+                .HasForeignKey(x => x.ProductId);
         }
     }
 }

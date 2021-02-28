@@ -17,11 +17,12 @@ namespace Task5.BL.Service
     public class PurchaseService : IPurchaseService
     {
         private bool _disposed = false;
-        private static IMapper _mapper;
-        private static IRepository _repository;
+        private IMapper _mapper;
+        private IRepository _repository;
 
         public PurchaseService(IRepository repository)
         {
+            //запихнуть в старттап
             _mapper = new Mapper(AutoMapperBLConfig.Configure());
             _repository = repository;
         }
@@ -42,7 +43,31 @@ namespace Task5.BL.Service
 
         public void AddPurchase(PurchaseDto purchaseDto)
         {
-            _repository.Add<PurchaseEntity>(_mapper.Map<PurchaseEntity>(purchaseDto));
+            var client = _repository.Get<ClientEntity>()
+                .FirstOrDefault(
+                    c => c.ClientName == purchaseDto.Client.ClientName &&
+                    c.ClientTelephone == purchaseDto.Client.ClientTelephone);
+            var product = _repository.Get<ProductEntity>()
+                .FirstOrDefault(
+                    p => p.ProductName == purchaseDto.Product.ProductName &&
+                    p.Price == purchaseDto.Product.Price);
+            var purchase = _mapper.Map<PurchaseEntity>(purchaseDto);
+            if (client != null && product != null)
+            {
+                purchase.Client = client;
+                purchase.Product = product;
+            }
+            else
+            if (client != null)
+            {
+                purchase.Client = client;
+            }else
+            if (product != null)
+            {
+                purchase.Product = product;
+            }
+
+            _repository.Add<PurchaseEntity>(purchase);
         }
 
         public void ModifyPurchase(PurchaseDto purchaseDto)

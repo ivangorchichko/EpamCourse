@@ -62,8 +62,8 @@
                 @foreach (var b in Model.Purchases)
                 {
                     <tr>
-                        <td><p>@b.Client.ClientName</p></td>
-                        <td><p>@b.Product.ProductName</p></td>
+                        <td><p>@b.ClientName</p></td>
+                        <td><p>@b.ProductName</p></td>
                         <td><p>@b.Date</p></td>
                         <td>
                             @if (User.IsInRole("admin"))

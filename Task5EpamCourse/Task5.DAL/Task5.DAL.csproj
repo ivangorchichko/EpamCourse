@@ -79,13 +79,9 @@
     <Compile Include="DataBaseContext\Configuration\ProductEntityConfiguration.cs" />
     <Compile Include="DataBaseContext\Configuration\PurchaseEntityConfiguration.cs" />
     <Compile Include="DataBaseContext\PurchaseContext.cs" />
-    <Compile Include="Migrations\202102221351406_FirstMigration.cs" />
-    <Compile Include="Migrations\202102221351406_FirstMigration.designer.cs">
-      <DependentUpon>202102221351406_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102221824461_SecondMigration.cs" />
-    <Compile Include="Migrations\202102221824461_SecondMigration.designer.cs">
-      <DependentUpon>202102221824461_SecondMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202102281537577_DatabaseMigration.cs" />
+    <Compile Include="Migrations\202102281537577_DatabaseMigration.Designer.cs">
+      <DependentUpon>202102281537577_DatabaseMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,11 +99,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102221351406_FirstMigration.resx">
-      <DependentUpon>202102221351406_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102221824461_SecondMigration.resx">
-      <DependentUpon>202102221824461_SecondMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102281537577_DatabaseMigration.resx">
+      <DependentUpon>202102281537577_DatabaseMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

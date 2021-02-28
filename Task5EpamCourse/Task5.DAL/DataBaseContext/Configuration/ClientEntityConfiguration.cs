@@ -15,6 +15,7 @@ namespace Task5.DAL.DataBaseContext.Configuration
             ToTable("dbo.Client");
 
             HasKey(c => c.Id);
+
         }
     }
 }
