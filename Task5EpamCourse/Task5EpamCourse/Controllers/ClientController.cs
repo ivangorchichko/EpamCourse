@@ -97,7 +97,6 @@ namespace Task5EpamCourse.Controllers
             if (ModelState.IsValid)
             {
                 _logger.Debug("Adding new client");
-                //???
                 clientViewModel.Id = _clientService.GetClientDto().ToList().Count;
                 _clientService.AddClient(MapperWebService.GetClientDto(clientViewModel));
                 _logger.Debug("Adding complete");

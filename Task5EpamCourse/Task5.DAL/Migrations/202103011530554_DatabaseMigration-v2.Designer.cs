@@ -7,13 +7,13 @@ namespace Task5.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class DatabaseMigration : IMigrationMetadata
+    public sealed partial class DatabaseMigrationv2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DatabaseMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DatabaseMigrationv2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102281918042_DatabaseMigration"; }
+            get { return "202103011530554_DatabaseMigration-v2"; }
         }
         
         string IMigrationMetadata.Source

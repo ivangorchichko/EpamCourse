@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model IEnumerable<Task5EpamCourse.Models.Purchase.PurchaseViewModel>
+@model IList<Task5EpamCourse.Models.Purchase.PurchaseViewModel>
 
 <div class="jumbotron">
     <h2>Приветствую вас на статистике продаж!</h2>
@@ -21,10 +21,10 @@
             @for (int i = 3; i > 0; i--)
             {
                 <tr>
-                    <td><p>@Model.ToList()[i].ClientName</p></td>
-                    <td><p>@Model.ToList()[i].ProductName</p></td>
-                    <td><p>@Model.ToList()[i].Price</p></td>
-                    <td><p>@Model.ToList()[i].Date</p></td>
+                    <td><p>@Model[i].ClientName</p></td>
+                    <td><p>@Model[i].ProductName</p></td>
+                    <td><p>@Model[i].Price</p></td>
+                    <td><p>@Model[i].Date</p></td>
                 </tr>
             }
         </table>

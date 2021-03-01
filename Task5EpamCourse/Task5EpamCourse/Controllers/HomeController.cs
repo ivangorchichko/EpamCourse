@@ -22,8 +22,11 @@ namespace Task5EpamCourse.Controllers
 
         public ActionResult Index()
         {
-            //FillDb();
-            return View(_purchaseMapper.GetPurchaseViewModel());
+            if (_purchaseMapper.GetPurchaseViewModel().ToList().Count == 0)
+            {
+                FillDb();
+            }
+            return View(_purchaseMapper.GetPurchaseViewModel().ToList());
         }
 
         public void FillDb()

@@ -31,6 +31,7 @@
                 @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
             </div>
             <div id="filter-radio-button">
+                <label>Select Manager</label>
                 @foreach (var manager in ViewBag.Managers)
                 {
                     <label>@InputExtensions.RadioButton(Html, "selectManager", manager) @manager</label>

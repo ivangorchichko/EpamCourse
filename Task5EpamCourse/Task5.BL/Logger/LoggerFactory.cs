@@ -11,7 +11,7 @@ namespace Task5.BL.Logger
                 .MinimumLevel.Verbose()
                 .WriteTo.File(ConfigurationManager.AppSettings.Get("loggerFile"),
                     outputTemplate:
-                    "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+                    "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
     }

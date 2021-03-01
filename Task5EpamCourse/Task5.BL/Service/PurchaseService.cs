@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Task5.BL.Contacts;
 using Task5.BL.Enums;
 using Task5.BL.MapperBLHelper;
 using Task5.BL.Models;
 using Task5.DAL.Repository.Contract;
-using Task5.DAL.Repository.Model;
 using Task5.DomainModel.DataModel;
 
 namespace Task5.BL.Service
 {
     public class PurchaseService : IPurchaseService
     {
-        private bool _disposed = false;
-        private IMapper _mapper;
-        private IRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IRepository _repository;
 
         public PurchaseService(IRepository repository)
         {
@@ -29,7 +25,7 @@ namespace Task5.BL.Service
         }
         public IEnumerable<PurchaseDto> GetPurchaseDto(int page, Expression<Func<PurchaseEntity, bool>> predicate = null)
         {
-            var purchasesEntities = new List<PurchaseEntity>();
+            List<PurchaseEntity> purchasesEntities;
             if (predicate != null)
             {
                 purchasesEntities = _repository.Get<PurchaseEntity>(3, page, predicate).ToList();
@@ -63,6 +59,11 @@ namespace Task5.BL.Service
         public void AddPurchase(PurchaseDto purchaseDto, string selectManager)
         {
             purchaseDto.Id = GetPurchaseDto().ToList().Count;
+            purchaseDto.Client.Date = purchaseDto.Date;
+            purchaseDto.Product.Date = purchaseDto.Date;
+            purchaseDto.Client.Id = purchaseDto.Id;
+            purchaseDto.Product.Id = purchaseDto.Id;
+
             var client = _repository.Get<ClientEntity>()
                 .FirstOrDefault(
                     c => c.ClientName == purchaseDto.Client.ClientName &&
@@ -74,6 +75,7 @@ namespace Task5.BL.Service
             var manager = _repository.Get<ManagerEntity>()
                 .FirstOrDefault(m => m.ManagerName == selectManager
                 );
+
             var purchase = _mapper.Map<PurchaseEntity>(purchaseDto);
             if (client != null && product != null && manager != null)
             {
@@ -125,30 +127,25 @@ namespace Task5.BL.Service
 
         public IEnumerable<PurchaseDto> GetFilteredPurchaseDto(TextFieldFilter filter, string fieldString, int page)
         {
-            var purchase = new PurchaseDto();
             var purchases = new List<PurchaseDto>();
             switch (filter)
             {
                 case TextFieldFilter.ClientName:
                 {
-                    purchases = GetPurchaseDto(page, p => purchase.Client.ClientName == fieldString).ToList();
-                     //   purchases = purchases.Where(purchase => purchase.Client.ClientName == fieldString).ToList();
+                    purchases = GetPurchaseDto(page, p => p.Client.ClientName == fieldString).ToList();
                     break;
                 }
                 case TextFieldFilter.ProductName:
                 {
-                   // purchases = GetPurchaseDto(page);
-                    //    purchases = purchases.Where(purchase => purchase.Product.ProductName == fieldString).ToList();
+                    purchases = GetPurchaseDto(page, p => p.Product.ProductName == fieldString).ToList();
                     break;
                 }
                 case TextFieldFilter.Date:
                 {
-                   // purchases = GetPurchaseDto(page);
-                    //    purchases = purchases.Where(purchase => purchase.Date.ToString().Contains(fieldString)).ToList();
+                    purchases = GetPurchaseDto(page, p => p.Date.ToString().Contains(fieldString)).ToList();
                     break;
                 }
             }
-
             return purchases;
         }
     }

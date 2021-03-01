@@ -33,12 +33,12 @@ namespace Task5.DAL.Repository.Model
         {
             if (predicate != null)
             {
-                return _context.Set<TEntity>().Where(predicate).OrderBy(x => x.Date).Skip((page - 1) * pageSize)
+                return _context.Set<TEntity>().Where(predicate).OrderByDescending(x => x.Date).Skip((page - 1) * pageSize)
                     .Take(pageSize).ToList();
             }
             else
             {
-                return _context.Set<TEntity>().OrderBy(x => x.Date).Skip((page - 1) * pageSize)
+                return _context.Set<TEntity>().OrderByDescending(x => x.Date).Skip((page - 1) * pageSize)
                     .Take(pageSize).ToList();
             }
         }

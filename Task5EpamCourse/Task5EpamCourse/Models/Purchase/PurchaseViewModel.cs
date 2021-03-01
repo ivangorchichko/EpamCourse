@@ -21,7 +21,7 @@ namespace Task5EpamCourse.Models.Purchase
         public string ClientName { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите номер телефона")]
-        [RegularExpression(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$", ErrorMessage = "Неверно введет номер")]
+        [RegularExpression(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$", ErrorMessage = "Неверно введен номер")]
         public string ClientTelephone { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите название продукта")]

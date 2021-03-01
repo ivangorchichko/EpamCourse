@@ -15,7 +15,6 @@ namespace Task5.BL.Service
 {
     public class ClientService : IClientService
     {
-        private bool _disposed = false;
         private static IMapper _mapper;
         private static IRepository _repository;
 
