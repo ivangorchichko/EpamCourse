@@ -1,0 +1,195 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Mvc;
+using Serilog;
+using Task5.BL.Contacts;
+using Task5.BL.Enums;
+using Task5EpamCourse.Models.Client;
+using Task5EpamCourse.Models.Manager;
+using Task5EpamCourse.PageHelper.Contacts;
+using Task5EpamCourse.Service.Contracts;
+
+namespace Task5EpamCourse.Controllers
+{
+    public class ManagerController : Controller
+    {
+        // GET: Manager
+        private readonly IManagerService _managerService;
+        private readonly IPageService _pageService;
+        private readonly IManagerMapper _managerMapper;
+        private readonly ILogger _logger;
+
+        public ManagerController(IManagerService managerService, ILogger logger, IPageService pageService, IManagerMapper managerMapper)
+        {
+            _managerService = managerService;
+            _logger = logger;
+            _pageService = pageService;
+            _managerMapper = managerMapper;
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Index(int page = 1)
+        {
+            _logger.Debug("Running Index Get method in ClientController");
+            if (HttpContext.User.Identity.IsAuthenticated == false)
+            {
+                _logger.Error("Error with authenticated");
+                return View("Error");
+            }
+            _logger.Debug("Sharing Index view");
+            return View(_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
+        {
+            _logger.Debug("Running Index Post method in ClientController");
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                if (filter == TextFieldFilter.Telephone)
+                {
+                    Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
+                    if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
+                    {
+                        return View(_pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
+                    }
+                    else
+                    {
+                        ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
+                        return View(_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
+                    }
+                }
+                else
+                {
+                    return View(_pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
+                }
+            }
+            _logger.Debug("Sharing Index view");
+            return View("Error");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            _logger.Debug("Running Details Get method in ClientController");
+            if (id == null)
+            {
+                _logger.Error("Error in chosen model");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                _logger.Debug("Sharing Details view");
+                return View(_managerMapper.GetManagerViewModel(id));
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult Create()
+        {
+            _logger.Debug("Running Create Get method in ClientController, sharing Create view");
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult Create(ManagerViewModel managerViewModel)
+        {
+            _logger.Debug("Running Create Post method in ClientController");
+            if (ModelState.IsValid)
+            {
+                _logger.Debug("Adding new client");
+                managerViewModel.Id = _managerService.GetManagersDto().ToList().Count;
+                _managerService.AddManager(_managerMapper.GetManagerDto(managerViewModel));
+                _logger.Debug("Adding complete");
+                return View("Details", managerViewModel);
+            }
+            else
+            {
+                _logger.Error("Error in model state");
+                return View();
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult Modify(int? id)
+        {
+            _logger.Debug("Running Modify Get method in ClientController");
+            if (id == null)
+            {
+                _logger.Error("Error in chosen model");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                _logger.Debug("Sharing Modify view");
+                return View(_managerMapper.GetManagerViewModel(id));
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult Modify(ManagerViewModel managerViewModel)
+        {
+            _logger.Debug("Running Modify Post method in ClientController");
+            if (ModelState.IsValid)
+            {
+                _logger.Debug("Modify client model");
+                _managerService.ModifyManager(_managerMapper.GetManagerDto(managerViewModel));
+                _logger.Debug("Modify complete");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _logger.Error("Error in model state");
+                return View();
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            _logger.Debug("Running Delete Get method in ClientController");
+            if (id == null)
+            {
+                _logger.Error("Error in chosen model");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                _logger.Debug("Sharing Delete view");
+                return View(_managerMapper.GetManagerViewModel(id));
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult Delete(ManagerViewModel managerViewModel)
+        {
+            _logger.Debug("Running Delete Post method in ClientController");
+            if (managerViewModel.Id != 0)
+            {
+                _logger.Debug("Remove client from db");
+                _managerService.RemoveManager(_managerMapper.GetManagerDto(managerViewModel));
+                _logger.Debug("Remove complete");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _logger.Error("Error in chosen model");
+                return View();
+            }
+        }
+    }
+}

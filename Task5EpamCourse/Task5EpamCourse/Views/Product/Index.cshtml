@@ -3,10 +3,10 @@
 }
 @using Task5EpamCourse.PageHelper
 @using Task5.BL.Enums
-@model Task5EpamCourse.Models.Page.ProductsInPageViewModel
+@model Task5EpamCourse.Models.Page.ModelsInPageViewModel
 
 <div class="jumbotron">
-    <h2>Все продажи</h2>
+    <h2>Все продукты</h2>
 </div>
 <div>
     @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "results" }))
@@ -15,6 +15,7 @@
             <table class="table">
                 <tr>
                     <td>
+                        <div class="text-danger">@ViewBag.NotValidParse</div>
                         <div class="editor-label">
                             <label>Введите строку фильтрации</label>
                         </div>
@@ -45,7 +46,7 @@
                 <thead class="bg-info">
                 <td><p>Продукт</p></td>
                 <td><p>Цена</p></td>
-                <td><p></p></td>
+                <td><p>Дата</p></td>
                 @if (User.IsInRole("admin"))
                 {
                     <td>
@@ -62,6 +63,7 @@
                     <tr>
                         <td><p>@b.ProductName</p></td>
                         <td><p>@b.Price</p></td>
+                        <td><p>@b.Date</p></td>
                         <td>
                             @if (User.IsInRole("admin"))
                             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,7 +25,7 @@ namespace Task5.BL.Service
             _repository = repository;
         }
 
-        public IEnumerable<ProductDto> GetProductDto()
+        public IEnumerable<ProductDto> GetProductsDto()
         {
             var productEntities = _repository.Get<ProductEntity>();
             var products =
@@ -32,9 +33,33 @@ namespace Task5.BL.Service
             return products;
         }
 
+        public IEnumerable<ProductDto> GetProductsDto(int page, Expression<Func<ProductEntity, bool>> predicate = null)
+        {
+            List<ProductEntity> productEntities;
+            if (predicate != null)
+            {
+                productEntities = _repository.Get<ProductEntity>(3, page, predicate).ToList();
+            }
+            else
+            {
+                productEntities = _repository.Get<ProductEntity>(3, page).ToList();
+            }
+
+            var products =
+                _mapper.Map<IEnumerable<ProductDto>>(productEntities);
+            return products;
+        }
+
         public void AddProduct(ProductDto productDto)
         {
-            _repository.Add<ProductEntity>(_mapper.Map<ProductEntity>(productDto));
+            var product = _repository.Get<ProductEntity>()
+                .FirstOrDefault(
+                    p => p.ProductName == productDto.ProductName &&
+                         p.Price == productDto.Price);
+            if (product != null)
+            {
+
+            }else _repository.Add<ProductEntity>(_mapper.Map<ProductEntity>(productDto));
         }
 
         public void ModifyProduct(ProductDto productDto)
@@ -55,23 +80,23 @@ namespace Task5.BL.Service
             _repository.Remove(productEntity);
         }
 
-        public IEnumerable<ProductDto> GetFilteredProductDto(TextFieldFilter filter, string fieldString)
-        {
-            var products = GetProductDto();
+        public IEnumerable<ProductDto> GetFilteredProductDto(TextFieldFilter filter, string fieldString, int page)
+        { 
             switch (filter)
             {
                 case TextFieldFilter.ProductName:
-                    {
-                        products = products.Where(product => product.ProductName == fieldString).ToList();
-                        break;
-                    }
+                {
+                    return GetProductsDto(page, p => p.ProductName == fieldString).ToList();
+
+                }
                 case TextFieldFilter.Price:
-                    {
-                        products = products.Where(product => product.Price == Double.Parse(fieldString)).ToList();
-                        break;
-                    }
+                {
+                    var parseField = Double.Parse(fieldString);
+                    return GetProductsDto(page, p => p.Price == parseField).ToList();
+                }
             }
-            return products;
+
+            return GetProductsDto(page);
         }
     }
 }

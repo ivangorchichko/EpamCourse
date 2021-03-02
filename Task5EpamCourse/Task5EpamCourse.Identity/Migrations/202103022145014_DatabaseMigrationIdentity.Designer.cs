@@ -7,13 +7,13 @@ namespace Task5EpamCourse.Identity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class DataMigration : IMigrationMetadata
+    public sealed partial class DatabaseMigrationIdentity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DataMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DatabaseMigrationIdentity));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102251419023_DataMigration"; }
+            get { return "202103022145014_DatabaseMigrationIdentity"; }
         }
         
         string IMigrationMetadata.Source

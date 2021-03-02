@@ -189,13 +189,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102251419023_DataMigration.cs" />
-    <Compile Include="Migrations\202102251419023_DataMigration.Designer.cs">
-      <DependentUpon>202102251419023_DataMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102251446484_DataMigration-v2.cs" />
-    <Compile Include="Migrations\202102251446484_DataMigration-v2.Designer.cs">
-      <DependentUpon>202102251446484_DataMigration-v2.cs</DependentUpon>
+    <Compile Include="Migrations\202103022145014_DatabaseMigrationIdentity.cs" />
+    <Compile Include="Migrations\202103022145014_DatabaseMigrationIdentity.Designer.cs">
+      <DependentUpon>202103022145014_DatabaseMigrationIdentity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\AccountUser.cs" />
@@ -203,8 +199,8 @@
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Manager\IdentityRoleManager.cs" />
     <Compile Include="Models\Manager\IdentityUserManager.cs" />
-    <Compile Include="Models\Roles\AccountRole.cs" />
-    <Compile Include="Models\Roles\CreateRoleViewModel.cs" />
+    <Compile Include="Models\Role\AccountRole.cs" />
+    <Compile Include="Models\Role\CreateRoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -256,11 +253,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102251419023_DataMigration.resx">
-      <DependentUpon>202102251419023_DataMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102251446484_DataMigration-v2.resx">
-      <DependentUpon>202102251446484_DataMigration-v2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103022145014_DatabaseMigrationIdentity.resx">
+      <DependentUpon>202103022145014_DatabaseMigrationIdentity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

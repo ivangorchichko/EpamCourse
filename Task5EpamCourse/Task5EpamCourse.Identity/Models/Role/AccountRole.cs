@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Task5EpamCourse.Identity.Models.Roles
+namespace Task5EpamCourse.Identity.Models.Role
 {
     public class AccountRole : IdentityRole
     {

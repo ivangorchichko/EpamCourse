@@ -5,7 +5,7 @@ using Task5EpamCourse.Models.Manager;
 using Task5EpamCourse.Models.Product;
 using Task5EpamCourse.Models.Purchase;
 
-namespace Task5EpamCourse.MapperWebHelper
+namespace Task5EpamCourse.MapperWebConfig
 {
     public static class AutoMapperWebConfig
     {
@@ -35,6 +35,9 @@ namespace Task5EpamCourse.MapperWebHelper
                     .ForPath(x => x.Manager.ManagerTelephone, y => y.MapFrom(z => z.ManagerTelephone))
                     .ForPath(x => x.Manager.ManagerRank, y => y.MapFrom(z => z.ManagerRank));
 
+                conf.CreateMap<CreatePurchaseViewModel, PurchaseViewModel>();
+                conf.CreateMap<PurchaseViewModel, ModifyPurchaseViewModel>();
+                conf.CreateMap<ModifyPurchaseViewModel, PurchaseViewModel>();
                 //Client//
                 conf.CreateMap<ClientDto, ClientViewModel>();
                 conf.CreateMap<ClientViewModel, ClientDto>();

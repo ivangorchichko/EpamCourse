@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using AutoMapper;
 using Task5.BL.Contacts;
 using Task5.BL.Models;
-using Task5EpamCourse.MapperWebHelper;
+using Task5.DomainModel.DataModel;
+using Task5EpamCourse.MapperWebConfig;
+using Task5EpamCourse.Models.Manager;
 using Task5EpamCourse.Models.Purchase;
 using Task5EpamCourse.Service.Contracts;
 
@@ -15,10 +18,12 @@ namespace Task5EpamCourse.Service
     {
         private readonly IMapper _mapper;
         private readonly IPurchaseService _purchaseService;
+        private readonly IManagerService _managerService;
 
-        public PurchaseMapper(IPurchaseService purchaseService)
+        public PurchaseMapper(IPurchaseService purchaseService, IManagerService managerService)
         {
             _purchaseService = purchaseService;
+            _managerService = managerService;
             _mapper = new Mapper(AutoMapperWebConfig.Configure());
         }
 
@@ -32,9 +37,53 @@ namespace Task5EpamCourse.Service
             return _mapper.Map<IEnumerable<PurchaseViewModel>>(_purchaseService.GetPurchaseDto())
                 .OrderBy(d => d.Date);
         }
+
+        public PurchaseViewModel GetPurchaseViewModel(CreatePurchaseViewModel createPurchase)
+        {
+            return _mapper.Map<PurchaseViewModel>(createPurchase);
+        }
+
         public PurchaseDto GetPurchaseDto(PurchaseViewModel purchaseViewModel)
         {
             return _mapper.Map<PurchaseDto>(purchaseViewModel);
+        }
+
+        public PurchaseDto GetPurchaseDto(CreatePurchaseViewModel createPurchaseViewModel)
+        {
+            var manager = GetManagersDto().FirstOrDefault(m => m.ManagerName == createPurchaseViewModel.ManagerName);
+            var purchaseViewModel = _mapper.Map<PurchaseViewModel>(createPurchaseViewModel);
+            purchaseViewModel.ManagerRank = manager.ManagerRank;
+            purchaseViewModel.ManagerTelephone = manager.ManagerTelephone;
+            return _mapper.Map<PurchaseDto>(purchaseViewModel);
+        }
+
+        public PurchaseDto GetPurchaseDto(ModifyPurchaseViewModel modifyPurchaseViewModel)
+        {
+            var manager = GetManagersDto().FirstOrDefault(m => m.ManagerName == modifyPurchaseViewModel.ManagerName);
+            var purchaseViewModel = _mapper.Map<PurchaseViewModel>(modifyPurchaseViewModel);
+            purchaseViewModel.ManagerRank = manager.ManagerRank;
+            purchaseViewModel.ManagerTelephone = manager.ManagerTelephone;
+            return _mapper.Map<PurchaseDto>(purchaseViewModel);
+        }
+
+        private IEnumerable<ManagerViewModel> GetManagersDto()
+        {
+            return _mapper.Map<IEnumerable<ManagerViewModel>>(_managerService.GetManagersDto());
+        }
+
+        public CreatePurchaseViewModel GetManagersViewModel()
+        {
+            return new CreatePurchaseViewModel()
+            {
+                Managers = new SelectList(GetManagersDto(), "ManagerName", "ManagerName"),
+            };
+        }
+
+        public ModifyPurchaseViewModel GetModifyPurchaseViewModel(int? id)
+        {
+            var purchase = _mapper.Map<ModifyPurchaseViewModel>(GetPurchaseViewModel(id));
+            purchase.Managers = new SelectList(GetManagersDto(), "ManagerName", "ManagerName");
+            return purchase;
         }
     }
 }

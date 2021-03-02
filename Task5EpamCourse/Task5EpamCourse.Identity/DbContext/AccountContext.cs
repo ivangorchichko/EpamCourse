@@ -9,11 +9,14 @@ namespace Task5EpamCourse.Identity.DbContext
 {
     public class AccountContext : IdentityDbContext<AccountUser>
     {
-        public AccountContext() : base("IdentityDb") { }
+        public AccountContext() : base("SaleTask5") { }
 
         public static AccountContext Create()
         {
             return new AccountContext();
         }
+        //<connectionStrings>
+        //<add name = "IdentityDb" providerName="System.Data.SqlClient" connectionString="Data Source=(local);Initial Catalog=IdentityDb;Integrated Security=True" />
+        //</connectionStrings>
     }
 }

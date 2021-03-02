@@ -23,7 +23,7 @@ namespace Task5.BL.MapperBLHelper
 
                 conf.CreateMap<PurchaseEntity, PurchaseDto>();
                 //    .ForPath(x => x.Client.ClientName, o => o.MapFrom(z => z.Client.ClientName))
-                //    .ForPath(x => x.Client.ClientTelephone, y => y.MapFrom(z => z.Client.ClientTelephone))
+                //    .ForPath(x => x.Client.Telephone, y => y.MapFrom(z => z.Client.Telephone))
                 //    .ForPath(x => x.Client.Id, y => y.MapFrom(z => z.Client.Id))
                 //    .ForPath(x => x.Product.ProductName, y => y.MapFrom(z => z.Product.ProductName))
                 //    .ForPath(x => x.Product.Price, y => y.MapFrom(z => z.Product.Price))
@@ -38,7 +38,7 @@ namespace Task5.BL.MapperBLHelper
                 //    .ForPath(x => x.Product.Date, y => y.MapFrom(z => z.Product.Date));
                 conf.CreateMap<PurchaseDto, PurchaseEntity>();
                     //.ForPath(x => x.Client.ClientName, o => o.MapFrom(z => z.Client.ClientName))
-                    //.ForPath(x => x.Client.ClientTelephone, y => y.MapFrom(z => z.Client.ClientTelephone))
+                    //.ForPath(x => x.Client.Telephone, y => y.MapFrom(z => z.Client.Telephone))
                     //.ForPath(x => x.Product.ProductName, y => y.MapFrom(z => z.Product.ProductName))
                     //.ForPath(x => x.Product.Price, y => y.MapFrom(z => z.Product.Price))
                     //.ForPath(x => x.Id, y => y.MapFrom(z => z.Id));

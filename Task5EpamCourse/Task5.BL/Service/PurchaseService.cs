@@ -19,7 +19,6 @@ namespace Task5.BL.Service
 
         public PurchaseService(IRepository repository)
         {
-            //запихнуть в старттап
             _mapper = new Mapper(AutoMapperBLConfig.Configure());
             _repository = repository;
         }
@@ -41,22 +40,13 @@ namespace Task5.BL.Service
         }
         public IEnumerable<PurchaseDto> GetPurchaseDto()
         {
-            var purchasesEntities = _repository.Get<PurchaseEntity>();
-            var clientEntities = _repository.Get<ClientEntity>();
-            var productEntities = _repository.Get<ProductEntity>();
-            var managerEntities = _repository.Get<ManagerEntity>();
-            var manager 
-                = _mapper.Map<IEnumerable<ManagerDto>>(managerEntities);
-            var client =
-                _mapper.Map<IEnumerable<ClientDto>>(clientEntities);
-            var product =
-                _mapper.Map<IEnumerable<ProductDto>>(productEntities);
+            var purchasesEntities = _repository.Get<PurchaseEntity>().ToList();
             var purchases =
                 _mapper.Map<IEnumerable<PurchaseDto>>(purchasesEntities);
             return purchases;
         }
 
-        public void AddPurchase(PurchaseDto purchaseDto, string selectManager)
+        public void AddPurchase(PurchaseDto purchaseDto)
         {
             purchaseDto.Id = GetPurchaseDto().ToList().Count;
             purchaseDto.Client.Date = purchaseDto.Date;
@@ -73,7 +63,7 @@ namespace Task5.BL.Service
                     p => p.ProductName == purchaseDto.Product.ProductName &&
                     p.Price == purchaseDto.Product.Price);
             var manager = _repository.Get<ManagerEntity>()
-                .FirstOrDefault(m => m.ManagerName == selectManager
+                .FirstOrDefault(m => m.ManagerName == purchaseDto.Manager.ManagerName
                 );
 
             var purchase = _mapper.Map<PurchaseEntity>(purchaseDto);
@@ -105,14 +95,11 @@ namespace Task5.BL.Service
                 .Find(purchase => purchase.Id == purchaseDto.Id);
             purchaseEntity.Product.ProductName = purchaseDto.Product.ProductName;
             purchaseEntity.Product.Price = purchaseDto.Product.Price;
-            purchaseEntity.Product.Date = purchaseDto.Product.Date;
             purchaseEntity.Client.ClientName = purchaseDto.Client.ClientName;
             purchaseEntity.Client.ClientTelephone = purchaseDto.Client.ClientTelephone;
-            purchaseEntity.Client.Date = purchaseDto.Client.Date;
             purchaseEntity.Manager.ManagerName = purchaseDto.Manager.ManagerName;
             purchaseEntity.Manager.ManagerTelephone = purchaseDto.Manager.ManagerTelephone;
             purchaseEntity.Manager.ManagerRank = purchaseDto.Manager.ManagerRank;
-            purchaseEntity.Manager.Date = purchaseDto.Manager.Date;
             purchaseEntity.Date = purchaseDto.Date;
             _repository.Save();
         }
@@ -127,26 +114,26 @@ namespace Task5.BL.Service
 
         public IEnumerable<PurchaseDto> GetFilteredPurchaseDto(TextFieldFilter filter, string fieldString, int page)
         {
-            var purchases = new List<PurchaseDto>();
             switch (filter)
             {
                 case TextFieldFilter.ClientName:
                 {
-                    purchases = GetPurchaseDto(page, p => p.Client.ClientName == fieldString).ToList();
-                    break;
+                    return GetPurchaseDto(page, p => p.Client.ClientName == fieldString).ToList();
+                    
                 }
                 case TextFieldFilter.ProductName:
                 {
-                    purchases = GetPurchaseDto(page, p => p.Product.ProductName == fieldString).ToList();
-                    break;
+                    return GetPurchaseDto(page, p => p.Product.ProductName == fieldString).ToList();
                 }
                 case TextFieldFilter.Date:
                 {
-                    purchases = GetPurchaseDto(page, p => p.Date.ToString().Contains(fieldString)).ToList();
-                    break;
-                }
+                    var parseDate = DateTime.Parse(fieldString);
+                    return GetPurchaseDto(page, p => p.Date.Day == parseDate.Day
+                                                     && p.Date.Month == parseDate.Month
+                                                     && p.Date.Year == parseDate.Year).ToList();
+                    }
             }
-            return purchases;
+            return GetPurchaseDto(page);
         }
     }
 }

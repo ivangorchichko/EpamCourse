@@ -15,7 +15,6 @@ using Task5.BL.DIConfig;
 using Task5EpamCourse.Identity.DbContext;
 using Task5EpamCourse.Identity.Models.Account;
 using Task5EpamCourse.Identity.Models.Manager;
-using Task5EpamCourse.MapperWebHelper;
 using Task5EpamCourse.PageHelper;
 using Task5EpamCourse.PageHelper.Contacts;
 using Task5EpamCourse.Service;
@@ -31,9 +30,7 @@ namespace Task5EpamCourse.App_Start
             RegistrContainer();
             app.CreatePerOwinContext<AccountContext>(AccountContext.Create);
             app.CreatePerOwinContext<IdentityUserManager>(IdentityUserManager.Create);
-
-            // регистрация менеджера ролей
-            //app.CreatePerOwinContext<IdentityRoleManager>(IdentityRoleManager.Create);
+            app.CreatePerOwinContext<IdentityRoleManager>(IdentityRoleManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -48,6 +45,9 @@ namespace Task5EpamCourse.App_Start
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<PageService>().As<IPageService>();
             builder.RegisterType<PurchaseMapper>().As<IPurchaseMapper>();
+            builder.RegisterType<ManagerMapper>().As<IManagerMapper>();
+            builder.RegisterType<ProductMapper>().As<IProductMapper>();
+            builder.RegisterType<ClientMapper>().As<IClientMapper>();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
     }

@@ -8,7 +8,6 @@ namespace Task5EpamCourse.Identity.Models.Account
 {
     public class RegisterViewModel
     {
-
         [Required]
         [EmailAddress]
         [Display(Name = "Адрес электронной почты")]

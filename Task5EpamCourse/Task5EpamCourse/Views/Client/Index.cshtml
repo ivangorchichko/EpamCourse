@@ -3,10 +3,10 @@
 }
 @using Task5EpamCourse.PageHelper
 @using Task5.BL.Enums
-@model Task5EpamCourse.Models.Page.ClientInPageViewModel
+@model Task5EpamCourse.Models.Page.ModelsInPageViewModel
 
 <div class="jumbotron">
-    <h2>Все продажи</h2>
+    <h2>Все клиенты</h2>
 </div>
 <div>
     @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "results" }))
@@ -15,6 +15,7 @@
             <table class="table">
                 <tr>
                     <td>
+                        <div class="text-danger">@ViewBag.NotValidParse</div>
                         <div class="editor-label">
                             <label>Введите строку фильтрации</label>
                         </div>
@@ -26,7 +27,7 @@
                             <span>Нету</span><br>
                             <input name="filter" type="radio" value=@TextFieldFilter.ClientName>
                             <span>Имя клиента</span><br>
-                            <input name="filter" type="radio" value=@TextFieldFilter.ClientTelephone>
+                            <input name="filter" type="radio" value=@TextFieldFilter.Telephone>
                             <span>Телефон клиента</span><br>
                         </div>
                     </td>
@@ -45,7 +46,7 @@
                 <thead class="bg-info">
                 <td><p>Клиент</p></td>
                 <td><p>Телефон клиента</p></td>
-                <td><p></p></td>
+                <td><p>Дата</p></td>
                 @if (User.IsInRole("admin"))
                 {
                     <td>
@@ -62,6 +63,7 @@
                     <tr>
                         <td><p>@b.ClientName</p></td>
                         <td><p>@b.ClientTelephone</p></td>
+                        <td><p>@b.Date</p></td>
                         <td>
                             @if (User.IsInRole("admin"))
                             {

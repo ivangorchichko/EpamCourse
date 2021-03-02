@@ -6,7 +6,6 @@ using Task5.BL.Contacts;
 using Task5.DAL.DataBaseContext;
 using Task5.DAL.Repository.Contract;
 using Task5.DomainModel.DataModel;
-using Task5EpamCourse.MapperWebHelper;
 using Task5EpamCourse.Service.Contracts;
 
 namespace Task5EpamCourse.Controllers

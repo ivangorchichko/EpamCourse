@@ -8,21 +8,16 @@ namespace Task5EpamCourse.Identity.Models.Account
 {
     public class LoginViewModel
     {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Адрес электронной почты")]
+        public string Email { get; set; }
 
         [Required]
-        public string Email { get; set; }
-        [Required]
+        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        //[Required]
-        //[Display(Name = "Адрес электронной почты")]
-        //[EmailAddress]
-        //public string Email { get; set; }
-
-        //[Required]
-        //[DataType(DataType.Password)]
-        //[Display(Name = "Пароль")]
-        //public string Password { get; set; }
     }
 }

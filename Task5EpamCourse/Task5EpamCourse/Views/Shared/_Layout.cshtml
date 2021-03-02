@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.Activities.Statements
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - приложение ASP.NET</title>
@@ -20,11 +21,19 @@
                 @Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Продажи", "Index", "Purchase")</li>
-                    <li>@Html.ActionLink("Клиенты", "Index", "Client")</li>
-                    <li>@Html.ActionLink("Продукты", "Index", "Product")</li>
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Продажи", "Index", "Purchase")</li>
+                        <li>@Html.ActionLink("Клиенты", "Index", "Client")</li>
+                        <li>@Html.ActionLink("Продукты", "Index", "Product")</li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("Менеджеры", "Index", "Manager")</li>
+                        }
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

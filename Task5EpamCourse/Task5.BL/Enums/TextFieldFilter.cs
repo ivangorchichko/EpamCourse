@@ -13,6 +13,8 @@ namespace Task5.BL.Enums
         ClientName,
         Date,
         Price,
-        ClientTelephone,
+        Telephone,
+        ManagerName,
+        ManagerRank,
     }
 }

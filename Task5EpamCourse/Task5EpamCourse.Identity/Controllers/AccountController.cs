@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Task5EpamCourse.Identity.Models.Account;
 using Task5EpamCourse.Identity.Models.Manager;
+using Task5EpamCourse.Identity.Models.Role;
 
 namespace Task5EpamCourse.Identity.Controllers
 {
@@ -16,11 +17,28 @@ namespace Task5EpamCourse.Identity.Controllers
     public class AccountController : Controller
     {
         private IdentityUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
+        private IdentityRoleManager RoleManager => HttpContext.GetOwinContext().GetUserManager<IdentityRoleManager>();
 
-        public ActionResult Register(string returnUrl)
+        public async Task<ActionResult> Register(string returnUrl)
         {
-            ViewBag.returnUrl = returnUrl;
-            return View();
+            var user = await UserManager.FindAsync("admin@mail.ru", "superuser");
+            if (user != null)
+            {
+                ViewBag.returnUrl = returnUrl;
+                return View();
+            }
+            else
+            {
+                var isRolesCreated = await CreateRole();
+                if (isRolesCreated == true)
+                { 
+                    await CreateAdminUserAsync();
+                    return View();
+                }
+
+                return View();
+            }
         }
 
         [HttpPost]
@@ -32,7 +50,7 @@ namespace Task5EpamCourse.Identity.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "admin");
+                    await UserManager.AddToRoleAsync(user.Id, "user");
 
                     ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user,
                         DefaultAuthenticationTypes.ApplicationCookie);
@@ -56,17 +74,10 @@ namespace Task5EpamCourse.Identity.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
         public async Task<ActionResult> Login(string returnUrl)
         {
-            var user = await UserManager.FindAsync("aadmin", "device");
+            var user = await UserManager.FindAsync("admin@mail.ru", "superuser");
             if (user != null)
             {
                 ViewBag.returnUrl = returnUrl;
@@ -74,7 +85,13 @@ namespace Task5EpamCourse.Identity.Controllers
             }
             else
             {
-                await CreateAdminUserAsync();
+                var isRolesCreated = await CreateRole();
+                if (isRolesCreated == true)
+                {
+                    await CreateAdminUserAsync();
+                    return View();
+                }
+
                 return View();
             }
         }
@@ -120,10 +137,42 @@ namespace Task5EpamCourse.Identity.Controllers
 
         private async Task<AccountUser> CreateAdminUserAsync()
         {
-            var admin = new AccountUser() {UserName = "Admin", Email = "Admin@mail.ru", NickName = "Admin"};
-            await UserManager.AddToRoleAsync(admin.Id, "admin");
-            await UserManager.CreateAsync(admin, "admin1");
+            var admin = new AccountUser() {UserName = "admin@mail.ru", Email = "admin@mail.ru", NickName = "Admin"};
+            var result = await UserManager.CreateAsync(admin, "superuser");
+            if (result.Succeeded)
+            {
+                await UserManager.AddToRoleAsync(admin.Id, "admin");
+            }
             return admin;
+        }
+
+        public async Task<bool> CreateRole(string returnUrl = null)
+        {
+            AccountRole adminRole = await RoleManager.FindByNameAsync("Admin");
+            AccountRole userRole = await RoleManager.FindByNameAsync("User");
+            if (adminRole == null || userRole == null)
+            {
+                IdentityResult resultAdminRole = await RoleManager.CreateAsync(new AccountRole()
+                {
+                    Name = "Admin",
+                    Description = "Super user in application",
+                });
+                IdentityResult resultUserRole = await RoleManager.CreateAsync(new AccountRole()
+                {
+                    Name = "User",
+                    Description = "Simple user in application",
+                });
+                if (resultUserRole.Succeeded && resultAdminRole.Succeeded)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

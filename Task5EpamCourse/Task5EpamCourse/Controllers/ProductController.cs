@@ -1,28 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Task5.BL.Contacts;
 using Task5.BL.Enums;
-using Task5.BL.Service;
-using Task5.DAL.Repository.Contract;
-using Task5.DAL.Repository.Model;
-using Task5EpamCourse.MapperWebHelper;
-using Task5EpamCourse.Models.Client;
 using Task5EpamCourse.Models.Product;
-using Task5EpamCourse.PageHelper;
+using Task5EpamCourse.PageHelper.Contacts;
+using Task5EpamCourse.Service.Contracts;
 
 namespace Task5EpamCourse.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly IPageService _pageService;
+        private readonly IProductMapper _productMapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IPageService pageService, IProductMapper productMapper)
         {
             _productService = productService;
+            _pageService = pageService;
+            _productMapper = productMapper;
         }
 
 
@@ -35,21 +33,36 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
 
-            return View(PageService.GetProductPages(
-                MapperWebService.GetProductViewModels(_productService.GetProductDto()), page));
+            return View(_pageService.GetModelsInPageViewModel<ProductViewModel>(page));
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
         {
-            if (HttpContext.User.Identity.IsAuthenticated == false)
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return View("Error");
+                if (filter == TextFieldFilter.Price)
+                {
+                    try
+                    {
+                        Double.Parse(fieldString);
+                        return View(
+                            _pageService.GetFilteredModelsInPageViewModel<ProductViewModel>(filter, fieldString, page));
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.NotValidParse = "Неверный ввод цены, примерный ввод : 0,3";
+                        return View(_pageService.GetModelsInPageViewModel<ProductViewModel>(page));
+                    }
+                }
+                else
+                {
+                    return View(
+                    _pageService.GetFilteredModelsInPageViewModel<ProductViewModel>(filter, fieldString, page));
+                }
             }
-            var products = MapperWebService
-                .GetProductViewModels(_productService.GetFilteredProductDto(filter, fieldString));
-            return View(PageService.GetProductPages(products, page));
+            return View("Error");
         }
 
         [Authorize]
@@ -62,9 +75,7 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(product);
+                return View(_productMapper.GetProductViewModel(id));
             }
         }
 
@@ -81,9 +92,8 @@ namespace Task5EpamCourse.Controllers
         {
             if (ModelState.IsValid)
             {
-                //???
-                productViewModel.Id = _productService.GetProductDto().ToList().Count;
-                _productService.AddProduct(MapperWebService.GetProductDto(productViewModel));
+                productViewModel.Id = _productService.GetProductsDto().ToList().Count;
+                _productService.AddProduct(_productMapper.GetProductDto(productViewModel));
                 return View("Details", productViewModel);
             }
             else
@@ -102,9 +112,7 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(product);
+                return View(_productMapper.GetProductViewModel(id));
             }
         }
 
@@ -114,7 +122,7 @@ namespace Task5EpamCourse.Controllers
         {
             if (ModelState.IsValid)
             {
-                _productService.ModifyProduct(MapperWebService.GetProductDto(productViewModel));
+                _productService.ModifyProduct(_productMapper.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else
@@ -133,9 +141,7 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var product = MapperWebService.GetProductViewModels(_productService.GetProductDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(product);
+                return View(_productMapper.GetProductViewModel(id));
             }
         }
 
@@ -143,9 +149,9 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Delete(ProductViewModel productViewModel)
         {
-            if (ModelState.IsValid)
+            if (productViewModel.Id != 0)
             {
-                _productService.RemoveProduct(MapperWebService.GetProductDto(productViewModel));
+                _productService.RemoveProduct(_productMapper.GetProductDto(productViewModel));
                 return RedirectToAction("Index");
             }
             else

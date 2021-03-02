@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,7 +25,7 @@ namespace Task5.BL.Service
             _repository = repository;
         }
 
-        public IEnumerable<ClientDto> GetClientDto()
+        public IEnumerable<ClientDto> GetClientsDto()
         {
             var clientEntities = _repository.Get<ClientEntity>();
             var client =
@@ -32,9 +33,36 @@ namespace Task5.BL.Service
             return client;
         }
 
+        public IEnumerable<ClientDto> GetClientsDto(int page, Expression<Func<ClientEntity, bool>> predicate = null)
+        {
+            List<ClientEntity> clientEntities;
+            if (predicate != null)
+            {
+                clientEntities = _repository.Get<ClientEntity>(3, page, predicate).ToList();
+            }
+            else
+            {
+                clientEntities = _repository.Get<ClientEntity>(3, page).ToList();
+            }
+
+            var clients =
+                _mapper.Map<IEnumerable<ClientDto>>(clientEntities);
+            return clients;
+        }
+
         public void AddClient(ClientDto clientDto)
         {
-            _repository.Add<ClientEntity>(_mapper.Map<ClientEntity>(clientDto));
+            var client = _repository.Get<ClientEntity>()
+                .FirstOrDefault(
+                    c => c.ClientName == clientDto.ClientName 
+                         && c.ClientTelephone == clientDto.ClientTelephone
+                         );
+            if (client != null)
+            {
+
+            }
+            else
+                _repository.Add<ClientEntity>(_mapper.Map<ClientEntity>(clientDto));
         }
 
         public void ModifyClient(ClientDto clientDto)
@@ -55,23 +83,22 @@ namespace Task5.BL.Service
             _repository.Remove(clientEntity);
         }
 
-        public IEnumerable<ClientDto> GetFilteredClientDto(TextFieldFilter filter, string fieldString)
+        public IEnumerable<ClientDto> GetFilteredClientDto(TextFieldFilter filter, string fieldString, int page)
         {
-            var purchases = GetClientDto();
             switch (filter)
             {
                 case TextFieldFilter.ClientName:
-                    {
-                        purchases = purchases.Where(purchase => purchase.ClientName == fieldString).ToList();
-                        break;
-                    }
-                case TextFieldFilter.ClientTelephone:
-                    {
-                        purchases = purchases.Where(purchase => purchase.ClientTelephone == fieldString).ToList();
-                        break;
-                    }
+                {
+                    return GetClientsDto(page, c => c.ClientName == fieldString).ToList();
+
+                }
+                case TextFieldFilter.Telephone:
+                {
+                    return GetClientsDto(page, c => c.ClientTelephone == fieldString).ToList();
+                }
             }
-            return purchases;
+
+            return GetClientsDto(page);
         }
     }
 }

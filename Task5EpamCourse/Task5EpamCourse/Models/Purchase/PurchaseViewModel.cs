@@ -32,10 +32,16 @@ namespace Task5EpamCourse.Models.Purchase
         [DataType(DataType.Currency,ErrorMessage = "Неверный ввод цены")]
         public double Price { get; set; }
 
+        [Required(ErrorMessage = "Пожалуйста, введите имя менеджера")]
+        [DataType(DataType.Text)]
         public string ManagerName { get; set; }
 
+        [Required(ErrorMessage = "Пожалуйста, введите телефон менеджера")]
+        [RegularExpression(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$", ErrorMessage = "Неверно введен номер")]
         public string ManagerTelephone { get; set; }
 
+        [Required(ErrorMessage = "Пожалуйста, введите ранг менеджера")]
+        [DataType(DataType.Text)]
         public string ManagerRank { get; set; }
     }
 }

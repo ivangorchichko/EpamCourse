@@ -20,6 +20,7 @@ namespace Task5.BL.DIConfig
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<PurchaseService>().As<IPurchaseService>();
             builder.RegisterType<Repository>().As<IRepository>();
+            builder.RegisterType<ManagerService>().As<IManagerService>();
             builder.RegisterInstance(LoggerFactory.GetLogger());
 
 

@@ -1,19 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Web.Mvc;
-using AutoMapper;
 using Task5.BL.Contacts;
 using Task5.BL.Enums;
-using Task5.BL.Service;
-using Task5.DAL.Repository.Contract;
-using Task5.DAL.Repository.Model;
-using Task5EpamCourse.MapperWebHelper;
-using Task5EpamCourse.Models.Manager;
 using Task5EpamCourse.Models.Purchase;
-using Task5EpamCourse.PageHelper;
 using Task5EpamCourse.PageHelper.Contacts;
-using Task5EpamCourse.Service;
 using Task5EpamCourse.Service.Contracts;
 
 namespace Task5EpamCourse.Controllers
@@ -48,12 +39,29 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
         {
-            if (HttpContext.User.Identity.IsAuthenticated == false)
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return View("Error");
+                if (filter == TextFieldFilter.Date)
+                {
+                    try
+                    {
+                        DateTime.Parse(fieldString);
+                        return View(
+                            _pageService.GetFilteredModelsInPageViewModel<PurchaseViewModel>(filter, fieldString,
+                                page));
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.NotValidParse = "Неверный ввод даты, примерный ввод : 11.11.2011";
+                        return View(_pageService.GetModelsInPageViewModel<PurchaseViewModel>(page));
+                    }
+                }
+                return View(
+                    _pageService.GetFilteredModelsInPageViewModel<PurchaseViewModel>(filter, fieldString,
+                        page));
             }
+            return View("Error");
             
-            return View(_pageService.GetFilteredModelsInPageViewModel<PurchaseViewModel>(filter, fieldString, page));
         }
 
         [Authorize]
@@ -66,8 +74,7 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = _purchaseMapper.GetPurchaseViewModel(id);
-                return View(purchase);
+                return View(_purchaseMapper.GetPurchaseViewModel(id));
             }
         }
 
@@ -75,31 +82,21 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            List<string> managerNames = new List<string>();
-            foreach (var purchase in _purchaseMapper.GetPurchaseViewModel())
-            {
-                if (!managerNames.Contains(purchase.ManagerName))
-                {
-                    managerNames.Add(purchase.ManagerName);
-                }
-            }
-
-            ViewBag.Managers = managerNames;
-            return View();
+            return View(_purchaseMapper.GetManagersViewModel());
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Create(PurchaseViewModel purchaseViewModel, string selectManager)
+        public ActionResult Create(CreatePurchaseViewModel purchaseViewModel)
         {
             if (ModelState.IsValid)
             {
-                _purchaseService.AddPurchase(_purchaseMapper.GetPurchaseDto(purchaseViewModel), selectManager);
-                return View("Details",purchaseViewModel);
+                _purchaseService.AddPurchase(_purchaseMapper.GetPurchaseDto(purchaseViewModel));
+                return View("Details", _purchaseMapper.GetPurchaseViewModel(purchaseViewModel));
             }
             else
             {
-                return View();
+                return View(_purchaseMapper.GetManagersViewModel());
             }
         }
 
@@ -113,14 +110,13 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = _purchaseMapper.GetPurchaseViewModel(id);
-                return View(purchase);
+                return View(_purchaseMapper.GetModifyPurchaseViewModel(id));
             }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Modify(PurchaseViewModel purchaseViewModel)
+        public ActionResult Modify(ModifyPurchaseViewModel purchaseViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -143,8 +139,7 @@ namespace Task5EpamCourse.Controllers
             }
             else
             {
-                var purchase = _purchaseMapper.GetPurchaseViewModel(id);
-                return View(purchase);
+                return View(_purchaseMapper.GetPurchaseViewModel(id));
             }
         }
 
@@ -152,9 +147,9 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Delete(PurchaseViewModel purchaseViewModel)
         {
-            if (ModelState.IsValid)
+            if (purchaseViewModel.Id != 0)
             {
-                _purchaseService.RemovePurchase(_purchaseMapper.GetPurchaseDto(purchaseViewModel));
+                _purchaseService.RemovePurchase(_purchaseMapper.GetPurchaseDto(_purchaseMapper.GetPurchaseViewModel(purchaseViewModel.Id)));
                 return RedirectToAction("Index");
             }
             else

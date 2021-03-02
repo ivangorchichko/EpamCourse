@@ -16,7 +16,7 @@ namespace Task5.BL.Contacts
 
         IEnumerable<PurchaseDto> GetPurchaseDto(int page, Expression<Func<PurchaseEntity, bool>> predicate = null);
 
-        void AddPurchase(PurchaseDto purchaseDto, string selectManager);
+        void AddPurchase(PurchaseDto purchaseDto);
 
         void ModifyPurchase(PurchaseDto purchaseDto);
 

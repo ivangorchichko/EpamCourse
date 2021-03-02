@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Serilog;
@@ -11,10 +12,11 @@ using Task5.BL.Logger;
 using Task5.BL.Service;
 using Task5.DAL.Repository.Contract;
 using Task5.DAL.Repository.Model;
-using Task5EpamCourse.MapperWebHelper;
 using Task5EpamCourse.Models.Client;
 using Task5EpamCourse.Models.Purchase;
 using Task5EpamCourse.PageHelper;
+using Task5EpamCourse.PageHelper.Contacts;
+using Task5EpamCourse.Service.Contracts;
 
 namespace Task5EpamCourse.Controllers
 {
@@ -22,12 +24,16 @@ namespace Task5EpamCourse.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
+        private readonly IPageService _pageService;
+        private readonly IClientMapper _clientMapper;
         private readonly ILogger _logger;
 
-        public ClientController(IClientService clientService, ILogger logger)
+        public ClientController(IClientService clientService, ILogger logger, IPageService pageService, IClientMapper clientMapper)
         {
             _clientService = clientService;
             _logger = logger;
+            _pageService = pageService;
+            _clientMapper = clientMapper;
         }
 
 
@@ -42,8 +48,7 @@ namespace Task5EpamCourse.Controllers
                 return View("Error");
             }
             _logger.Debug("Sharing Index view");
-            return View(PageService.GetClientsPages(
-                MapperWebService.GetClientViewModels(_clientService.GetClientDto()), page));
+            return View(_pageService.GetModelsInPageViewModel<ClientViewModel>(page));
         }
 
         [Authorize]
@@ -51,15 +56,28 @@ namespace Task5EpamCourse.Controllers
         public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
         {
             _logger.Debug("Running Index Post method in ClientController");
-            if (HttpContext.User.Identity.IsAuthenticated == false)
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                _logger.Error("Error with authenticated");
-                return View("Error");
+                if (filter == TextFieldFilter.Telephone)
+                {
+                    Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
+                    if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
+                    {
+                        return View(_pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
+                    }
+                    else
+                    {
+                         ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
+                         return View(_pageService.GetModelsInPageViewModel<ClientViewModel>(page));
+                    }
+                }
+                else
+                {
+                    return View(_pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
+                }
             }
             _logger.Debug("Sharing Index view");
-            var clients = MapperWebService
-                .GetClientViewModels(_clientService.GetFilteredClientDto(filter, fieldString));
-            return View(PageService.GetClientsPages(clients, page));
+            return View("Error");
         }
 
         [Authorize]
@@ -75,9 +93,7 @@ namespace Task5EpamCourse.Controllers
             else
             {
                 _logger.Debug("Sharing Details view");
-                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(client);
+                return View(_clientMapper.GetClientViewModel(id));
             }
         }
 
@@ -97,8 +113,8 @@ namespace Task5EpamCourse.Controllers
             if (ModelState.IsValid)
             {
                 _logger.Debug("Adding new client");
-                clientViewModel.Id = _clientService.GetClientDto().ToList().Count;
-                _clientService.AddClient(MapperWebService.GetClientDto(clientViewModel));
+                clientViewModel.Id = _clientService.GetClientsDto().ToList().Count;
+                _clientService.AddClient(_clientMapper.GetClientDto(clientViewModel));
                 _logger.Debug("Adding complete");
                 return View("Details", clientViewModel);
             }
@@ -122,9 +138,7 @@ namespace Task5EpamCourse.Controllers
             else
             {
                 _logger.Debug("Sharing Modify view");
-                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(client);
+                return View(_clientMapper.GetClientViewModel(id));
             }
         }
 
@@ -136,7 +150,7 @@ namespace Task5EpamCourse.Controllers
             if (ModelState.IsValid)
             {
                 _logger.Debug("Modify client model");
-                _clientService.ModifyClient(MapperWebService.GetClientDto(clientViewModel));
+                _clientService.ModifyClient(_clientMapper.GetClientDto(clientViewModel));
                 _logger.Debug("Modify complete");
                 return RedirectToAction("Index");
             }
@@ -160,9 +174,7 @@ namespace Task5EpamCourse.Controllers
             else
             {
                 _logger.Debug("Sharing Delete view");
-                var client = MapperWebService.GetClientViewModels(_clientService.GetClientDto())
-                    .ToList().Find(x => x.Id == id);
-                return View(client);
+                return View(_clientMapper.GetClientViewModel(id));
             }
         }
 
@@ -171,10 +183,10 @@ namespace Task5EpamCourse.Controllers
         public ActionResult Delete(ClientViewModel clientViewModel)
         {
             _logger.Debug("Running Delete Post method in ClientController");
-            if (ModelState.IsValid)
+            if (clientViewModel.Id != 0)
             {
                 _logger.Debug("Remove client from db");
-                _clientService.RemoveClient(MapperWebService.GetClientDto(clientViewModel));
+                _clientService.RemoveClient(_clientMapper.GetClientDto(clientViewModel));
                 _logger.Debug("Remove complete");
                 return RedirectToAction("Index");
             }
