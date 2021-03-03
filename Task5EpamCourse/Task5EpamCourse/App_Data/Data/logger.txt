@@ -1,0 +1,21 @@
+2021-03-04 00:14:47.505 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:47.515 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:48.081 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:48.081 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:52.091 +03:00 [DBG] Running Modify Get method in ClientController
+2021-03-04 00:14:52.091 +03:00 [DBG] Sharing Modify view
+2021-03-04 00:14:53.547 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:53.547 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:53.671 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:53.671 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:54.512 +03:00 [DBG] Running Create Get method in ClientController, sharing Create view
+2021-03-04 00:14:55.550 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:55.550 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:55.661 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:55.661 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:56.489 +03:00 [DBG] Running Delete Get method in ClientController
+2021-03-04 00:14:56.490 +03:00 [DBG] Sharing Delete view
+2021-03-04 00:14:57.428 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:57.428 +03:00 [DBG] Sharing Index view
+2021-03-04 00:14:57.541 +03:00 [DBG] Running Index Get method in ClientController
+2021-03-04 00:14:57.541 +03:00 [DBG] Sharing Index view

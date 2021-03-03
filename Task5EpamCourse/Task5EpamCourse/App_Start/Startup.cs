@@ -15,7 +15,6 @@ using Task5.BL.DIConfig;
 using Task5EpamCourse.Identity.DbContext;
 using Task5EpamCourse.Identity.Models.Account;
 using Task5EpamCourse.Identity.Models.Manager;
-using Task5EpamCourse.Logger;
 using Task5EpamCourse.PageHelper;
 using Task5EpamCourse.PageHelper.Contacts;
 using Task5EpamCourse.Service;
@@ -49,7 +48,6 @@ namespace Task5EpamCourse.App_Start
             builder.RegisterType<ManagerMapper>().As<IManagerMapper>();
             builder.RegisterType<ProductMapper>().As<IProductMapper>();
             builder.RegisterType<ClientMapper>().As<IClientMapper>();
-            //builder.RegisterInstance(LoggerFactory.GetLogger());
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
     }

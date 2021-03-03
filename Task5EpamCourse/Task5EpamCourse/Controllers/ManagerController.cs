@@ -35,7 +35,7 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            _logger.Debug("Running Index Get method in ClientController");
+            _logger.Debug("Running Index Get method in ManagerController");
             if (HttpContext.User.Identity.IsAuthenticated == false)
             {
                 _logger.Error("Error with authenticated");
@@ -48,14 +48,14 @@ namespace Task5EpamCourse.Controllers
 
         public ActionResult GetManagers(int page = 1)
         {
-            _logger.Debug("Running Index Get method in ClientController");
+            _logger.Debug("Running GetManagers Get method in ManagerController");
             if (HttpContext.User.Identity.IsAuthenticated == false)
             {
                 _logger.Error("Error with authenticated");
                 return View("Error");
             }
             ViewBag.CurrentPage = page;
-            _logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing partial view");
             return PartialView("_Managers",_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
         }
 
@@ -63,7 +63,7 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult GetManagers(string fieldString, TextFieldFilter filter, int page = 1)
         {
-            _logger.Debug("Running Index Post method in ClientController");
+            _logger.Debug("Running GetManagers Post method in ManagerController");
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 if (filter == TextFieldFilter.Telephone)
@@ -71,20 +71,23 @@ namespace Task5EpamCourse.Controllers
                     Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
                     if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
                     {
+                        _logger.Debug("Sharing partial view");
                         return PartialView("_Managers", _pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
                     }
                     else
                     {
+                        _logger.Warning("Incorrect input");
                         ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
                         return PartialView("_Managers", _pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
                     }
                 }
                 else
                 {
+                    _logger.Debug("Sharing partial view");
                     return PartialView("_Managers", _pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
                 }
             }
-            _logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing Error view");
             return View("Error");
         }
 
@@ -92,7 +95,7 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Details(int? id)
         {
-            _logger.Debug("Running Details Get method in ClientController");
+            _logger.Debug("Running Details Get method in ManagerController");
             if (id == null)
             {
                 _logger.Error("Error in chosen model");
@@ -109,7 +112,7 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            _logger.Debug("Running Create Get method in ClientController, sharing Create view");
+            _logger.Debug("Running Create Get method in ManagerController, sharing Create view");
             return View();
         }
 
@@ -117,10 +120,10 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Create(ManagerViewModel managerViewModel)
         {
-            _logger.Debug("Running Create Post method in ClientController");
+            _logger.Debug("Running Create Post method in ManagerController");
             if (ModelState.IsValid)
             {
-                _logger.Debug("Adding new client");
+                _logger.Debug("Adding new manager");
                 managerViewModel.Id = _managerService.GetManagersDto().ToList().Count;
                 _managerService.AddManager(_managerMapper.GetManagerDto(managerViewModel));
                 _logger.Debug("Adding complete");
@@ -137,7 +140,7 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Modify(int? id)
         {
-            _logger.Debug("Running Modify Get method in ClientController");
+            _logger.Debug("Running Modify Get method in ManagerController");
             if (id == null)
             {
                 _logger.Error("Error in chosen model");
@@ -154,10 +157,10 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Modify(ManagerViewModel managerViewModel)
         {
-            _logger.Debug("Running Modify Post method in ClientController");
+            _logger.Debug("Running Modify Post method in ManagerController");
             if (ModelState.IsValid)
             {
-                _logger.Debug("Modify client model");
+                _logger.Debug("Modify manager model");
                 _managerService.ModifyManager(_managerMapper.GetManagerDto(managerViewModel));
                 _logger.Debug("Modify complete");
                 return RedirectToAction("Index");
@@ -173,7 +176,7 @@ namespace Task5EpamCourse.Controllers
         [HttpGet]
         public ActionResult Delete(int? id)
         {
-            _logger.Debug("Running Delete Get method in ClientController");
+            _logger.Debug("Running Delete Get method in ManagerController");
             if (id == null)
             {
                 _logger.Error("Error in chosen model");
@@ -190,10 +193,10 @@ namespace Task5EpamCourse.Controllers
         [HttpPost]
         public ActionResult Delete(ManagerViewModel managerViewModel)
         {
-            _logger.Debug("Running Delete Post method in ClientController");
+            _logger.Debug("Running Delete Post method in ManagerController");
             if (managerViewModel.Id != 0)
             {
-                _logger.Debug("Remove client from db");
+                _logger.Debug("Remove manager from db");
                 _managerService.RemoveManager(_managerMapper.GetManagerDto(managerViewModel));
                 _logger.Debug("Remove complete");
                 return RedirectToAction("Index");

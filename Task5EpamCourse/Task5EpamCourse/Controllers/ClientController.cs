@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Serilog;
 using Task5.BL.Contacts;
 using Task5.BL.Enums;
-using Task5EpamCourse.Logger;
 using Task5EpamCourse.Models.Client;
 using Task5EpamCourse.PageHelper.Contacts;
 using Task5EpamCourse.Service.Contracts;
@@ -18,14 +17,13 @@ namespace Task5EpamCourse.Controllers
         private readonly IClientService _clientService;
         private readonly IPageService _pageService;
         private readonly IClientMapper _clientMapper;
-        private readonly ILogger _logger = LoggerFactory.GetLogger();
-
-        public ClientController(IClientService clientService,  IPageService pageService, IClientMapper clientMapper)
+        private readonly ILogger _logger;
+        public ClientController(IClientService clientService,  IPageService pageService, IClientMapper clientMapper, ILogger logger)
         {
             _clientService = clientService;
-     
             _pageService = pageService;
             _clientMapper = clientMapper;
+            _logger = logger;
         }
 
 
@@ -47,21 +45,21 @@ namespace Task5EpamCourse.Controllers
 
         public ActionResult GetClients(int page = 1)
         {
-            _logger.Debug("Running Index Get method in ClientController");
+            _logger.Debug("Running GetClients Get method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated == false)
             {
                 _logger.Error("Error with authenticated");
                 return View("Error");
             }
             ViewBag.CurrentPage = page;
-            _logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing partial view");
             return PartialView("_Clients", _pageService.GetModelsInPageViewModel<ClientViewModel>(page));
         }
 
         [HttpPost]
         public ActionResult GetClients(string fieldString, TextFieldFilter filter, int page = 1)
         {
-            _logger.Debug("Running Index Post method in ClientController");
+            _logger.Debug("Running GetClients Post method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 if (filter == TextFieldFilter.Telephone)
@@ -69,20 +67,23 @@ namespace Task5EpamCourse.Controllers
                     Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
                     if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
                     {
+                        _logger.Debug("Sharing partial view");
                         return PartialView("_Clients", _pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
                     }
                     else
                     {
+                        _logger.Warning("Incorrect input");
                          ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
                          return PartialView("_Clients", _pageService.GetModelsInPageViewModel<ClientViewModel>(page));
                     }
                 }
                 else
                 {
+                    _logger.Debug("Sharing partial view");
                     return PartialView("_Clients", _pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
                 }
             }
-            _logger.Debug("Sharing Index view");
+            _logger.Debug("Sharing Error view");
             return View("Error");
         }
 

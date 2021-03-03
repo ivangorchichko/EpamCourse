@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Serilog;
 using Task5.BL.Contacts;
 using Task5.DAL.DataBaseContext;
 using Task5.DAL.Repository.Contract;
@@ -13,18 +14,23 @@ namespace Task5EpamCourse.Controllers
     public class HomeController : Controller
     {
         private readonly IPurchaseMapper _purchaseMapper;
+        private readonly ILogger _logger;
 
-        public HomeController(IPurchaseMapper purchaseMapper)
+        public HomeController(IPurchaseMapper purchaseMapper, ILogger logger)
         {
             _purchaseMapper = purchaseMapper;
+            _logger = logger;
         }
 
         public ActionResult Index()
         {
+            _logger.Debug("Running Index Get method in HomeController");
             if (_purchaseMapper.GetPurchaseViewModel().ToList().Count == 0)
             {
+                _logger.Debug("Fill database");
                 FillDb();
             }
+            _logger.Debug("Sharing Index view");
             return View(_purchaseMapper.GetPurchaseViewModel().ToList());
         }
 

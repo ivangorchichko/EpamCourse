@@ -21,6 +21,7 @@ namespace Task5.BL.DIConfig
             builder.RegisterType<PurchaseService>().As<IPurchaseService>();
             builder.RegisterType<Repository>().As<IRepository>();
             builder.RegisterType<ManagerService>().As<IManagerService>();
+            builder.RegisterInstance(LoggerFactory.GetLogger());
 
 
             return builder;
