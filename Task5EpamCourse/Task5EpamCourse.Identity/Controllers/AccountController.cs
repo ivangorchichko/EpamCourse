@@ -148,18 +148,18 @@ namespace Task5EpamCourse.Identity.Controllers
 
         public async Task<bool> CreateRole(string returnUrl = null)
         {
-            AccountRole adminRole = await RoleManager.FindByNameAsync("Admin");
-            AccountRole userRole = await RoleManager.FindByNameAsync("User");
+            AccountRole adminRole = await RoleManager.FindByNameAsync("admin");
+            AccountRole userRole = await RoleManager.FindByNameAsync("user");
             if (adminRole == null || userRole == null)
             {
                 IdentityResult resultAdminRole = await RoleManager.CreateAsync(new AccountRole()
                 {
-                    Name = "Admin",
+                    Name = "admin",
                     Description = "Super user in application",
                 });
                 IdentityResult resultUserRole = await RoleManager.CreateAsync(new AccountRole()
                 {
-                    Name = "User",
+                    Name = "user",
                     Description = "Simple user in application",
                 });
                 if (resultUserRole.Succeeded && resultAdminRole.Succeeded)

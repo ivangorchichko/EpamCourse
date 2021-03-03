@@ -80,9 +80,9 @@
     <Compile Include="DataBaseContext\Configuration\ProductEntityConfiguration.cs" />
     <Compile Include="DataBaseContext\Configuration\PurchaseEntityConfiguration.cs" />
     <Compile Include="DataBaseContext\PurchaseContext.cs" />
-    <Compile Include="Migrations\202103011530554_DatabaseMigration-v2.cs" />
-    <Compile Include="Migrations\202103011530554_DatabaseMigration-v2.Designer.cs">
-      <DependentUpon>202103011530554_DatabaseMigration-v2.cs</DependentUpon>
+    <Compile Include="Migrations\202103031850368_DatabaseMigration.cs" />
+    <Compile Include="Migrations\202103031850368_DatabaseMigration.Designer.cs">
+      <DependentUpon>202103031850368_DatabaseMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,8 +100,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202103011530554_DatabaseMigration-v2.resx">
-      <DependentUpon>202103011530554_DatabaseMigration-v2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103031850368_DatabaseMigration.resx">
+      <DependentUpon>202103031850368_DatabaseMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

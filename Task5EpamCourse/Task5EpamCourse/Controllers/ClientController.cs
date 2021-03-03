@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 using Serilog;
 using Task5.BL.Contacts;
 using Task5.BL.Enums;
-using Task5.BL.Logger;
-using Task5.BL.Service;
-using Task5.DAL.Repository.Contract;
-using Task5.DAL.Repository.Model;
+using Task5EpamCourse.Logger;
 using Task5EpamCourse.Models.Client;
-using Task5EpamCourse.Models.Purchase;
-using Task5EpamCourse.PageHelper;
 using Task5EpamCourse.PageHelper.Contacts;
 using Task5EpamCourse.Service.Contracts;
 
@@ -26,12 +18,12 @@ namespace Task5EpamCourse.Controllers
         private readonly IClientService _clientService;
         private readonly IPageService _pageService;
         private readonly IClientMapper _clientMapper;
-        private readonly ILogger _logger;
+        private readonly ILogger _logger = LoggerFactory.GetLogger();
 
-        public ClientController(IClientService clientService, ILogger logger, IPageService pageService, IClientMapper clientMapper)
+        public ClientController(IClientService clientService,  IPageService pageService, IClientMapper clientMapper)
         {
             _clientService = clientService;
-            _logger = logger;
+     
             _pageService = pageService;
             _clientMapper = clientMapper;
         }
@@ -47,13 +39,27 @@ namespace Task5EpamCourse.Controllers
                 _logger.Error("Error with authenticated");
                 return View("Error");
             }
+            ViewBag.CurrentPage = page;
             _logger.Debug("Sharing Index view");
             return View(_pageService.GetModelsInPageViewModel<ClientViewModel>(page));
         }
 
-        [Authorize]
+
+        public ActionResult GetClients(int page = 1)
+        {
+            _logger.Debug("Running Index Get method in ClientController");
+            if (HttpContext.User.Identity.IsAuthenticated == false)
+            {
+                _logger.Error("Error with authenticated");
+                return View("Error");
+            }
+            ViewBag.CurrentPage = page;
+            _logger.Debug("Sharing Index view");
+            return PartialView("_Clients", _pageService.GetModelsInPageViewModel<ClientViewModel>(page));
+        }
+
         [HttpPost]
-        public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
+        public ActionResult GetClients(string fieldString, TextFieldFilter filter, int page = 1)
         {
             _logger.Debug("Running Index Post method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -63,17 +69,17 @@ namespace Task5EpamCourse.Controllers
                     Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
                     if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
                     {
-                        return View(_pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
+                        return PartialView("_Clients", _pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
                     }
                     else
                     {
                          ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
-                         return View(_pageService.GetModelsInPageViewModel<ClientViewModel>(page));
+                         return PartialView("_Clients", _pageService.GetModelsInPageViewModel<ClientViewModel>(page));
                     }
                 }
                 else
                 {
-                    return View(_pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
+                    return PartialView("_Clients", _pageService.GetFilteredModelsInPageViewModel<ClientViewModel>(filter, fieldString, page));
                 }
             }
             _logger.Debug("Sharing Index view");

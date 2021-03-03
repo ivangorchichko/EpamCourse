@@ -32,13 +32,23 @@ namespace Task5EpamCourse.Controllers
             {
                 return View("Error");
             }
-
-            return View(_pageService.GetModelsInPageViewModel<ProductViewModel>(page));
+            ViewBag.CurrentPage = page;
+            return View();
         }
 
-        [Authorize]
+        public ActionResult GetProducts(int page = 1)
+        {
+            if (HttpContext.User.Identity.IsAuthenticated == false)
+            {
+                return View("Error");
+            }
+
+            ViewBag.CurrentPage = page;
+            return PartialView("_Products", _pageService.GetModelsInPageViewModel<ProductViewModel>(page));
+        }
+
         [HttpPost]
-        public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
+        public ActionResult GetProducts(string fieldString, TextFieldFilter filter, int page = 1)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
@@ -47,19 +57,19 @@ namespace Task5EpamCourse.Controllers
                     try
                     {
                         Double.Parse(fieldString);
-                        return View(
+                        return PartialView("_Products",
                             _pageService.GetFilteredModelsInPageViewModel<ProductViewModel>(filter, fieldString, page));
                     }
                     catch (Exception e)
                     {
                         ViewBag.NotValidParse = "Неверный ввод цены, примерный ввод : 0,3";
-                        return View(_pageService.GetModelsInPageViewModel<ProductViewModel>(page));
+                        return PartialView("_Products", _pageService.GetModelsInPageViewModel<ProductViewModel>(page));
                     }
                 }
                 else
                 {
-                    return View(
-                    _pageService.GetFilteredModelsInPageViewModel<ProductViewModel>(filter, fieldString, page));
+                    return PartialView("_Products",
+                        _pageService.GetFilteredModelsInPageViewModel<ProductViewModel>(filter, fieldString, page));
                 }
             }
             return View("Error");

@@ -199,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logger\LoggerFactory.cs" />
     <Compile Include="Models\Manager\ManagerViewModel.cs" />
     <Compile Include="Models\Page\ModelsInPageViewModel.cs" />
     <Compile Include="Models\Page\PageInfo.cs" />
@@ -281,6 +282,11 @@
     <Content Include="Views\Manager\Details.cshtml" />
     <Content Include="Views\Manager\Modify.cshtml" />
     <Content Include="Views\Manager\Delete.cshtml" />
+    <Content Include="Views\Product\_Products.cshtml" />
+    <Content Include="Views\Purchase\_Purchases.cshtml" />
+    <Content Include="Views\Manager\_Managers.cshtml" />
+    <Content Include="Views\Client\_Clients.cshtml" />
+    <Content Include="Views\Purchase\_Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

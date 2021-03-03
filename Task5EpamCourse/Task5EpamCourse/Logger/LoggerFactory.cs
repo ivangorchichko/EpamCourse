@@ -1,7 +1,11 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
 using Serilog;
 
-namespace Task5.BL.Logger
+namespace Task5EpamCourse.Logger
 {
     public static class LoggerFactory
     {
@@ -16,4 +20,3 @@ namespace Task5.BL.Logger
         }
     }
 }
-    

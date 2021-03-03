@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Task5.BL.Contacts;
@@ -31,13 +32,22 @@ namespace Task5EpamCourse.Controllers
             {
                 return View("Error");
             }
-
-            return View(_pageService.GetModelsInPageViewModel<PurchaseViewModel>(page));
+            ViewBag.CurrentPage = page;
+            return View();
         }
 
-        [Authorize]
+        public ActionResult GetPurchases(int page = 1)
+        {
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View("Error");
+            }
+            ViewBag.CurrentPage = page;
+            return PartialView("_Purchases",_pageService.GetModelsInPageViewModel<PurchaseViewModel>(page));
+        }
+
         [HttpPost]
-        public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
+        public ActionResult GetPurchases(string fieldString, TextFieldFilter filter, int page = 1)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
@@ -46,17 +56,17 @@ namespace Task5EpamCourse.Controllers
                     try
                     {
                         DateTime.Parse(fieldString);
-                        return View(
+                        return PartialView("_Purchases",
                             _pageService.GetFilteredModelsInPageViewModel<PurchaseViewModel>(filter, fieldString,
                                 page));
                     }
                     catch (Exception e)
                     {
                         ViewBag.NotValidParse = "Неверный ввод даты, примерный ввод : 11.11.2011";
-                        return View(_pageService.GetModelsInPageViewModel<PurchaseViewModel>(page));
+                        return PartialView("_Purchases",_pageService.GetModelsInPageViewModel<PurchaseViewModel>(page));
                     }
                 }
-                return View(
+                return PartialView("_Purchases",
                     _pageService.GetFilteredModelsInPageViewModel<PurchaseViewModel>(filter, fieldString,
                         page));
             }
@@ -156,6 +166,16 @@ namespace Task5EpamCourse.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetChartData()
+        {
+            var item = _purchaseService.GetPurchaseDto()
+                .GroupBy(x => x.Date.ToString("d"))
+                .Select(x => new object[] { x.Key.ToString(), x.Count() })
+                .ToArray();
+            return Json(item, JsonRequestBehavior.AllowGet);
         }
     }
 }

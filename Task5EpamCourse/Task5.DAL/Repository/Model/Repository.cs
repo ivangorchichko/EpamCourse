@@ -60,10 +60,10 @@ namespace Task5.DAL.Repository.Model
             _context.SaveChanges();
         }
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    _context?.Dispose();
+        //}
     }
 }
 

@@ -8,7 +8,7 @@ using Task5.DomainModel.Contract;
 
 namespace Task5.DAL.Repository.Contract
 {
-    public interface IRepository : IDisposable
+    public interface IRepository
     {
         IEnumerable<TEntity> Get<TEntity>() where TEntity : class;
 

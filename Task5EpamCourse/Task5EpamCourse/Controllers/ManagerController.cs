@@ -17,7 +17,6 @@ namespace Task5EpamCourse.Controllers
 {
     public class ManagerController : Controller
     {
-        // GET: Manager
         private readonly IManagerService _managerService;
         private readonly IPageService _pageService;
         private readonly IManagerMapper _managerMapper;
@@ -42,13 +41,27 @@ namespace Task5EpamCourse.Controllers
                 _logger.Error("Error with authenticated");
                 return View("Error");
             }
+            ViewBag.CurrentPage = page;
             _logger.Debug("Sharing Index view");
             return View(_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
         }
 
-        [Authorize]
+        public ActionResult GetManagers(int page = 1)
+        {
+            _logger.Debug("Running Index Get method in ClientController");
+            if (HttpContext.User.Identity.IsAuthenticated == false)
+            {
+                _logger.Error("Error with authenticated");
+                return View("Error");
+            }
+            ViewBag.CurrentPage = page;
+            _logger.Debug("Sharing Index view");
+            return PartialView("_Managers",_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
+        }
+
+
         [HttpPost]
-        public ActionResult Index(string fieldString, TextFieldFilter filter, int page = 1)
+        public ActionResult GetManagers(string fieldString, TextFieldFilter filter, int page = 1)
         {
             _logger.Debug("Running Index Post method in ClientController");
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -58,17 +71,17 @@ namespace Task5EpamCourse.Controllers
                     Regex regex = new Regex(@"^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$");
                     if (regex.IsMatch(fieldString) && (fieldString.Length == 13 || fieldString.Length == 11))
                     {
-                        return View(_pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
+                        return PartialView("_Managers", _pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
                     }
                     else
                     {
                         ViewBag.NotValidParse = "Неверный ввод номера телефона, примерный ввод : (+375|80)(29|25|44|33)(1111111)";
-                        return View(_pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
+                        return PartialView("_Managers", _pageService.GetModelsInPageViewModel<ManagerViewModel>(page));
                     }
                 }
                 else
                 {
-                    return View(_pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
+                    return PartialView("_Managers", _pageService.GetFilteredModelsInPageViewModel<ManagerViewModel>(filter, fieldString, page));
                 }
             }
             _logger.Debug("Sharing Index view");
